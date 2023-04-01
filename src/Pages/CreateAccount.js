@@ -8,21 +8,25 @@ import UserPersonal from "../MultiStepForm-Pages/UserPersonal";
 import UserProfessional from "../MultiStepForm-Pages/UserProfessional";
 import Particle from "../MultiStepForm-Pages/Particle";
 import Avatar from "../Images/login-avatar.jpg";
+import NextArrow from "../Images/next-arrow.svg";
+import PreviousArrow from "../Images/left-arrow.svg";
+import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   const [userAccountValidation, setUserAccountValidation] = useState(false);
   const [userAccount, setUserAccount] = useState({
-    firstName: "",
-    lastName: "",
-    userName: "",
-    fatherName: "",
+    First_Name: "",
+    Last_Name: "",
+    User_Name: "",
+    Father_Name: "",
     Email: "",
     Password: "",
-    ConfirmPassword: "",
+    Confirm_Password: "",
   });
 
   const userAccountOnChange = (e) => {
@@ -54,7 +58,6 @@ const CreateAccount = () => {
     Current_Country: "",
     City: "",
     Date_of_Birth: "",
-    CNIC: "",
   });
 
   const userPersonalOnChange = (e) => {
@@ -69,7 +72,7 @@ const CreateAccount = () => {
   const userPersonal_values = Object.values(userPersonal);
 
   useEffect(() => {
-    const validation = userPersonal_values.every((value) => value.length > 2);
+    const validation = userPersonal_values.every((value) => value.length > 3);
     setUserPersonalValidation(validation);
   }, [userPersonal_values, userPersonal]);
 
@@ -134,37 +137,41 @@ const CreateAccount = () => {
   ]);
 
   return (
-    <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-myblue">
-      <div className="Wrapper flex w-full items-center h-full pl-5 bg-white">
-        <div
-          style={{
-            backgroundImage: `url(${Avatar})`,
-          }}
-          className="LeftContainer h-full w-[28%] bg-contain bg-bottom bg-no-repeat bg-white"
-        >
-          <div>
-            <section className="mb-6 mt-3">
-              <h1 className="text-bluelite text-5xl font-bold text-center py-5">
-                React App
-              </h1>
-            </section>
-          </div>
+    <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-myblue p-5">
+      <div className="Wrapper flex w-full items-center h-full  bg-white max-w-[1440px]">
+        <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white py-2">
+          <section className=" h-20 flex justify-center items-center mb-2">
+            <h1 className="text-bluelite text-4xl font-bold text-center ">
+              React App
+            </h1>
+          </section>
+          <section className="pl-7   h-[28rem] flex justify-center items-end ">
+            <img src={Avatar} alt="avatar" className="max-h-[27rem]" />
+          </section>
+          <section className="flex justify-center items-center w-full  h-16">
+            <button
+              onClick={() => navigate("/login-page")}
+              className="w-4/5 py-2 bg-myblue rounded-sm text-white text-center hover:scale-105 transition-all font-semibold"
+            >
+              Login
+            </button>
+          </section>
         </div>
         <div className="RightContainer h-full w-[72%] relative bg-myblue ">
           <Particle />
           <form
             onSubmit={handleFormSubmit}
-            className="w-full h-full absolute top-0 right-0 text-white px-14"
+            className="w-full h-full absolute top-0 right-0 text-white px-14 bg-white bg-opacity-5"
           >
             <div className="flex justify-center items-center  mt-5 mb-8">
-              <h1 className="text-white text-5xl font-bold text-center py-5">
+              <h1 className="text-white text-4xl font-bold text-center py-5 tracking-wide">
                 Create Account
               </h1>
             </div>
             {currentPage}
-            <div className="flex justify-between py-3 px-1 items-center">
+            <div className="flex justify-between py-3 px-1 items-baseline ">
               <div className="pages">
-                <h2 className="text-xl font-semibold ">
+                <h2 className="text-2xl font-semibold underline">
                   {currentPageIndex === 0
                     ? "User Account"
                     : currentPageIndex === 1
@@ -179,15 +186,24 @@ const CreateAccount = () => {
                   <button
                     type="button"
                     onClick={Previous}
-                    className="w-28 py-1 text-lg border-4 border-green-600 bg-white text-myblue font-bold rounded-md ml-3 hover:scale-105 "
+                    className="w-28 py-2 text-base border-[1px] border-white bg-myblue text-white  tracking-wider rounded-md ml-3 hover:scale-105 transition-all "
                   >
-                    Previous
+                    <div className="flex items-center justify-end ">
+                      <img
+                        src={PreviousArrow}
+                        alt="nextArrow"
+                        className="h-4 w-4 "
+                      />
+                      <p className="ml-2  flex justify-start items-center w-16">
+                        Prev
+                      </p>
+                    </div>
                   </button>
                 )}
 
                 <button
                   type="submit"
-                  className="w-28 py-1 text-lg border-4 border-green-600 bg-white text-myblue font-bold rounded-md ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:hover:scale-95  disabled:font-normal disabled:border-gray-500 transition-all"
+                  className="w-28 py-2 text-base border-[1px] border-white bg-myblue text-white  tracking-wider rounded-md ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all"
                   disabled={
                     currentPageIndex === 0 && userAccountValidation
                       ? false
@@ -196,7 +212,21 @@ const CreateAccount = () => {
                       : true
                   }
                 >
-                  {LastPage ? "Submit" : "Next"}
+                  {LastPage ? (
+                    "Submit"
+                  ) : (
+                    <div className="flex items-center ">
+                      <p className="mr-2  flex justify-end items-center w-16">
+                        Next
+                      </p>
+
+                      <img
+                        src={NextArrow}
+                        alt="nextArrow"
+                        className="h-4 w-4 "
+                      />
+                    </div>
+                  )}
                 </button>
               </div>
             </div>

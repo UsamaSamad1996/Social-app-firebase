@@ -7,15 +7,13 @@ const UserAccount = ({ userAccount, userAccountOnChange }) => {
       <FormContainer>
         <div className="flex gap-7 mb-5">
           <div className="w-full">
-            <label htmlFor="firstname" className="font-semibold ">
-              FirstName
-            </label>
+            <label htmlFor="First_Name">FirstName</label>
             <input
-              className={`px-5 py-2 border-4 border-gray-500 text-black w-full mt-2 rounded-lg focus:outline-none valid:border-green-600`}
+              className={`px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600`}
               type="text"
-              name="firstName"
-              id="firstname"
-              value={userAccount.firstName || ""}
+              name="First_Name"
+              id="First_Name"
+              value={userAccount.First_Name || ""}
               onChange={userAccountOnChange}
               minLength={3}
               maxLength={15}
@@ -24,15 +22,13 @@ const UserAccount = ({ userAccount, userAccountOnChange }) => {
             />
           </div>
           <div className="w-full">
-            <label htmlFor="lastName" className="font-semibold ">
-              LastName
-            </label>
+            <label htmlFor="Last_Name">LastName</label>
             <input
-              className="px-5 py-2 border-4 border-gray-500 text-black w-full mt-2 rounded-lg focus:outline-none valid:border-green-600"
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               type="text"
-              name="lastName"
-              id="lastName"
-              value={userAccount.lastName || ""}
+              name="Last_Name"
+              id="Last_Name"
+              value={userAccount.Last_Name || ""}
               onChange={userAccountOnChange}
               minLength={3}
               maxLength={15}
@@ -43,15 +39,13 @@ const UserAccount = ({ userAccount, userAccountOnChange }) => {
         </div>
         <div className="flex gap-7 mb-5">
           <div className="w-full">
-            <label htmlFor="username" className="font-semibold ">
-              UserName
-            </label>
+            <label htmlFor="User_Name">UserName</label>
             <input
-              className="px-5 py-2 border-4 border-gray-500 text-black w-full mt-2 rounded-lg focus:outline-none valid:border-green-600"
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               type="text"
-              name="userName"
-              id="username"
-              value={userAccount.userName || ""}
+              name="User_Name"
+              id="User_Name"
+              value={userAccount.User_Name || ""}
               onChange={userAccountOnChange}
               minLength={3}
               maxLength={25}
@@ -60,15 +54,13 @@ const UserAccount = ({ userAccount, userAccountOnChange }) => {
             />
           </div>
           <div className="w-full">
-            <label htmlFor="fatherName" className="font-semibold ">
-              Father's Name
-            </label>
+            <label htmlFor="Father_Name">Father's Name</label>
             <input
-              className="px-5 py-2 border-4 border-gray-500 text-black w-full mt-2 rounded-lg focus:outline-none valid:border-green-600"
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               type="text"
-              name="fatherName"
-              id="fatherName"
-              value={userAccount.fatherName || ""}
+              name="Father_Name"
+              id="Father_Name"
+              value={userAccount.Father_Name || ""}
               onChange={userAccountOnChange}
               minLength={3}
               maxLength={12}
@@ -79,11 +71,9 @@ const UserAccount = ({ userAccount, userAccountOnChange }) => {
         </div>
         <div className="mb-5">
           <div className="w-full">
-            <label htmlFor="Email" className="font-semibold ">
-              Email
-            </label>
+            <label htmlFor="Email">Email</label>
             <input
-              className="px-5 py-2 border-4 border-gray-500 text-black w-full mt-2 rounded-lg focus:outline-none valid:border-green-600"
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               type="email"
               name="Email"
               id="Email"
@@ -98,11 +88,9 @@ const UserAccount = ({ userAccount, userAccountOnChange }) => {
         </div>
         <div className="flex gap-7 mb-5">
           <div className="w-full">
-            <label htmlFor="Password" className="font-semibold ">
-              Password
-            </label>
+            <label htmlFor="Password">Password</label>
             <input
-              className="px-5 py-2 border-4 border-gray-500 text-black w-full mt-2 rounded-lg focus:outline-none valid:border-green-600"
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               type="password"
               name="Password"
               id="Password"
@@ -115,15 +103,13 @@ const UserAccount = ({ userAccount, userAccountOnChange }) => {
             />
           </div>
           <div className="w-full">
-            <label htmlFor="ConfirmPassword" className="font-semibold ">
-              Confirm Password
-            </label>
+            <label htmlFor="Confirm_Password">Confirm Password</label>
             <input
-              className="px-5 py-2 border-4 border-gray-500 text-black w-full mt-2 rounded-lg focus:outline-none valid:border-green-600"
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               type="password"
-              name="ConfirmPassword"
-              id="ConfirmPassword"
-              value={userAccount.ConfirmPassword || ""}
+              name="Confirm_Password"
+              id="Confirm_Password"
+              value={userAccount.Confirm_Password || ""}
               onChange={userAccountOnChange}
               minLength={8}
               maxLength={25}
