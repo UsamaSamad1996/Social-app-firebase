@@ -11,6 +11,7 @@ import Avatar from "../Images/login-avatar.jpg";
 import NextArrow from "../Images/next-arrow.svg";
 import PreviousArrow from "../Images/left-arrow.svg";
 import { useNavigate } from "react-router-dom";
+import UserLocation from "../MultiStepForm-Pages/UserLocation";
 
 const CreateAccount = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +25,7 @@ const CreateAccount = () => {
     Last_Name: "",
     User_Name: "",
     Father_Name: "",
-    Email: "",
+    Email_Address: "",
     Password: "",
     Confirm_Password: "",
   });
@@ -54,10 +55,10 @@ const CreateAccount = () => {
     Marital_Status: "",
     Phone_No: "",
     Gender: "",
-    From_Country: "",
-    Current_Country: "",
-    City: "",
+    Religion: "",
     Date_of_Birth: "",
+    Language: "",
+    Nick_Name: "",
   });
 
   const userPersonalOnChange = (e) => {
@@ -81,9 +82,73 @@ const CreateAccount = () => {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+  const [userLocationValidation, setUserLocationValidation] = useState(false);
+  const [userLocation, setUserLocation] = useState({
+    From_Country: "",
+    Current_Country: "",
+    City: "",
+  });
+
+  const userLocationOnChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setUserLocation({
+      ...userLocation,
+      [name]: value,
+    });
+  };
+
+  const userLocation_values = Object.values(userLocation);
+
   useEffect(() => {
-    setUserData({ ...userAccount, ...userPersonal });
-  }, [userAccount, userPersonal]);
+    const validation = userLocation_values.every((value) => value.length > 3);
+    setUserLocationValidation(validation);
+  }, [userLocation_values, userLocation]);
+
+  // console.log(userProfessional);
+  // console.log(userAccountValidation);
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const [userProfessionalValidation, setUserProfessionalValidation] =
+    useState(false);
+  const [userProfessional, setUserProfessional] = useState({
+    Qualification: "",
+    Field_of_Education: "",
+    Job_Title: "",
+  });
+
+  const userProfessionalOnChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setUserProfessional({
+      ...userProfessional,
+      [name]: value,
+    });
+  };
+
+  const userProfessional_values = Object.values(userProfessional);
+
+  useEffect(() => {
+    const validation = userProfessional_values.every(
+      (value) => value.length > 3
+    );
+    setUserProfessionalValidation(validation);
+  }, [userProfessional_values, userProfessional]);
+
+  // console.log(userProfessional);
+  // console.log(userAccountValidation);
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+  useEffect(() => {
+    setUserData({
+      ...userAccount,
+      ...userPersonal,
+      ...userLocation,
+      Created_at: serverTimestamp(),
+    });
+  }, [userAccount, userPersonal, userLocation]);
 
   console.log(userData);
 
@@ -133,51 +198,63 @@ const CreateAccount = () => {
       userPersonal={userPersonal}
       userPersonalOnChange={userPersonalOnChange}
     />,
-    <UserProfessional />,
+    <UserLocation
+      userLocationOnChange={userLocationOnChange}
+      userLocation={userLocation}
+    />,
+    <UserProfessional
+      userProfessional={userProfessional}
+      userProfessionalOnChange={userProfessionalOnChange}
+    />,
   ]);
 
   return (
-    <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-myblue p-5">
-      <div className="Wrapper flex w-full items-center h-full  bg-white max-w-[1440px]">
-        <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white py-2">
-          <section className=" h-20 flex justify-center items-center mb-2">
-            <h1 className="text-bluelite text-4xl font-bold text-center ">
-              React App
+    <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-myblue p-8">
+      <div className="Wrapper flex w-full h-full  bg-myblue max-w-[1440px]">
+        <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white ">
+          <section className=" h-20 flex justify-center items-center mb-3">
+            <h1 className="text-bluelite  text-3xl font-bold text-center pt-2 font-alkatra">
+              SameBook
             </h1>
           </section>
-          <section className="pl-7   h-[28rem] flex justify-center items-end ">
-            <img src={Avatar} alt="avatar" className="max-h-[27rem]" />
+          <section className="pl-7   max-h-[28rem] flex justify-center items-end  ">
+            <img src={Avatar} alt="avatar" className="max-h-[25.5rem]" />
           </section>
-          <section className="flex justify-center items-center w-full  h-16">
+          <section className="flex justify-center items-center w-full ">
             <button
               onClick={() => navigate("/login-page")}
-              className="w-4/5 py-2 bg-myblue rounded-sm text-white text-center hover:scale-105 transition-all font-semibold"
+              className="w-4/5 py-2 bg-myblue rounded-sm text-white text-center hover:scale-110 transition-all font-semibold border-none outline-none"
             >
               Login
             </button>
           </section>
         </div>
-        <div className="RightContainer h-full w-[72%] relative bg-myblue ">
-          <Particle />
+        <div className="RightContainer w-[72%]  bg-myblue relative ">
+          {/* <Particle /> */}
+          <div className="absolute right-10 top-6">
+            <h3 className="pl-5 text-sm text-white">
+              Step {currentPageIndex + 1} / {formPages.length}
+            </h3>
+          </div>
           <form
             onSubmit={handleFormSubmit}
-            className="w-full h-full absolute top-0 right-0 text-white px-14 bg-white bg-opacity-5"
+            className="w-full h-full text-white px-14 bg-white bg-opacity-5 absolute top-0 pt-10"
           >
-            <div className="flex justify-center items-center  mt-5 mb-8">
-              <h1 className="text-white text-4xl font-bold text-center py-5 tracking-wide">
+            <div className="flex justify-start items-center ">
+              <h1 className="text-white text-3xl font-bold  pb-10 tracking-wide">
                 Create Account
               </h1>
             </div>
             {currentPage}
-            <div className="flex justify-between py-3 px-1 items-baseline ">
-              <div className="pages">
-                <h2 className="text-2xl font-semibold underline">
+            <div className="flex justify-between py-3 px-1 items-center ">
+              <div className="pages ">
+                <h2 className="text-lg font-alkatra ">
                   {currentPageIndex === 0
-                    ? "User Account"
+                    ? "Let's start with account information"
                     : currentPageIndex === 1
-                    ? "User Personal"
+                    ? "Enter your basic & personal information"
                     : currentPageIndex === 2
-                    ? "User Professional"
+                    ? "Places you lived"
                     : null}
                 </h2>
               </div>
@@ -186,46 +263,41 @@ const CreateAccount = () => {
                   <button
                     type="button"
                     onClick={Previous}
-                    className="w-28 py-2 text-base border-[1px] border-white bg-myblue text-white  tracking-wider rounded-md ml-3 hover:scale-105 transition-all "
+                    className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm  hover:scale-105 transition-all flex justify-center items-center "
                   >
-                    <div className="flex items-center justify-end ">
-                      <img
-                        src={PreviousArrow}
-                        alt="nextArrow"
-                        className="h-4 w-4 "
-                      />
-                      <p className="ml-2  flex justify-start items-center w-16">
-                        Prev
-                      </p>
-                    </div>
+                    <img
+                      src={PreviousArrow}
+                      alt="nextArrow"
+                      className="h-4 w-4 "
+                    />
+                    <p className="ml-2">Previous</p>
                   </button>
                 )}
 
                 <button
                   type="submit"
-                  className="w-28 py-2 text-base border-[1px] border-white bg-myblue text-white  tracking-wider rounded-md ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all"
+                  className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
                   disabled={
                     currentPageIndex === 0 && userAccountValidation
                       ? false
                       : currentPageIndex === 1 && userPersonalValidation
                       ? false
+                      : currentPageIndex === 2 && userLocationValidation
+                      ? false
                       : true
                   }
                 >
                   {LastPage ? (
-                    "Submit"
+                    <p>Submit</p>
                   ) : (
-                    <div className="flex items-center ">
-                      <p className="mr-2  flex justify-end items-center w-16">
-                        Next
-                      </p>
-
+                    <>
+                      <p className="mr-2">Next</p>
                       <img
                         src={NextArrow}
                         alt="nextArrow"
                         className="h-4 w-4 "
                       />
-                    </div>
+                    </>
                   )}
                 </button>
               </div>

@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useMemo } from "react";
 import FormContainer from "./FormContainer";
+import countryList from "react-select-country-list";
 
-const UserProfessional = ({ userProfessional, userProfessionalOnChange }) => {
+const UserLocation = ({ userLocationOnChange, userLocation }) => {
+  const options = useMemo(() => countryList().getData(), []);
+
+  console.log(userLocation);
+
   return (
     <div>
-      {/* <FormContainer>
+      <FormContainer>
         <div className="flex gap-7 mb-5">
           <div className="w-full">
             <label htmlFor="CurrentCountry">Country</label>
@@ -12,7 +17,7 @@ const UserProfessional = ({ userProfessional, userProfessionalOnChange }) => {
               className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               name="Current_Country"
               id="CurrentCountry"
-              onChange={userPersonalOnChange}
+              onChange={userLocationOnChange}
               required
               minLength={4}
             >
@@ -29,12 +34,12 @@ const UserProfessional = ({ userProfessional, userProfessionalOnChange }) => {
             </select>
           </div>
           <div className="w-full">
-            <label htmlFor="FromCountry">From</label>
+            <label htmlFor="FromCountry">Hometown</label>
             <select
               className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               name="From_Country"
               id="FromCountry"
-              onChange={userPersonalOnChange}
+              onChange={userLocationOnChange}
               required
               minLength={4}
             >
@@ -59,36 +64,33 @@ const UserProfessional = ({ userProfessional, userProfessionalOnChange }) => {
               type="text"
               name="City"
               id="City"
-              value={userPersonal.City || ""}
-              onChange={userPersonalOnChange}
+              value={userLocation.City || ""}
+              onChange={userLocationOnChange}
               minLength={4}
               maxLength={15}
               required
-              placeholder="Karachi"
+              placeholder="In Which city are you living currently?"
             />
           </div>
           <div className="w-full">
-            <label htmlFor="Marital_Status">Marital Status</label>
-            <select
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
-              name="Marital_Status"
-              id="Marital_Status"
-              onChange={userPersonalOnChange}
-              required
+            <label htmlFor="City">City</label>
+            <input
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600 "
+              type="text"
+              name="City"
+              id="City"
+              value={userLocation.City || ""}
+              onChange={userLocationOnChange}
               minLength={4}
-            >
-              <option value="">Marital Status</option>
-              {marital_Status?.map((status, i) => (
-                <option key={i} className="bg-white text-black" value={status}>
-                  {status}
-                </option>
-              ))}
-            </select>
+              maxLength={15}
+              required
+              placeholder="What is your basic City?"
+            />
           </div>
         </div>
-      </FormContainer> */}
+      </FormContainer>
     </div>
   );
 };
 
-export default UserProfessional;
+export default UserLocation;

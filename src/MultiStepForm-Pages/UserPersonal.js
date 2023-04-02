@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormContainer from "./FormContainer";
-import countryList from "react-select-country-list";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
@@ -42,8 +41,6 @@ const UserPersonal = ({ userPersonal, userPersonalOnChange }) => {
   // // Outputs: +1
   // console.log("+" + getCountryCallingCode("PK"));
 
-  const options = useMemo(() => countryList().getData(), []);
-
   const marital_Status = [
     "Single",
     "Married",
@@ -60,64 +57,47 @@ const UserPersonal = ({ userPersonal, userPersonalOnChange }) => {
       <FormContainer>
         <div className="flex gap-7 mb-5">
           <div className="w-full">
-            <label htmlFor="CurrentCountry">Country</label>
-            <select
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
-              name="Current_Country"
-              id="CurrentCountry"
-              onChange={userPersonalOnChange}
-              required
-              minLength={4}
-            >
-              <option value="">Where are you living?</option>
-              {options?.map((country, i) => (
-                <option
-                  key={i}
-                  className="bg-white text-black"
-                  value={country.label}
-                >
-                  {country.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="w-full">
-            <label htmlFor="FromCountry">From</label>
-            <select
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
-              name="From_Country"
-              id="FromCountry"
-              onChange={userPersonalOnChange}
-              required
-              minLength={4}
-            >
-              <option value="">Country, Where are you from?</option>
-              {options?.map((country, i) => (
-                <option
-                  key={i}
-                  className="bg-white text-black"
-                  value={country.label}
-                >
-                  {country.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="flex gap-7 mb-5">
-          <div className="w-full">
-            <label htmlFor="City">City</label>
+            <label htmlFor="Religion">Religion</label>
             <input
               className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600 "
               type="text"
-              name="City"
-              id="City"
-              value={userPersonal.City || ""}
+              name="Religion"
+              id="Religion"
+              value={userPersonal.Religion || ""}
               onChange={userPersonalOnChange}
               minLength={4}
               maxLength={15}
               required
-              placeholder="Karachi"
+              placeholder="What is your Religion?"
+            />
+          </div>
+          <div className="w-full">
+            <label htmlFor="Language">Language</label>
+            <input
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600 "
+              type="text"
+              name="Language"
+              id="Language"
+              value={userPersonal.Language || ""}
+              onChange={userPersonalOnChange}
+              minLength={4}
+              maxLength={15}
+              required
+              placeholder="What is your basic language?"
+            />
+          </div>
+        </div>
+        <div className="flex gap-7 mb-5">
+          <div className="w-full">
+            <label htmlFor="Nick_Name">Nick Name</label>
+            <input
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none "
+              type="text"
+              name="Nick_Name"
+              id="Nick_Name"
+              value={userPersonal.Nick_Name || ""}
+              onChange={userPersonalOnChange}
+              placeholder="Add a Nickname, if any? Optional"
             />
           </div>
           <div className="w-full">
@@ -130,7 +110,7 @@ const UserPersonal = ({ userPersonal, userPersonalOnChange }) => {
               required
               minLength={4}
             >
-              <option value="">Marital Status</option>
+              <option value="">Relationship Status</option>
               {marital_Status?.map((status, i) => (
                 <option key={i} className="bg-white text-black" value={status}>
                   {status}

@@ -71,13 +71,13 @@ const UserAccount = ({ userAccount, userAccountOnChange }) => {
         </div>
         <div className="mb-5">
           <div className="w-full">
-            <label htmlFor="Email">Email</label>
+            <label htmlFor="Email_Address">Email Address</label>
             <input
               className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
               type="email"
-              name="Email"
-              id="Email"
-              value={userAccount.Email || ""}
+              name="Email_Address"
+              id="Email_Address"
+              value={userAccount.Email_Address || ""}
               onChange={userAccountOnChange}
               minLength={5}
               maxLength={30}

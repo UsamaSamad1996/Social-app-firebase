@@ -9,6 +9,10 @@ module.exports = {
         bluelite: "#1A2F57",
         bluedisable: "#13223EE6",
       },
+      fontFamily: {
+        virgo: ["Proza Libre", "sans-serif"],
+        alkatra: ["Alkatra", "cursive"],
+      },
     },
   },
   plugins: [],

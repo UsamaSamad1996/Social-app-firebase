@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Proza+Libre&family=Roboto:wght@100;300;400;500;700;900&family=Syne+Mono&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Alkatra&family=Fasthand&family=Proza+Libre&family=Roboto:wght@100;300;400;500;700;900&family=Syne+Mono&display=swap');
