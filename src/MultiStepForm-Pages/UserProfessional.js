@@ -2,50 +2,60 @@ import React from "react";
 import FormContainer from "./FormContainer";
 
 const UserProfessional = ({ userProfessional, userProfessionalOnChange }) => {
+  const qualifications = [
+    "Metric",
+    "Intermediate",
+    "Diploma",
+    "Associate degree",
+    "Bachelor’s/Honours degree",
+    "Master’s degree",
+    "Doctoral degree/PhD",
+    "Others",
+  ];
+
+  const field_of_Education = [
+    "Pre-Engineering",
+    "Pre-Medical",
+    "Arts",
+    "Commerce",
+    "Others",
+  ];
   return (
     <div>
-      {/* <FormContainer>
+      <FormContainer>
         <div className="flex gap-7 mb-5">
           <div className="w-full">
-            <label htmlFor="CurrentCountry">Country</label>
+            <label htmlFor="Qualification">Qualification</label>
             <select
               className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
-              name="Current_Country"
-              id="CurrentCountry"
-              onChange={userPersonalOnChange}
+              name="Qualification"
+              id="Qualification"
+              onChange={userProfessionalOnChange}
               required
               minLength={4}
             >
-              <option value="">Where are you living?</option>
-              {options?.map((country, i) => (
-                <option
-                  key={i}
-                  className="bg-white text-black"
-                  value={country.label}
-                >
-                  {country.label}
+              <option value="">What is your Qualification?</option>
+              {qualifications?.map((degrees, i) => (
+                <option key={i} className="bg-white text-black" value={degrees}>
+                  {degrees}
                 </option>
               ))}
             </select>
           </div>
           <div className="w-full">
-            <label htmlFor="FromCountry">From</label>
+            <label htmlFor="Field_of_Education">Field of Education</label>
             <select
               className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
-              name="From_Country"
-              id="FromCountry"
-              onChange={userPersonalOnChange}
+              name="Field_of_Education"
+              id="Field_of_Education"
+              onChange={userProfessionalOnChange}
               required
               minLength={4}
             >
-              <option value="">Country, Where are you from?</option>
-              {options?.map((country, i) => (
-                <option
-                  key={i}
-                  className="bg-white text-black"
-                  value={country.label}
-                >
-                  {country.label}
+              <option value="">What is your Field of Education?</option>
+              {field_of_Education?.map((courses, i) => (
+                <option key={i} className="bg-white text-black" value={courses}>
+                  {courses}
                 </option>
               ))}
             </select>
@@ -53,40 +63,72 @@ const UserProfessional = ({ userProfessional, userProfessionalOnChange }) => {
         </div>
         <div className="flex gap-7 mb-5">
           <div className="w-full">
-            <label htmlFor="City">City</label>
+            <label htmlFor="School">
+              School <span className="text-[12px] ml-1">(Optional)</span>
+            </label>
             <input
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600 "
+              className={`px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600`}
               type="text"
-              name="City"
-              id="City"
-              value={userPersonal.City || ""}
-              onChange={userPersonalOnChange}
-              minLength={4}
+              name="School"
+              id="School"
+              value={userProfessional.School || ""}
+              onChange={userProfessionalOnChange}
+              minLength={3}
               maxLength={15}
-              required
-              placeholder="Karachi"
+              placeholder="Add School"
             />
           </div>
           <div className="w-full">
-            <label htmlFor="Marital_Status">Marital Status</label>
-            <select
+            <label htmlFor="College">
+              College <span className="text-[12px] ml-1">(Optional)</span>
+            </label>
+            <input
               className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
-              name="Marital_Status"
-              id="Marital_Status"
-              onChange={userPersonalOnChange}
-              required
-              minLength={4}
-            >
-              <option value="">Marital Status</option>
-              {marital_Status?.map((status, i) => (
-                <option key={i} className="bg-white text-black" value={status}>
-                  {status}
-                </option>
-              ))}
-            </select>
+              type="text"
+              name="College"
+              id="College"
+              value={userProfessional.College || ""}
+              onChange={userProfessionalOnChange}
+              minLength={3}
+              maxLength={15}
+              placeholder="Add College"
+            />
           </div>
         </div>
-      </FormContainer> */}
+        <div className="flex gap-7 mb-5">
+          <div className="w-full">
+            <label htmlFor="University">
+              University <span className="text-[12px] ml-1">(Optional)</span>
+            </label>
+            <input
+              className={`px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600`}
+              type="text"
+              name="University"
+              id="University"
+              value={userProfessional.University || ""}
+              onChange={userProfessionalOnChange}
+              minLength={3}
+              maxLength={15}
+              placeholder="Add University"
+            />
+          </div>
+          <div className="w-full">
+            <label htmlFor="Job">Work</label>
+            <input
+              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
+              type="text"
+              name="Job"
+              id="Job"
+              value={userProfessional.Job || ""}
+              onChange={userProfessionalOnChange}
+              minLength={3}
+              maxLength={15}
+              required
+              placeholder="What work you do? Job or Business"
+            />
+          </div>
+        </div>
+      </FormContainer>
     </div>
   );
 };

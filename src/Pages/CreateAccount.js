@@ -12,173 +12,186 @@ import NextArrow from "../Images/next-arrow.svg";
 import PreviousArrow from "../Images/left-arrow.svg";
 import { useNavigate } from "react-router-dom";
 import UserLocation from "../MultiStepForm-Pages/UserLocation";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const CreateAccount = () => {
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
   const navigate = useNavigate();
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  const [userAccountValidation, setUserAccountValidation] = useState(false);
-  const [userAccount, setUserAccount] = useState({
-    First_Name: "",
-    Last_Name: "",
-    User_Name: "",
-    Father_Name: "",
-    Email_Address: "",
-    Password: "",
-    Confirm_Password: "",
-  });
-
-  const userAccountOnChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUserAccount({
-      ...userAccount,
-      [name]: value,
-    });
-  };
-
-  const userAccount_values = Object.values(userAccount);
-
-  useEffect(() => {
-    const validation = userAccount_values.every((value) => value.length > 2);
-    setUserAccountValidation(validation);
-  }, [userAccount_values, userAccount]);
-
-  // console.log(userAccount);
-  // console.log(userAccountValidation);
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  const [userPersonalValidation, setUserPersonalValidation] = useState(false);
-  const [userPersonal, setUserPersonal] = useState({
-    Marital_Status: "",
-    Phone_No: "",
-    Gender: "",
-    Religion: "",
-    Date_of_Birth: "",
-    Language: "",
-    Nick_Name: "",
-  });
-
-  const userPersonalOnChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUserPersonal({
-      ...userPersonal,
-      [name]: value,
-    });
-  };
-
-  const userPersonal_values = Object.values(userPersonal);
-
-  useEffect(() => {
-    const validation = userPersonal_values.every((value) => value.length > 3);
-    setUserPersonalValidation(validation);
-  }, [userPersonal_values, userPersonal]);
-
-  // console.log(userAccount);
-  // console.log(userAccountValidation);
-
+  const [userAccount, setUserAccount] = useState({});
+  const [pageOneValidation, setpageOneValidation] = useState(false);
+  const [pageTwoValidation, setPageTwoValidation] = useState(false);
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const [userLocationValidation, setUserLocationValidation] = useState(false);
-  const [userLocation, setUserLocation] = useState({
-    From_Country: "",
-    Current_Country: "",
-    City: "",
-  });
+  const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
+    useFormik({
+      initialValues: {
+        First_Name: "",
+        Last_Name: "",
+        User_Name: "",
+        Father_Name: "",
+        Email_Address: "",
+        Password: "",
+        Confirm_Password: "",
+        Marital_Status: "",
+        Phone_No: "",
+        Gender: "",
+        Religion: "",
+        Date_of_Birth: "",
+        Language: "",
+        Nick_Name: "",
+        From_Country: "",
+        Current_Country: "",
+        City: "",
+        Qualification: "",
+        Field_of_Education: "",
+        School: "",
+        College: "",
+        University: "",
+        Job: "",
+      },
+      validationSchema: Yup.object({
+        First_Name: Yup.string()
+          .min(3, "Minimum 3 Characters")
+          .max(10, "Max 10 Characters")
+          .required("Required"),
+        Last_Name: Yup.string()
+          .min(3, "Minimum 3 Characters")
+          .max(10, "Max 10 Characters")
+          .required("Required"),
+        User_Name: Yup.string()
+          .min(3, "Minimum 3 Characters")
+          .max(25, "Max 25 Characters")
+          .required("Required"),
+        Father_Name: Yup.string()
+          .min(3, "Minimum 3 Characters")
+          .max(15, "Max 15 Characters")
+          .required("Required"),
+        Email_Address: Yup.string()
+          .email("Invalid Email")
+          .required("Required")
+          .min(5, "Minimum 5 Characters"),
+        Password: Yup.string()
+          .max(20, "Max 20 Characters")
+          .min(10, "Minimum 10 Characters")
+          // .oneOf([Yup.ref("Confirm_Password"), null], "Password Not Matches")
+          .required("Required"),
+        Confirm_Password: Yup.string()
+          .max(20, "Max 20 Characters")
+          .min(10, "Minimum 10 Characters")
+          .oneOf([Yup.ref("Password"), null], "Password does not Match")
+          .required("Required"),
+        Religion: Yup.string()
+          .min(3, "Minimum 3 Characters")
+          .max(15, "Max 15 Characters"),
+        Language: Yup.string()
+          .min(3, "Minimum 3 Characters")
+          .max(15, "Max 15 Characters")
+          .required("Required"),
+        Nick_Name: Yup.string()
+          .min(3, "Minimum 3 Characters")
+          .max(15, "Max 15 Characters"),
+        Marital_Status: Yup.string().required("Required"),
+        Gender: Yup.string().required("Required"),
+        Date_of_Birth: Yup.string().required("Required"),
+        Phone_No: Yup.string()
+          .min(12, "Minimum 12 Characters")
+          .max(15, "Max 15 Characters")
+          .required("Required"),
+      }),
 
-  const userLocationOnChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUserLocation({
-      ...userLocation,
-      [name]: value,
+      onSubmit: (values) => {},
     });
-  };
 
-  const userLocation_values = Object.values(userLocation);
+  const {
+    First_Name,
+    Last_Name,
+    User_Name,
+    Father_Name,
+    Email_Address,
+    Password,
+    Confirm_Password,
+
+    Language,
+
+    Marital_Status,
+    Gender,
+    Date_of_Birth,
+    Phone_No,
+  } = values;
 
   useEffect(() => {
-    const validation = userLocation_values.every((value) => value.length > 3);
-    setUserLocationValidation(validation);
-  }, [userLocation_values, userLocation]);
-
-  // console.log(userProfessional);
-  // console.log(userAccountValidation);
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-  const [userProfessionalValidation, setUserProfessionalValidation] =
-    useState(false);
-  const [userProfessional, setUserProfessional] = useState({
-    Qualification: "",
-    Field_of_Education: "",
-    Job_Title: "",
-  });
-
-  const userProfessionalOnChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUserProfessional({
-      ...userProfessional,
-      [name]: value,
-    });
-  };
-
-  const userProfessional_values = Object.values(userProfessional);
-
-  useEffect(() => {
-    const validation = userProfessional_values.every(
-      (value) => value.length > 3
-    );
-    setUserProfessionalValidation(validation);
-  }, [userProfessional_values, userProfessional]);
-
-  // console.log(userProfessional);
-  // console.log(userAccountValidation);
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-  useEffect(() => {
-    setUserData({
-      ...userAccount,
-      ...userPersonal,
-      ...userLocation,
-      Created_at: serverTimestamp(),
-    });
-  }, [userAccount, userPersonal, userLocation]);
-
-  console.log(userData);
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    if (LastPage) {
-      try {
-        const response = await createUserWithEmailAndPassword(
-          auth,
-          userData.Email,
-          userData.Password
-        );
-        // after creating user, we are storing here user form data in users collection with user uid
-        await setDoc(doc(db, "users", response.user.uid), userData);
-        console.log("çreated");
-      } catch (error) {
-        console.log(error.message);
-      }
+    if (
+      First_Name?.length < 3 ||
+      Last_Name?.length < 3 ||
+      User_Name?.length < 3 ||
+      Father_Name?.length < 3 ||
+      (Email_Address?.length < 5 && !Email_Address.includes("@")) ||
+      Password?.length < 10 ||
+      Confirm_Password?.length < 10 ||
+      Password !== Confirm_Password
+    ) {
+      setpageOneValidation(false);
     } else {
-      // if (userData.firstname === "" || userData.firstname.length < 3) {
-      //   setError("error");
-      // } else {
-      //   Next();
-      // }
-      // Page No. {currentPageIndex + 1} / {formPages.length}
-
-      Next();
+      setpageOneValidation(true);
     }
-  };
+
+    if (
+      Language?.length < 3 ||
+      Marital_Status === "" ||
+      Gender === "" ||
+      Date_of_Birth === ""
+    ) {
+      setPageTwoValidation(false);
+    } else {
+      setPageTwoValidation(true);
+    }
+  }, [
+    First_Name?.length,
+    Last_Name?.length,
+    User_Name?.length,
+    Father_Name?.length,
+    Email_Address?.length,
+    Password?.length,
+    Confirm_Password?.length,
+    Language?.length,
+    Email_Address,
+    Password,
+    Confirm_Password,
+    Marital_Status,
+    Gender,
+    Date_of_Birth,
+  ]);
+
+  console.log({ values });
+
+  // const handleFormSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (LastPage) {
+  //     try {
+  //       const response = await createUserWithEmailAndPassword(
+  //         auth,
+  //         userData.Email,
+  //         userData.Password
+  //       );
+  //       // after creating user, we are storing here user form data in users collection with user uid
+  //       await setDoc(doc(db, "users", response.user.uid), userData);
+  //       console.log("çreated");
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   } else {
+  //     // if (userData.firstname === "" || userData.firstname.length < 3) {
+  //     //   setError("error");
+  //     // } else {
+  //     //   Next();
+  //     // }
+  //     // Page No. {currentPageIndex + 1} / {formPages.length}
+
+  //     Next();
+  //   }
+  // };
 
   const {
     formPages,
@@ -191,20 +204,32 @@ const CreateAccount = () => {
     setCurrentPageIndex,
   } = useMultiStepFormHook([
     <UserAccount
-      userAccount={userAccount}
-      userAccountOnChange={userAccountOnChange}
+      values={values}
+      handleBlur={handleBlur}
+      handleChange={handleChange}
+      touched={touched}
+      errors={errors}
     />,
     <UserPersonal
-      userPersonal={userPersonal}
-      userPersonalOnChange={userPersonalOnChange}
+      values={values}
+      handleBlur={handleBlur}
+      handleChange={handleChange}
+      touched={touched}
+      errors={errors}
     />,
     <UserLocation
-      userLocationOnChange={userLocationOnChange}
-      userLocation={userLocation}
+      values={values}
+      handleBlur={handleBlur}
+      handleChange={handleChange}
+      touched={touched}
+      errors={errors}
     />,
     <UserProfessional
-      userProfessional={userProfessional}
-      userProfessionalOnChange={userProfessionalOnChange}
+      values={values}
+      handleBlur={handleBlur}
+      handleChange={handleChange}
+      touched={touched}
+      errors={errors}
     />,
   ]);
 
@@ -212,12 +237,12 @@ const CreateAccount = () => {
     <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-myblue p-8">
       <div className="Wrapper flex w-full h-full  bg-myblue max-w-[1440px]">
         <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white ">
-          <section className=" h-20 flex justify-center items-center mb-3">
-            <h1 className="text-bluelite  text-3xl font-bold text-center pt-2 font-alkatra">
+          <section className=" h-20 flex justify-center items-center mb-2">
+            <h1 className="text-bluelite  text-[2rem] font-bold text-center pt-4 font-alkatra">
               SameBook
             </h1>
           </section>
-          <section className="pl-7   max-h-[28rem] flex justify-center items-end  ">
+          <section className="pl-7   h-[26rem] flex justify-center items-end  ">
             <img src={Avatar} alt="avatar" className="max-h-[25.5rem]" />
           </section>
           <section className="flex justify-center items-center w-full ">
@@ -237,7 +262,7 @@ const CreateAccount = () => {
             </h3>
           </div>
           <form
-            onSubmit={handleFormSubmit}
+            onSubmit={handleSubmit}
             className="w-full h-full text-white px-14 bg-white bg-opacity-5 absolute top-0 pt-10"
           >
             <div className="flex justify-start items-center ">
@@ -273,33 +298,31 @@ const CreateAccount = () => {
                     <p className="ml-2">Previous</p>
                   </button>
                 )}
-
-                <button
-                  type="submit"
-                  className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
-                  disabled={
-                    currentPageIndex === 0 && userAccountValidation
-                      ? false
-                      : currentPageIndex === 1 && userPersonalValidation
-                      ? false
-                      : currentPageIndex === 2 && userLocationValidation
-                      ? false
-                      : true
-                  }
-                >
-                  {LastPage ? (
-                    <p>Submit</p>
-                  ) : (
-                    <>
-                      <p className="mr-2">Next</p>
-                      <img
-                        src={NextArrow}
-                        alt="nextArrow"
-                        className="h-4 w-4 "
-                      />
-                    </>
-                  )}
-                </button>
+                {LastPage ? (
+                  <button
+                    type="submit"
+                    onClick={() => console.log("submit")}
+                    className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
+                  >
+                    <p className="mr-2">Submit</p>
+                    <img src={NextArrow} alt="nextArrow" className="h-4 w-4 " />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => Next()}
+                    className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
+                    disabled={
+                      pageOneValidation && currentPageIndex === 0
+                        ? false
+                        : pageTwoValidation && currentPageIndex === 1
+                        ? false
+                        : true
+                    }
+                  >
+                    <p className="mr-2">Next</p>
+                    <img src={NextArrow} alt="nextArrow" className="h-4 w-4 " />
+                  </button>
+                )}
               </div>
             </div>
           </form>

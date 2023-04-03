@@ -1,121 +1,247 @@
 import React from "react";
 import FormContainer from "./FormContainer";
+import Checked from "../Images/checked.svg";
 
-const UserAccount = ({ userAccount, userAccountOnChange }) => {
+const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
+  const {
+    First_Name: First_Name_error,
+    Last_Name: Last_Name_error,
+    User_Name: User_Name_error,
+    Father_Name: Father_Name_error,
+    Email_Address: Email_Address_error,
+    Password: Password_error,
+    Confirm_Password: Confirm_Password_error,
+  } = errors;
+
+  const {
+    First_Name: First_Name_touched,
+    Last_Name: Last_Name_touched,
+    User_Name: User_Name_touched,
+    Father_Name: Father_Name_touched,
+    Email_Address: Email_Address_touched,
+    Password: Password_touched,
+    Confirm_Password: Confirm_Password_touched,
+  } = touched;
+
   return (
     <div>
       <FormContainer>
         <div className="flex gap-7 mb-5">
-          <div className="w-full">
+          <div className="w-full relative">
             <label htmlFor="First_Name">FirstName</label>
             <input
-              className={`px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600`}
+              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+                First_Name_touched && First_Name_error
+                  ? "border-red-600"
+                  : First_Name_touched && !First_Name_error
+                  ? "border-green-600"
+                  : "border-transparent"
+              }`}
               type="text"
               name="First_Name"
               id="First_Name"
-              value={userAccount.First_Name || ""}
-              onChange={userAccountOnChange}
-              minLength={3}
-              maxLength={15}
-              required
+              value={values.First_Name || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Lionel"
             />
+            {First_Name_touched && First_Name_error ? (
+              <p className="text-sm text-red-500 absolute right-0">
+                {First_Name_error}
+              </p>
+            ) : First_Name_touched && !First_Name_error ? (
+              <img
+                className="absolute w-4 h-4 right-4 top-[2.65rem]"
+                src={Checked}
+                alt="true"
+              />
+            ) : null}
           </div>
-          <div className="w-full">
+          <div className="w-full relative">
             <label htmlFor="Last_Name">LastName</label>
             <input
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
+              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+                Last_Name_touched && Last_Name_error
+                  ? "border-red-600"
+                  : Last_Name_touched && !Last_Name_error
+                  ? "border-green-600"
+                  : "border-transparent"
+              }`}
               type="text"
               name="Last_Name"
               id="Last_Name"
-              value={userAccount.Last_Name || ""}
-              onChange={userAccountOnChange}
-              minLength={3}
-              maxLength={15}
-              required
+              value={values.Last_Name || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Messi"
             />
+            {Last_Name_touched && Last_Name_error ? (
+              <p className="text-sm text-red-500 absolute right-0">
+                {Last_Name_error}
+              </p>
+            ) : Last_Name_touched && !Last_Name_error ? (
+              <img
+                className="absolute w-4 h-4 right-4 top-[2.65rem]"
+                src={Checked}
+                alt="true"
+              />
+            ) : null}
           </div>
         </div>
         <div className="flex gap-7 mb-5">
-          <div className="w-full">
+          <div className="w-full relative">
             <label htmlFor="User_Name">UserName</label>
             <input
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
+              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+                User_Name_touched && User_Name_error
+                  ? "border-red-600"
+                  : User_Name_touched && !User_Name_error
+                  ? "border-green-600"
+                  : "border-transparent"
+              }`}
               type="text"
               name="User_Name"
               id="User_Name"
-              value={userAccount.User_Name || ""}
-              onChange={userAccountOnChange}
-              minLength={3}
-              maxLength={25}
-              required
+              value={values.User_Name || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Lionel Messi"
             />
+            {User_Name_touched && User_Name_error ? (
+              <p className="text-sm text-red-500 absolute right-0">
+                {User_Name_error}
+              </p>
+            ) : User_Name_touched && !User_Name_error ? (
+              <img
+                className="absolute w-4 h-4 right-4 top-[2.65rem]"
+                src={Checked}
+                alt="true"
+              />
+            ) : null}
           </div>
-          <div className="w-full">
+          <div className="w-full relative">
             <label htmlFor="Father_Name">Father's Name</label>
             <input
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
+              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+                Father_Name_touched && Father_Name_error
+                  ? "border-red-600"
+                  : Father_Name_touched && !Father_Name_error
+                  ? "border-green-600"
+                  : "border-transparent"
+              }`}
               type="text"
               name="Father_Name"
               id="Father_Name"
-              value={userAccount.Father_Name || ""}
-              onChange={userAccountOnChange}
-              minLength={3}
-              maxLength={12}
-              required
+              value={values.Father_Name || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Jorge Messi"
             />
+            {Father_Name_touched && Father_Name_error ? (
+              <p className="text-sm text-red-500 absolute right-0">
+                {Father_Name_error}
+              </p>
+            ) : Father_Name_touched && !Father_Name_error ? (
+              <img
+                className="absolute w-4 h-4 right-4 top-[2.65rem]"
+                src={Checked}
+                alt="true"
+              />
+            ) : null}
           </div>
         </div>
         <div className="mb-5">
-          <div className="w-full">
+          <div className="w-full relative">
             <label htmlFor="Email_Address">Email Address</label>
             <input
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
+              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+                Email_Address_touched && Email_Address_error
+                  ? "border-red-600"
+                  : Email_Address_touched && !Email_Address_error
+                  ? "border-green-600"
+                  : "border-transparent"
+              }`}
               type="email"
               name="Email_Address"
               id="Email_Address"
-              value={userAccount.Email_Address || ""}
-              onChange={userAccountOnChange}
-              minLength={5}
-              maxLength={30}
-              required
+              value={values.Email_Address || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="you.name@gmail.com"
             />
+            {Email_Address_touched && Email_Address_error ? (
+              <p className="text-sm text-red-500 absolute right-0">
+                {Email_Address_error}
+              </p>
+            ) : Email_Address_touched && !Email_Address_error ? (
+              <img
+                className="absolute w-4 h-4 right-4 top-[2.65rem]"
+                src={Checked}
+                alt="true"
+              />
+            ) : null}
           </div>
         </div>
         <div className="flex gap-7 mb-5">
-          <div className="w-full">
+          <div className="w-full relative">
             <label htmlFor="Password">Password</label>
             <input
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
+              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+                Password_touched && Password_error
+                  ? "border-red-600"
+                  : Password_touched && !Password_error
+                  ? "border-green-600"
+                  : "border-transparent"
+              }`}
               type="password"
               name="Password"
               id="Password"
-              value={userAccount.Password || ""}
-              onChange={userAccountOnChange}
-              minLength={8}
-              maxLength={25}
-              required
+              value={values.Password || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="ABCxyz*123/"
             />
+            {Password_touched && Password_error ? (
+              <p className="text-sm text-red-500 absolute right-0">
+                {Password_error}
+              </p>
+            ) : Password_touched && !Password_error ? (
+              <img
+                className="absolute w-4 h-4 right-4 top-[2.65rem]"
+                src={Checked}
+                alt="true"
+              />
+            ) : null}
           </div>
-          <div className="w-full">
+          <div className="w-full relative">
             <label htmlFor="Confirm_Password">Confirm Password</label>
             <input
-              className="px-5 h-9 border-[3px] border-transparent text-black w-full mt-2 rounded-md focus:outline-none valid:border-green-600"
+              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+                Confirm_Password_touched && Confirm_Password_error
+                  ? "border-red-600"
+                  : Confirm_Password_touched && !Confirm_Password_error
+                  ? "border-green-600"
+                  : "border-transparent"
+              }`}
               type="password"
               name="Confirm_Password"
               id="Confirm_Password"
-              value={userAccount.Confirm_Password || ""}
-              onChange={userAccountOnChange}
-              minLength={8}
-              maxLength={25}
-              required
+              value={values.Confirm_Password || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="ABCxyz*123/"
             />
+            {Confirm_Password_touched && Confirm_Password_error ? (
+              <p className="text-sm text-red-500 absolute right-0">
+                {Confirm_Password_error}
+              </p>
+            ) : Confirm_Password_touched && !Confirm_Password_error ? (
+              <img
+                className="absolute w-4 h-4 right-4 top-[2.65rem]"
+                src={Checked}
+                alt="true"
+              />
+            ) : null}
           </div>
         </div>
       </FormContainer>
