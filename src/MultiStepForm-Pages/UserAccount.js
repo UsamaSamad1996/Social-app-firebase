@@ -28,7 +28,9 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
       <FormContainer>
         <div className="flex gap-7 mb-5">
           <div className="w-full relative">
-            <label htmlFor="First_Name">FirstName</label>
+            <label htmlFor="First_Name" className="text-sm">
+              FirstName
+            </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 First_Name_touched && First_Name_error
@@ -58,7 +60,9 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
             ) : null}
           </div>
           <div className="w-full relative">
-            <label htmlFor="Last_Name">LastName</label>
+            <label htmlFor="Last_Name" className="text-sm">
+              LastName
+            </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Last_Name_touched && Last_Name_error
@@ -90,7 +94,9 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
         </div>
         <div className="flex gap-7 mb-5">
           <div className="w-full relative">
-            <label htmlFor="User_Name">UserName</label>
+            <label htmlFor="User_Name" className="text-sm">
+              UserName
+            </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 User_Name_touched && User_Name_error
@@ -120,7 +126,9 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
             ) : null}
           </div>
           <div className="w-full relative">
-            <label htmlFor="Father_Name">Father's Name</label>
+            <label htmlFor="Father_Name" className="text-sm">
+              Father's Name
+            </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Father_Name_touched && Father_Name_error
@@ -152,7 +160,9 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
         </div>
         <div className="mb-5">
           <div className="w-full relative">
-            <label htmlFor="Email_Address">Email Address</label>
+            <label htmlFor="Email_Address" className="text-sm">
+              Email Address
+            </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Email_Address_touched && Email_Address_error
@@ -184,7 +194,9 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
         </div>
         <div className="flex gap-7 mb-5">
           <div className="w-full relative">
-            <label htmlFor="Password">Password</label>
+            <label htmlFor="Password" className="text-sm">
+              Password
+            </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Password_touched && Password_error
@@ -214,12 +226,14 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
             ) : null}
           </div>
           <div className="w-full relative">
-            <label htmlFor="Confirm_Password">Confirm Password</label>
+            <label htmlFor="Confirm_Password" className="text-sm">
+              Confirm Password
+            </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
-                Confirm_Password_touched && Confirm_Password_error
+                Password_touched && Confirm_Password_error
                   ? "border-red-600"
-                  : Confirm_Password_touched && !Confirm_Password_error
+                  : Password_touched && !Confirm_Password_error
                   ? "border-green-600"
                   : "border-transparent"
               }`}
@@ -231,11 +245,11 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               onBlur={handleBlur}
               placeholder="ABCxyz*123/"
             />
-            {Confirm_Password_touched && Confirm_Password_error ? (
+            {Password_touched && Confirm_Password_error ? (
               <p className="text-sm text-red-500 absolute right-0">
                 {Confirm_Password_error}
               </p>
-            ) : Confirm_Password_touched && !Confirm_Password_error ? (
+            ) : Password_touched && !Confirm_Password_error ? (
               <img
                 className="absolute w-4 h-4 right-4 top-[2.65rem]"
                 src={Checked}

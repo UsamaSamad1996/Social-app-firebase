@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import FormContainer from "./FormContainer";
 import Checked from "../Images/checked.svg";
-
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const UserPersonal = ({
   values,
@@ -33,41 +34,6 @@ const UserPersonal = ({
     Date_of_Birth: Date_of_Birth_touched,
   } = touched;
 
-  const [phoneNo, setPhoneNo] = useState("");
-
-  console.log(phoneNo, { Phone_No_error });
-
-  useEffect(() => {
-    // if (phoneNo?.length > 12) {
-    //   setPhoneNumberIsValid(true);
-    // } else {
-    //   setPhoneNumberIsValid(false);
-    // }
-    // if (values?.Gender?.length > 3) {
-    //   setGenderIsValid(true);
-    // } else {
-    //   setGenderIsValid(false);
-    // }
-    values.Phone_No = String(phoneNo);
-  }, [phoneNo, values]);
-
-  // console.log(values);
-
-  // const empty = [];
-  // const arr = getCountries();
-
-  // arr.forEach((code) => {
-  //   const country = countryNames[code];
-  //   const codes = getCountryCallingCode(code);
-  //   empty.push({ country, codes });
-  // });
-
-  // // Outputs: United States
-  // console.log("usama", empty);
-
-  // // Outputs: +1
-  // console.log("+" + getCountryCallingCode("PK"));
-
   const marital_Status = [
     "Single",
     "Married",
@@ -78,6 +44,15 @@ const UserPersonal = ({
     "Widowed",
   ];
 
+  const [phoneNo, setPhoneNo] = useState("");
+  const [startDate, setStartDate] = useState("");
+  console.log({ value: values?.Date_of_Birth });
+
+  useEffect(() => {
+    values.Phone_No = String(phoneNo);
+    values.Date_of_Birth = String(startDate);
+  }, [phoneNo, startDate, values]);
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
@@ -85,7 +60,7 @@ const UserPersonal = ({
       <FormContainer>
         <div className="flex gap-7 mb-5">
           <div className="w-full relative">
-            <label htmlFor="Religion">
+            <label htmlFor="Religion" className="text-sm">
               Religion <span className="text-[12px] ml-1">(Optional)</span>
             </label>
             <input
@@ -117,7 +92,9 @@ const UserPersonal = ({
             ) : null}
           </div>
           <div className="w-full relative">
-            <label htmlFor="Language">Language</label>
+            <label htmlFor="Language" className="text-sm">
+              Language
+            </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Language_touched && Language_error
@@ -150,8 +127,8 @@ const UserPersonal = ({
         </div>
         <div className="flex gap-7 mb-5">
           <div className="w-full relative">
-            <label htmlFor="Nick_Name">
-              Nick Name <span className="text-[12px] ml-1">(Optional)</span>
+            <label htmlFor="Nick_Name" className="text-sm">
+              Nickname <span className="text-[12px] ml-1">(Optional)</span>
             </label>
             <input
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
@@ -167,7 +144,7 @@ const UserPersonal = ({
               value={values.Nick_Name || ""}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="Add a Nickname, if any? Optional"
+              placeholder="Add a Nickname, if any?"
             />
             {Nick_Name_touched && Nick_Name_error ? (
               <p className="text-sm text-red-500 absolute right-0">
@@ -182,7 +159,9 @@ const UserPersonal = ({
             ) : null}
           </div>
           <div className="w-full relative">
-            <label htmlFor="Marital_Status">Marital Status</label>
+            <label htmlFor="Marital_Status" className="text-sm">
+              Marital Status
+            </label>
             <select
               className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] appearance-none ${
                 Marital_Status_touched && Marital_Status_error
@@ -219,15 +198,19 @@ const UserPersonal = ({
 
         <div className="flex gap-7 mb-5">
           <div name="Phone_No" className="w-full relative">
-            <label htmlFor="Phone_No">Phone No</label>
+            <label htmlFor="Phone_No" className="text-sm">
+              Phone No
+            </label>
             <PhoneInput
+              id="Phone_No"
+              name="Phone_No"
               international
               countryCallingCodeEditable={false}
               onBlur={handleBlur}
               defaultCountry="PK"
               value={phoneNo}
               onChange={(e) => setPhoneNo(e)}
-              className={`px-5 h-9 border-[3px] text-black w-full mt-2 rounded-md focus:outline-none bg-white ${
+              className={`px-5 h-9 border-[3px] text-black w-full mt-2 rounded-md bg-white appearance-none ${
                 Phone_No_touched && Phone_No_error
                   ? "border-red-600"
                   : Phone_No_touched && !Phone_No_error
@@ -249,27 +232,34 @@ const UserPersonal = ({
           </div>
 
           <div className="w-full relative">
-            <label htmlFor="Date_of_Birth">Date of Birth</label>
-            <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] appearance-none ${
-                Date_of_Birth_touched && Date_of_Birth_error
+            <label htmlFor="Date_of_Birth" className="text-sm">
+              Date of Birth
+            </label>
+            <DatePicker
+              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+                Phone_No_touched && Date_of_Birth_error
                   ? "border-red-600"
-                  : Date_of_Birth_touched && !Date_of_Birth_error
+                  : Phone_No_touched && !Date_of_Birth_error
                   ? "border-green-600"
                   : "border-transparent"
               }`}
-              type="date"
+              selected={startDate}
+              onChange={(e) => setStartDate(e)}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
               name="Date_of_Birth"
               id="Date_of_Birth"
-              value={values.Date_of_Birth || ""}
-              onChange={handleChange}
               onBlur={handleBlur}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="Date_of_Birth DD/MM/YYYY"
             />
-            {Date_of_Birth_touched && Date_of_Birth_error ? (
+            {Phone_No_touched && Date_of_Birth_error ? (
               <p className="text-sm text-red-500 absolute right-0">
                 {Date_of_Birth_error}
               </p>
-            ) : Date_of_Birth_touched && !Date_of_Birth_error ? (
+            ) : Phone_No_touched && !Date_of_Birth_error ? (
               <div className="w-6 text-right flex justify-end  bg-white absolute top-[2.65rem] right-4">
                 <img className=" w-4 h-4  bg-white " src={Checked} alt="true" />
               </div>
@@ -278,13 +268,15 @@ const UserPersonal = ({
         </div>
 
         <div className=" mb-5 relative">
-          <label htmlFor="gender">Gender</label>
+          <label htmlFor="gender" className="text-sm">
+            Gender
+          </label>
           <div
             id="gender"
-            className={`w-full mt-2 bg-white text-myblue border-[3px]  rounded-md h-9 flex items-center justify-evenly nce-none ${
-              Gender_touched && Gender_error
+            className={`w-full mt-2 bg-white text-myblue border-[3px]  rounded-md h-9 flex items-center justify-evenly  ${
+              Phone_No_touched && Gender_error
                 ? "border-red-600"
-                : Gender_touched && !Gender_error
+                : Phone_No_touched && !Gender_error
                 ? "border-green-600"
                 : "border-transparent"
             }
@@ -325,11 +317,11 @@ const UserPersonal = ({
               </label>
             </div>
           </div>
-          {Gender_touched && Gender_error ? (
+          {Phone_No_touched && Gender_error ? (
             <p className="text-sm text-red-500 absolute right-0">
               {Gender_error}
             </p>
-          ) : Gender_touched && !Gender_error ? (
+          ) : Phone_No_touched && !Gender_error ? (
             <img
               className="absolute w-4 h-4 right-4 top-[2.65rem]"
               src={Checked}

@@ -1,7 +1,7 @@
 import React from "react";
 
 const FormContainer = ({ children }) => {
-  return <div className=" h-[340px] mb-5 ">{children}</div>;
+  return <div className="  h-full w-full  ">{children}</div>;
 };
 
 export default FormContainer;

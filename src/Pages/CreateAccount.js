@@ -14,18 +14,24 @@ import { useNavigate } from "react-router-dom";
 import UserLocation from "../MultiStepForm-Pages/UserLocation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import SubmitForm from "../MultiStepForm-Pages/SubmitForm";
+import SubmitIcon from "../Images/submit.svg";
+import CircularLoader from "../Assets/CircularLoader";
 
 const CreateAccount = () => {
-  // const [userData, setUserData] = useState({});
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const [userAccount, setUserAccount] = useState({});
   const [pageOneValidation, setpageOneValidation] = useState(false);
   const [pageTwoValidation, setPageTwoValidation] = useState(false);
+  const [pageThreeValidation, setPageThreeValidation] = useState(false);
+  const [pageFourValidation, setPageFourValidation] = useState(false);
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
     useFormik({
       initialValues: {
+        Created_At: serverTimestamp(),
         First_Name: "",
         Last_Name: "",
         User_Name: "",
@@ -33,15 +39,15 @@ const CreateAccount = () => {
         Email_Address: "",
         Password: "",
         Confirm_Password: "",
-        Marital_Status: "",
-        Phone_No: "",
-        Gender: "",
         Religion: "",
-        Date_of_Birth: "",
         Language: "",
         Nick_Name: "",
-        From_Country: "",
+        Marital_Status: "",
+        Phone_No: "",
+        Date_of_Birth: "",
+        Gender: "",
         Current_Country: "",
+        From_Country: "",
         City: "",
         Qualification: "",
         Field_of_Education: "",
@@ -49,6 +55,8 @@ const CreateAccount = () => {
         College: "",
         University: "",
         Job: "",
+        Company: "",
+        Working_Details: "",
       },
       validationSchema: Yup.object({
         First_Name: Yup.string()
@@ -73,12 +81,15 @@ const CreateAccount = () => {
           .min(5, "Minimum 5 Characters"),
         Password: Yup.string()
           .max(20, "Max 20 Characters")
-          .min(10, "Minimum 10 Characters")
-          // .oneOf([Yup.ref("Confirm_Password"), null], "Password Not Matches")
+          .min(8, "Minimum 8 Characters")
+          .matches(/[0-9]/, "Requires a Number")
+          .matches(/[a-z]/, "Requires a lowercase letter")
+          .matches(/[A-Z]/, "Requires an uppercase letter")
+          .matches(/[^\w]/, "Requires a symbol")
           .required("Required"),
         Confirm_Password: Yup.string()
           .max(20, "Max 20 Characters")
-          .min(10, "Minimum 10 Characters")
+          .min(8, "Minimum 8 Characters")
           .oneOf([Yup.ref("Password"), null], "Password does not Match")
           .required("Required"),
         Religion: Yup.string()
@@ -98,9 +109,47 @@ const CreateAccount = () => {
           .min(12, "Minimum 12 Characters")
           .max(15, "Max 15 Characters")
           .required("Required"),
+        Current_Country: Yup.string().required("Required"),
+        From_Country: Yup.string().required("Required"),
+        City: Yup.string()
+          .min(4, "Minimum 4 Characters")
+          .max(20, "Max 20 Characters")
+          .required("Required"),
+        Qualification: Yup.string().required("Required"),
+        Field_of_Education: Yup.string().required("Required"),
+        School: Yup.string().min(5, "Minimum 5 Characters"),
+        College: Yup.string().min(5, "Minimum 5 Characters"),
+        University: Yup.string()
+          .min(8, "Minimum 8 Characters")
+          .max(35, "Max 35 Characters")
+          .required("Required"),
+        Job: Yup.string()
+          .min(8, "Minimum 8 Characters")
+          .max(35, "Max 35 Characters")
+          .required("Required"),
+        Company: Yup.string()
+          .min(6, "Minimum 6 Characters")
+          .max(35, "Max 35 Characters"),
+        Working_Details: Yup.string()
+          .min(6, "Minimum 6 Characters")
+          .max(40, "Max 40 Characters"),
       }),
-
-      onSubmit: (values) => {},
+      onSubmit: async (values) => {
+        setIsLoading(true);
+        try {
+          const response = await createUserWithEmailAndPassword(
+            auth,
+            values.Email_Address,
+            values.Password
+          );
+          // after creating user, we are storing here user form data in users collection with user uid
+          await setDoc(doc(db, "users", response.user.uid), values);
+          alert("form submitted successfully");
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error.message);
+        }
+      },
     });
 
   const {
@@ -111,13 +160,20 @@ const CreateAccount = () => {
     Email_Address,
     Password,
     Confirm_Password,
-
     Language,
-
     Marital_Status,
     Gender,
     Date_of_Birth,
     Phone_No,
+    Current_Country,
+    From_Country,
+    City,
+    Qualification,
+    Field_of_Education,
+    University,
+    Job,
+    Company,
+    Working_Details,
   } = values;
 
   useEffect(() => {
@@ -140,11 +196,29 @@ const CreateAccount = () => {
       Language?.length < 3 ||
       Marital_Status === "" ||
       Gender === "" ||
-      Date_of_Birth === ""
+      Date_of_Birth === "" ||
+      Phone_No?.length < 13
     ) {
       setPageTwoValidation(false);
     } else {
       setPageTwoValidation(true);
+    }
+
+    if (City?.length < 4 || Current_Country === "" || From_Country === "") {
+      setPageThreeValidation(false);
+    } else {
+      setPageThreeValidation(true);
+    }
+
+    if (
+      Qualification === "" ||
+      Field_of_Education === "" ||
+      University?.length < 8 ||
+      Job?.length < 8
+    ) {
+      setPageFourValidation(false);
+    } else {
+      setPageFourValidation(true);
     }
   }, [
     First_Name?.length,
@@ -161,37 +235,20 @@ const CreateAccount = () => {
     Marital_Status,
     Gender,
     Date_of_Birth,
+    From_Country,
+    Current_Country,
+    Phone_No?.length,
+    Phone_No,
+    City?.length,
+    Qualification,
+    Field_of_Education,
+    University?.length,
+    Job?.length,
+    Company,
+    Working_Details,
   ]);
 
-  console.log({ values });
-
-  // const handleFormSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (LastPage) {
-  //     try {
-  //       const response = await createUserWithEmailAndPassword(
-  //         auth,
-  //         userData.Email,
-  //         userData.Password
-  //       );
-  //       // after creating user, we are storing here user form data in users collection with user uid
-  //       await setDoc(doc(db, "users", response.user.uid), userData);
-  //       console.log("çreated");
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   } else {
-  //     // if (userData.firstname === "" || userData.firstname.length < 3) {
-  //     //   setError("error");
-  //     // } else {
-  //     //   Next();
-  //     // }
-  //     // Page No. {currentPageIndex + 1} / {formPages.length}
-
-  //     Next();
-  //   }
-  // };
+  // console.log({ values });
 
   const {
     formPages,
@@ -231,21 +288,22 @@ const CreateAccount = () => {
       touched={touched}
       errors={errors}
     />,
+    <SubmitForm values={values} />,
   ]);
 
   return (
     <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-myblue p-8">
       <div className="Wrapper flex w-full h-full  bg-myblue max-w-[1440px]">
-        <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white ">
-          <section className=" h-20 flex justify-center items-center mb-2">
-            <h1 className="text-bluelite  text-[2rem] font-bold text-center pt-4 font-alkatra">
+        <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white  flex flex-col">
+          <section className=" h-[18%] flex justify-center items-center  ">
+            <h1 className="text-bluelite  text-[2rem] font-bold text-center  font-alkatra  w-full">
               SameBook
             </h1>
           </section>
-          <section className="pl-7   h-[26rem] flex justify-center items-end  ">
-            <img src={Avatar} alt="avatar" className="max-h-[25.5rem]" />
+          <section className="pl-7  flex-auto flex justify-center items-end w-full">
+            <img src={Avatar} alt="avatar" className="max-h-[26rem] " />
           </section>
-          <section className="flex justify-center items-center w-full ">
+          <section className="flex justify-center items-start w-full h-[10%]">
             <button
               onClick={() => navigate("/login-page")}
               className="w-4/5 py-2 bg-myblue rounded-sm text-white text-center hover:scale-110 transition-all font-semibold border-none outline-none"
@@ -263,15 +321,16 @@ const CreateAccount = () => {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="w-full h-full text-white px-14 bg-white bg-opacity-5 absolute top-0 pt-10"
+            className="w-full h-full text-white px-14 bg-white bg-opacity-5 absolute top-0  flex flex-col items-center"
           >
-            <div className="flex justify-start items-center ">
-              <h1 className="text-white text-3xl font-bold  pb-10 tracking-wide">
+            <div className="flex justify-start items-center  w-full h-[20%]">
+              <h1 className="text-white text-3xl font-bold  tracking-wide ">
                 Create Account
               </h1>
             </div>
-            {currentPage}
-            <div className="flex justify-between py-3 px-1 items-center ">
+            <div className="  w-full  h-[62%] xl:px-8">{currentPage}</div>
+
+            <div className="flex justify-between py-3 px-1 items-center   w-full h-[18%] ">
               <div className="pages ">
                 <h2 className="text-lg font-alkatra ">
                   {currentPageIndex === 0
@@ -279,7 +338,11 @@ const CreateAccount = () => {
                     : currentPageIndex === 1
                     ? "Enter your basic & personal information"
                     : currentPageIndex === 2
-                    ? "Places you lived"
+                    ? "Add Places you lived"
+                    : currentPageIndex === 3
+                    ? "Add Your Qualification & Working Detail"
+                    : currentPageIndex === 4
+                    ? "Please check & then submit the Form!"
                     : null}
                 </h2>
               </div>
@@ -303,9 +366,18 @@ const CreateAccount = () => {
                     type="submit"
                     onClick={() => console.log("submit")}
                     className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
+                    disabled={isLoading ? true : false}
                   >
                     <p className="mr-2">Submit</p>
-                    <img src={NextArrow} alt="nextArrow" className="h-4 w-4 " />
+                    {isLoading ? (
+                      <CircularLoader />
+                    ) : (
+                      <img
+                        src={SubmitIcon}
+                        alt="nextArrow"
+                        className="h-4 w-4 "
+                      />
+                    )}
                   </button>
                 ) : (
                   <button
@@ -315,6 +387,10 @@ const CreateAccount = () => {
                       pageOneValidation && currentPageIndex === 0
                         ? false
                         : pageTwoValidation && currentPageIndex === 1
+                        ? false
+                        : pageThreeValidation && currentPageIndex === 2
+                        ? false
+                        : pageFourValidation && currentPageIndex === 3
                         ? false
                         : true
                     }
