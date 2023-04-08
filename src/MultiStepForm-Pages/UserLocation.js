@@ -21,7 +21,6 @@ const UserLocation = ({
   const {
     Current_Country: Current_Country_touched,
     From_Country: From_Country_touched,
-    City: City_touched,
   } = touched;
 
   const options = useMemo(() => countryList().getData(), []);
@@ -33,7 +32,7 @@ const UserLocation = ({
           <div className="w-full relative">
             <label htmlFor="Current_Country">Country</label>
             <select
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] appearance-none ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] appearance-none ${
                 Current_Country_touched && Current_Country_error
                   ? "border-red-600"
                   : Current_Country_touched && !Current_Country_error
@@ -45,7 +44,7 @@ const UserLocation = ({
               onChange={handleChange}
               onBlur={handleBlur}
             >
-              <option value="">Where are you living?</option>
+              <option value="">Country, Where are you living?</option>
               {options?.map((country, i) => (
                 <option
                   key={i}
@@ -57,7 +56,7 @@ const UserLocation = ({
               ))}
             </select>
             {Current_Country_touched && Current_Country_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Current_Country_error}
               </p>
             ) : Current_Country_touched && !Current_Country_error ? (
@@ -71,7 +70,7 @@ const UserLocation = ({
           <div className="w-full relative">
             <label htmlFor="FromCountry">Hometown</label>
             <select
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] appearance-none ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] appearance-none ${
                 From_Country_touched && From_Country_error
                   ? "border-red-600"
                   : From_Country_touched && !From_Country_error
@@ -95,7 +94,7 @@ const UserLocation = ({
               ))}
             </select>
             {From_Country_touched && From_Country_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {From_Country_error}
               </p>
             ) : From_Country_touched && !From_Country_error ? (
@@ -111,7 +110,7 @@ const UserLocation = ({
           <div className="w-full relative">
             <label htmlFor="City">City</label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 From_Country_touched && City_error
                   ? "border-red-600"
                   : From_Country_touched && !City_error
@@ -124,10 +123,10 @@ const UserLocation = ({
               value={values.City || ""}
               onChange={handleChange}
               onBlur={handleBlur}
-              placeholder="What is your basic City?"
+              placeholder="In which city are you living currently?"
             />
             {From_Country_touched && City_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {City_error}
               </p>
             ) : From_Country_touched && !City_error ? (

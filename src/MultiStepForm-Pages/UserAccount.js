@@ -20,7 +20,6 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
     Father_Name: Father_Name_touched,
     Email_Address: Email_Address_touched,
     Password: Password_touched,
-    Confirm_Password: Confirm_Password_touched,
   } = touched;
 
   return (
@@ -32,7 +31,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               FirstName
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 First_Name_touched && First_Name_error
                   ? "border-red-600"
                   : First_Name_touched && !First_Name_error
@@ -48,7 +47,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="Lionel"
             />
             {First_Name_touched && First_Name_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {First_Name_error}
               </p>
             ) : First_Name_touched && !First_Name_error ? (
@@ -64,7 +63,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               LastName
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Last_Name_touched && Last_Name_error
                   ? "border-red-600"
                   : Last_Name_touched && !Last_Name_error
@@ -80,7 +79,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="Messi"
             />
             {Last_Name_touched && Last_Name_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Last_Name_error}
               </p>
             ) : Last_Name_touched && !Last_Name_error ? (
@@ -98,7 +97,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               UserName
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 User_Name_touched && User_Name_error
                   ? "border-red-600"
                   : User_Name_touched && !User_Name_error
@@ -114,7 +113,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="Lionel Messi"
             />
             {User_Name_touched && User_Name_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {User_Name_error}
               </p>
             ) : User_Name_touched && !User_Name_error ? (
@@ -130,7 +129,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               Father's Name
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Father_Name_touched && Father_Name_error
                   ? "border-red-600"
                   : Father_Name_touched && !Father_Name_error
@@ -146,7 +145,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="Jorge Messi"
             />
             {Father_Name_touched && Father_Name_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Father_Name_error}
               </p>
             ) : Father_Name_touched && !Father_Name_error ? (
@@ -164,7 +163,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               Email Address
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Email_Address_touched && Email_Address_error
                   ? "border-red-600"
                   : Email_Address_touched && !Email_Address_error
@@ -180,7 +179,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="you.name@gmail.com"
             />
             {Email_Address_touched && Email_Address_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Email_Address_error}
               </p>
             ) : Email_Address_touched && !Email_Address_error ? (
@@ -198,7 +197,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               Password
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Password_touched && Password_error
                   ? "border-red-600"
                   : Password_touched && !Password_error
@@ -214,7 +213,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="ABCxyz*123/"
             />
             {Password_touched && Password_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Password_error}
               </p>
             ) : Password_touched && !Password_error ? (
@@ -230,7 +229,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               Confirm Password
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Password_touched && Confirm_Password_error
                   ? "border-red-600"
                   : Password_touched && !Confirm_Password_error
@@ -246,7 +245,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="ABCxyz*123/"
             />
             {Password_touched && Confirm_Password_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Confirm_Password_error}
               </p>
             ) : Password_touched && !Confirm_Password_error ? (

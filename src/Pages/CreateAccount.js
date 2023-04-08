@@ -1,4 +1,4 @@
-import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -17,15 +17,46 @@ import * as Yup from "yup";
 import SubmitForm from "../MultiStepForm-Pages/SubmitForm";
 import SubmitIcon from "../Images/submit.svg";
 import CircularLoader from "../Assets/CircularLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateAccount = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [pageOneValidation, setpageOneValidation] = useState(false);
   const [pageTwoValidation, setPageTwoValidation] = useState(false);
   const [pageThreeValidation, setPageThreeValidation] = useState(false);
   const [pageFourValidation, setPageFourValidation] = useState(false);
+  const [formIsValid, setFormIsValid] = useState(false);
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const notifyError = (msg) =>
+    toast.error(msg, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  const notifySuccess = (msg) => {
+    toast.success(msg, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
@@ -62,22 +93,22 @@ const CreateAccount = () => {
         First_Name: Yup.string()
           .min(3, "Minimum 3 Characters")
           .max(10, "Max 10 Characters")
-          .required("Required"),
+          .required("Required*"),
         Last_Name: Yup.string()
           .min(3, "Minimum 3 Characters")
           .max(10, "Max 10 Characters")
-          .required("Required"),
+          .required("Required*"),
         User_Name: Yup.string()
           .min(3, "Minimum 3 Characters")
           .max(25, "Max 25 Characters")
-          .required("Required"),
+          .required("Required*"),
         Father_Name: Yup.string()
           .min(3, "Minimum 3 Characters")
           .max(15, "Max 15 Characters")
-          .required("Required"),
+          .required("Required*"),
         Email_Address: Yup.string()
           .email("Invalid Email")
-          .required("Required")
+          .required("Required*")
           .min(5, "Minimum 5 Characters"),
         Password: Yup.string()
           .max(20, "Max 20 Characters")
@@ -86,47 +117,47 @@ const CreateAccount = () => {
           .matches(/[a-z]/, "Requires a lowercase letter")
           .matches(/[A-Z]/, "Requires an uppercase letter")
           .matches(/[^\w]/, "Requires a symbol")
-          .required("Required"),
+          .required("Required*"),
         Confirm_Password: Yup.string()
           .max(20, "Max 20 Characters")
           .min(8, "Minimum 8 Characters")
           .oneOf([Yup.ref("Password"), null], "Password does not Match")
-          .required("Required"),
+          .required("Required*"),
         Religion: Yup.string()
           .min(3, "Minimum 3 Characters")
           .max(15, "Max 15 Characters"),
         Language: Yup.string()
           .min(3, "Minimum 3 Characters")
           .max(15, "Max 15 Characters")
-          .required("Required"),
+          .required("Required*"),
         Nick_Name: Yup.string()
           .min(3, "Minimum 3 Characters")
           .max(15, "Max 15 Characters"),
-        Marital_Status: Yup.string().required("Required"),
-        Gender: Yup.string().required("Required"),
-        Date_of_Birth: Yup.string().required("Required"),
+        Marital_Status: Yup.string().required("Required*"),
+        Gender: Yup.string().required("Required*"),
+        Date_of_Birth: Yup.string().required("Required*"),
         Phone_No: Yup.string()
-          .min(12, "Minimum 12 Characters")
-          .max(15, "Max 15 Characters")
-          .required("Required"),
-        Current_Country: Yup.string().required("Required"),
-        From_Country: Yup.string().required("Required"),
+          .min(13, "Minimum 13 Characters")
+          .max(20, "Max 20 Characters")
+          .required("Required*"),
+        Current_Country: Yup.string().required("Required*"),
+        From_Country: Yup.string().required("Required*"),
         City: Yup.string()
           .min(4, "Minimum 4 Characters")
           .max(20, "Max 20 Characters")
-          .required("Required"),
-        Qualification: Yup.string().required("Required"),
-        Field_of_Education: Yup.string().required("Required"),
+          .required("Required*"),
+        Qualification: Yup.string().required("Required*"),
+        Field_of_Education: Yup.string().required("Required*"),
         School: Yup.string().min(5, "Minimum 5 Characters"),
         College: Yup.string().min(5, "Minimum 5 Characters"),
         University: Yup.string()
           .min(8, "Minimum 8 Characters")
           .max(35, "Max 35 Characters")
-          .required("Required"),
+          .required("Required*"),
         Job: Yup.string()
           .min(8, "Minimum 8 Characters")
           .max(35, "Max 35 Characters")
-          .required("Required"),
+          .required("Required*"),
         Company: Yup.string()
           .min(6, "Minimum 6 Characters")
           .max(35, "Max 35 Characters"),
@@ -142,12 +173,24 @@ const CreateAccount = () => {
             values.Email_Address,
             values.Password
           );
+
           // after creating user, we are storing here user form data in users collection with user uid
-          await setDoc(doc(db, "users", response.user.uid), values);
-          alert("form submitted successfully");
-          setIsLoading(false);
+          if (response) {
+            await setDoc(doc(db, "users", response.user.uid), values);
+          }
+          notifySuccess("Account Registered Successfully");
+          setTimeout(() => {
+            setIsLoading(false);
+            navigate("/login-page");
+          }, 5000);
         } catch (error) {
-          console.log(error.message);
+          notifyError(error.message);
+
+          setTimeout(() => {
+            setIsLoading(false);
+            window.location.reload(false);
+            setCurrentPageIndex(0);
+          }, 5000);
         }
       },
     });
@@ -248,8 +291,6 @@ const CreateAccount = () => {
     Working_Details,
   ]);
 
-  // console.log({ values });
-
   const {
     formPages,
     currentPage,
@@ -288,7 +329,11 @@ const CreateAccount = () => {
       touched={touched}
       errors={errors}
     />,
-    <SubmitForm values={values} />,
+    <SubmitForm
+      values={values}
+      setFormIsValid={setFormIsValid}
+      formIsValid={formIsValid}
+    />,
   ]);
 
   return (
@@ -347,11 +392,11 @@ const CreateAccount = () => {
                 </h2>
               </div>
               <div className="flex items-center">
-                {!FirstPage && (
+                {!FirstPage && !LastPage ? (
                   <button
                     type="button"
                     onClick={Previous}
-                    className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm  hover:scale-105 transition-all flex justify-center items-center "
+                    className="w-36 py-2 text-sm  bg-myblue text-white  tracking-wider rounded-sm  hover:scale-105 transition-all flex justify-center items-center "
                   >
                     <img
                       src={PreviousArrow}
@@ -360,15 +405,37 @@ const CreateAccount = () => {
                     />
                     <p className="ml-2">Previous</p>
                   </button>
-                )}
+                ) : LastPage ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      window.location.reload(false);
+                      setCurrentPageIndex(0);
+                    }}
+                    className="w-36 py-2 text-sm  bg-myblue text-white  tracking-wider rounded-sm  hover:scale-105 transition-all flex justify-center items-center "
+                  >
+                    {/* <img
+                      src={PreviousArrow}
+                      alt="nextArrow"
+                      className="h-4 w-4 "
+                    /> */}
+                    <p className="ml-2">Reset</p>
+                  </button>
+                ) : null}
                 {LastPage ? (
                   <button
+                    onClick={() => console.log("yes")}
                     type="submit"
-                    onClick={() => console.log("submit")}
-                    className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
-                    disabled={isLoading ? true : false}
+                    className="w-36 py-2 text-sm  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
+                    disabled={
+                      formIsValid && !isLoading
+                        ? false
+                        : formIsValid && isLoading
+                        ? true
+                        : true
+                    }
                   >
-                    <p className="mr-2">Submit</p>
+                    <p className="mr-2">Sign Up</p>
                     {isLoading ? (
                       <CircularLoader />
                     ) : (
@@ -381,8 +448,9 @@ const CreateAccount = () => {
                   </button>
                 ) : (
                   <button
-                    onClick={() => Next()}
-                    className="w-36 py-2 text-base  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
+                    type="button"
+                    onClick={Next}
+                    className="w-36 py-2 text-sm  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
                     disabled={
                       pageOneValidation && currentPageIndex === 0
                         ? false
@@ -402,6 +470,18 @@ const CreateAccount = () => {
               </div>
             </div>
           </form>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </div>
       </div>
     </div>

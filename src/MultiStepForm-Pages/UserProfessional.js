@@ -27,7 +27,6 @@ const UserProfessional = ({
     School: School_touched,
     College: College_touched,
     University: University_touched,
-    Job: Job_touched,
     Company: Company_touched,
     Working_Details: Working_Details_touched,
   } = touched;
@@ -79,7 +78,7 @@ const UserProfessional = ({
               ))}
             </select>
             {Qualification_touched && Qualification_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Qualification_error}
               </p>
             ) : Qualification_touched && !Qualification_error ? (
@@ -115,7 +114,7 @@ const UserProfessional = ({
               ))}
             </select>
             {Field_of_Education_touched && Field_of_Education_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Field_of_Education_error}
               </p>
             ) : Field_of_Education_touched && !Field_of_Education_error ? (
@@ -149,7 +148,7 @@ const UserProfessional = ({
               placeholder="+ Add School Name"
             />
             {School_touched && School_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {School_error}
               </p>
             ) : School_touched && !School_error ? (
@@ -181,7 +180,7 @@ const UserProfessional = ({
               placeholder="+ Add College Name"
             />
             {College_touched && College_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {College_error}
               </p>
             ) : College_touched && !College_error ? (
@@ -215,7 +214,7 @@ const UserProfessional = ({
               placeholder="+ Add University Name"
             />
             {University_touched && University_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {University_error}
               </p>
             ) : University_touched && !University_error ? (
@@ -232,9 +231,9 @@ const UserProfessional = ({
             </label>
             <input
               className={`text-sm px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
-                Job_touched && Job_error
+                University_touched && Job_error
                   ? "border-red-600"
-                  : Job_touched && !Job_error
+                  : University_touched && !Job_error
                   ? "border-green-600"
                   : "border-transparent"
               }`}
@@ -246,11 +245,11 @@ const UserProfessional = ({
               onBlur={handleBlur}
               placeholder="What work you do? Add Job or Business"
             />
-            {Job_touched && Job_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+            {University_touched && Job_error ? (
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Job_error}
               </p>
-            ) : Job_touched && !Job_error ? (
+            ) : University_touched && !Job_error ? (
               <img
                 className="absolute w-4 h-4 right-4 top-[2.65rem]"
                 src={Checked}
@@ -282,7 +281,7 @@ const UserProfessional = ({
               placeholder="Add company or organization name you work in ?"
             />
             {Company_touched && Company_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Company_error}
               </p>
             ) : Company_touched && !Company_error ? (
@@ -315,7 +314,7 @@ const UserProfessional = ({
               placeholder="If any Detail of your work you want to add ?"
             />
             {Working_Details_touched && Working_Details_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Working_Details_error}
               </p>
             ) : Working_Details_touched && !Working_Details_error ? (

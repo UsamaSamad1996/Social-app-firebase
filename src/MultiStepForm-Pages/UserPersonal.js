@@ -30,8 +30,6 @@ const UserPersonal = ({
     Nick_Name: Nick_Name_touched,
     Phone_No: Phone_No_touched,
     Marital_Status: Marital_Status_touched,
-    Gender: Gender_touched,
-    Date_of_Birth: Date_of_Birth_touched,
   } = touched;
 
   const marital_Status = [
@@ -46,7 +44,6 @@ const UserPersonal = ({
 
   const [phoneNo, setPhoneNo] = useState("");
   const [startDate, setStartDate] = useState("");
-  console.log({ value: values?.Date_of_Birth });
 
   useEffect(() => {
     values.Phone_No = String(phoneNo);
@@ -64,7 +61,7 @@ const UserPersonal = ({
               Religion <span className="text-[12px] ml-1">(Optional)</span>
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Religion_touched && Religion_error
                   ? "border-red-600"
                   : Religion_touched && !Religion_error
@@ -80,7 +77,7 @@ const UserPersonal = ({
               placeholder="What is your Religion?"
             />
             {Religion_touched && Religion_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Religion_error}
               </p>
             ) : Religion_touched && !Religion_error ? (
@@ -96,7 +93,7 @@ const UserPersonal = ({
               Language
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Language_touched && Language_error
                   ? "border-red-600"
                   : Language_touched && !Language_error
@@ -113,7 +110,7 @@ const UserPersonal = ({
               autoComplete="on"
             />
             {Language_touched && Language_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Language_error}
               </p>
             ) : Language_touched && !Language_error ? (
@@ -131,7 +128,7 @@ const UserPersonal = ({
               Nickname <span className="text-[12px] ml-1">(Optional)</span>
             </label>
             <input
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Nick_Name_touched && Nick_Name_error
                   ? "border-red-600"
                   : Nick_Name_touched && !Nick_Name_error
@@ -147,7 +144,7 @@ const UserPersonal = ({
               placeholder="Add a Nickname, if any?"
             />
             {Nick_Name_touched && Nick_Name_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Nick_Name_error}
               </p>
             ) : Nick_Name_touched && !Nick_Name_error ? (
@@ -163,7 +160,7 @@ const UserPersonal = ({
               Marital Status
             </label>
             <select
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] appearance-none ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] appearance-none ${
                 Marital_Status_touched && Marital_Status_error
                   ? "border-red-600"
                   : Marital_Status_touched && !Marital_Status_error
@@ -183,7 +180,7 @@ const UserPersonal = ({
               ))}
             </select>
             {Marital_Status_touched && Marital_Status_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Marital_Status_error}
               </p>
             ) : Marital_Status_touched && !Marital_Status_error ? (
@@ -210,7 +207,7 @@ const UserPersonal = ({
               defaultCountry="PK"
               value={phoneNo}
               onChange={(e) => setPhoneNo(e)}
-              className={`px-5 h-9 border-[3px] text-black w-full mt-2 rounded-md bg-white appearance-none ${
+              className={`px-5 text-sm h-9 border-[3px] text-black w-full mt-2 rounded-md bg-white appearance-none ${
                 Phone_No_touched && Phone_No_error
                   ? "border-red-600"
                   : Phone_No_touched && !Phone_No_error
@@ -219,7 +216,7 @@ const UserPersonal = ({
               }`}
             />
             {Phone_No_touched && Phone_No_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Phone_No_error}
               </p>
             ) : Phone_No_touched && !Phone_No_error ? (
@@ -236,7 +233,7 @@ const UserPersonal = ({
               Date of Birth
             </label>
             <DatePicker
-              className={`px-5 h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
+              className={`px-5 text-sm h-9 text-black w-full mt-2 rounded-md focus:outline-none border-[3px] ${
                 Phone_No_touched && Date_of_Birth_error
                   ? "border-red-600"
                   : Phone_No_touched && !Date_of_Birth_error
@@ -256,7 +253,7 @@ const UserPersonal = ({
               placeholderText="Date_of_Birth DD/MM/YYYY"
             />
             {Phone_No_touched && Date_of_Birth_error ? (
-              <p className="text-sm text-red-500 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0">
                 {Date_of_Birth_error}
               </p>
             ) : Phone_No_touched && !Date_of_Birth_error ? (
@@ -318,7 +315,7 @@ const UserPersonal = ({
             </div>
           </div>
           {Phone_No_touched && Gender_error ? (
-            <p className="text-sm text-red-500 absolute right-0">
+            <p className="text-[12px] text-red-600 absolute right-0">
               {Gender_error}
             </p>
           ) : Phone_No_touched && !Gender_error ? (
