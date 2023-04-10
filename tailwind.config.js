@@ -8,6 +8,9 @@ module.exports = {
         myblue: "#13223E",
         bluelite: "#1A2F57",
         bluedisable: "#13223EE6",
+        purpleBlue: "#626EE3",
+        algoBlue: "#02203C",
+        algoBlueTwo: "#15314B",
       },
       fontFamily: {
         virgo: ["Proza Libre", "sans-serif"],

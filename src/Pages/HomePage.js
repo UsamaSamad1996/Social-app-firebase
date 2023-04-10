@@ -1,8 +1,12 @@
 import React from "react";
-import CircularLoader from "../Assets/CircularLoader";
+import Navbar from "../Components/Navbar";
 
 const HomePage = () => {
-  return <div>HOme</div>;
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 };
 
 export default HomePage;

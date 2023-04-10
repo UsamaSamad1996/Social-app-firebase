@@ -6,7 +6,6 @@ import useMultiStepFormHook from "../CustomHooks/useMultiStepFormHook";
 import UserAccount from "../MultiStepForm-Pages/UserAccount";
 import UserPersonal from "../MultiStepForm-Pages/UserPersonal";
 import UserProfessional from "../MultiStepForm-Pages/UserProfessional";
-import Particle from "../MultiStepForm-Pages/Particle";
 import Avatar from "../Images/login-avatar.jpg";
 import NextArrow from "../Images/next-arrow.svg";
 import PreviousArrow from "../Images/left-arrow.svg";
@@ -44,6 +43,7 @@ const CreateAccount = () => {
       progress: undefined,
       theme: "light",
     });
+
   const notifySuccess = (msg) => {
     toast.success(msg, {
       position: "top-right",
@@ -91,46 +91,82 @@ const CreateAccount = () => {
       },
       validationSchema: Yup.object({
         First_Name: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Firstname can only contain letters, spaces, hyphens, and underscores"
+          )
           .min(3, "Minimum 3 Characters")
           .max(10, "Max 10 Characters")
           .required("Required*"),
         Last_Name: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Lastname can only contain letters, spaces, hyphens, and underscores"
+          )
           .min(3, "Minimum 3 Characters")
           .max(10, "Max 10 Characters")
           .required("Required*"),
         User_Name: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Username can only contain letters, spaces, hyphens, and underscores"
+          )
           .min(3, "Minimum 3 Characters")
           .max(25, "Max 25 Characters")
           .required("Required*"),
         Father_Name: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Fathername can only contain letters, spaces, hyphens, and underscores"
+          )
           .min(3, "Minimum 3 Characters")
           .max(15, "Max 15 Characters")
           .required("Required*"),
         Email_Address: Yup.string()
           .email("Invalid Email")
           .required("Required*")
+          .matches(
+            /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+            "Please enter a valid email address, uppercase letters are not allowed"
+          )
           .min(5, "Minimum 5 Characters"),
         Password: Yup.string()
           .max(20, "Max 20 Characters")
           .min(8, "Minimum 8 Characters")
-          .matches(/[0-9]/, "Requires a Number")
-          .matches(/[a-z]/, "Requires a lowercase letter")
-          .matches(/[A-Z]/, "Requires an uppercase letter")
-          .matches(/[^\w]/, "Requires a symbol")
+          .matches(
+            /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])/,
+            "Password must contain at least 1 uppercase letter, 1 symbol, and 1 number"
+          )
           .required("Required*"),
         Confirm_Password: Yup.string()
           .max(20, "Max 20 Characters")
           .min(8, "Minimum 8 Characters")
+          .matches(
+            /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])/,
+            "Password must contain at least 1 uppercase letter, 1 symbol, and 1 number"
+          )
           .oneOf([Yup.ref("Password"), null], "Password does not Match")
           .required("Required*"),
         Religion: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Religion can only contain letters, spaces, hyphens, and underscores"
+          )
           .min(3, "Minimum 3 Characters")
           .max(15, "Max 15 Characters"),
         Language: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Language can only contain letters, spaces, hyphens, and underscores"
+          )
           .min(3, "Minimum 3 Characters")
           .max(15, "Max 15 Characters")
           .required("Required*"),
         Nick_Name: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Nickname can only contain letters, spaces, hyphens, and underscores"
+          )
           .min(3, "Minimum 3 Characters")
           .max(15, "Max 15 Characters"),
         Marital_Status: Yup.string().required("Required*"),
@@ -143,27 +179,59 @@ const CreateAccount = () => {
         Current_Country: Yup.string().required("Required*"),
         From_Country: Yup.string().required("Required*"),
         City: Yup.string()
+          .matches(
+            /^[a-zA-Z _,-]+$/,
+            "City can only contain letters, spaces, hyphens, underscores and comma"
+          )
           .min(4, "Minimum 4 Characters")
           .max(20, "Max 20 Characters")
           .required("Required*"),
         Qualification: Yup.string().required("Required*"),
         Field_of_Education: Yup.string().required("Required*"),
-        School: Yup.string().min(5, "Minimum 5 Characters"),
-        College: Yup.string().min(5, "Minimum 5 Characters"),
+        School: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "School can only contain letters, spaces, hyphens, and underscores"
+          )
+          .min(5, "Minimum 5 Characters")
+          .max(35, "Max 35 Characters"),
+        College: Yup.string()
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "College can only contain letters, spaces, hyphens, and underscores"
+          )
+          .min(5, "Minimum 5 Characters")
+          .max(35, "Max 35 Characters"),
         University: Yup.string()
-          .min(8, "Minimum 8 Characters")
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "University can only contain letters, spaces, hyphens, and underscores"
+          )
+          .min(5, "Minimum 5 Characters")
           .max(35, "Max 35 Characters")
           .required("Required*"),
         Job: Yup.string()
-          .min(8, "Minimum 8 Characters")
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "University can only contain letters, spaces, hyphens, and underscores"
+          )
+          .min(5, "Minimum 5 Characters")
           .max(35, "Max 35 Characters")
           .required("Required*"),
         Company: Yup.string()
-          .min(6, "Minimum 6 Characters")
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Company can only contain letters, spaces, hyphens, and underscores"
+          )
+          .min(5, "Minimum 5 Characters")
           .max(35, "Max 35 Characters"),
         Working_Details: Yup.string()
-          .min(6, "Minimum 6 Characters")
-          .max(40, "Max 40 Characters"),
+          .matches(
+            /^[a-zA-Z _-]+$/,
+            "Details can only contain letters, spaces, hyphens, and underscores"
+          )
+          .min(5, "Minimum 5 Characters")
+          .max(35, "Max 35 Characters"),
       }),
       onSubmit: async (values) => {
         setIsLoading(true);
@@ -182,53 +250,58 @@ const CreateAccount = () => {
           setTimeout(() => {
             setIsLoading(false);
             navigate("/login-page");
-          }, 5000);
+          }, 4500);
         } catch (error) {
           notifyError(error.message);
-
           setTimeout(() => {
             setIsLoading(false);
             window.location.reload(false);
             setCurrentPageIndex(0);
-          }, 5000);
+          }, 4500);
         }
       },
     });
 
+  const { First_Name, Current_Country, Marital_Status, Qualification } = values;
+
   const {
-    First_Name,
-    Last_Name,
-    User_Name,
-    Father_Name,
-    Email_Address,
-    Password,
-    Confirm_Password,
-    Language,
-    Marital_Status,
-    Gender,
-    Date_of_Birth,
-    Phone_No,
-    Current_Country,
-    From_Country,
-    City,
-    Qualification,
-    Field_of_Education,
-    University,
-    Job,
-    Company,
-    Working_Details,
-  } = values;
+    First_Name: First_Name_error,
+    Last_Name: Last_Name_error,
+    User_Name: User_Name_error,
+    Father_Name: Father_Name_error,
+    Email_Address: Email_Address_error,
+    Password: Password_error,
+    Confirm_Password: Confirm_Password_error,
+    Religion: Religion_error,
+    Language: Language_error,
+    Nick_Name: Nick_Name_error,
+    Phone_No: Phone_No_error,
+    Marital_Status: Marital_Status_error,
+    Gender: Gender_error,
+    Date_of_Birth: Date_of_Birth_error,
+    Current_Country: Current_Country_error,
+    From_Country: From_Country_error,
+    City: City_error,
+    Qualification: Qualification_error,
+    Field_of_Education: Field_of_Education_error,
+    School: School_error,
+    College: College_error,
+    University: University_error,
+    Job: Job_error,
+    Company: Company_error,
+    Working_Details: Working_Details_error,
+  } = errors;
 
   useEffect(() => {
     if (
-      First_Name?.length < 3 ||
-      Last_Name?.length < 3 ||
-      User_Name?.length < 3 ||
-      Father_Name?.length < 3 ||
-      (Email_Address?.length < 5 && !Email_Address.includes("@")) ||
-      Password?.length < 10 ||
-      Confirm_Password?.length < 10 ||
-      Password !== Confirm_Password
+      First_Name === "" ||
+      First_Name_error ||
+      Last_Name_error ||
+      User_Name_error ||
+      Father_Name_error ||
+      Email_Address_error ||
+      Password_error ||
+      Confirm_Password_error
     ) {
       setpageOneValidation(false);
     } else {
@@ -236,18 +309,26 @@ const CreateAccount = () => {
     }
 
     if (
-      Language?.length < 3 ||
       Marital_Status === "" ||
-      Gender === "" ||
-      Date_of_Birth === "" ||
-      Phone_No?.length < 13
+      Religion_error ||
+      Language_error ||
+      Nick_Name_error ||
+      Phone_No_error ||
+      Marital_Status_error ||
+      Gender_error ||
+      Date_of_Birth_error
     ) {
       setPageTwoValidation(false);
     } else {
       setPageTwoValidation(true);
     }
 
-    if (City?.length < 4 || Current_Country === "" || From_Country === "") {
+    if (
+      Current_Country === "" ||
+      Current_Country_error ||
+      From_Country_error ||
+      City_error
+    ) {
       setPageThreeValidation(false);
     } else {
       setPageThreeValidation(true);
@@ -255,40 +336,49 @@ const CreateAccount = () => {
 
     if (
       Qualification === "" ||
-      Field_of_Education === "" ||
-      University?.length < 8 ||
-      Job?.length < 8
+      Qualification_error ||
+      Field_of_Education_error ||
+      School_error ||
+      College_error ||
+      University_error ||
+      Job_error ||
+      Company_error ||
+      Working_Details_error
     ) {
       setPageFourValidation(false);
     } else {
       setPageFourValidation(true);
     }
   }, [
-    First_Name?.length,
-    Last_Name?.length,
-    User_Name?.length,
-    Father_Name?.length,
-    Email_Address?.length,
-    Password?.length,
-    Confirm_Password?.length,
-    Language?.length,
-    Email_Address,
-    Password,
-    Confirm_Password,
-    Marital_Status,
-    Gender,
-    Date_of_Birth,
-    From_Country,
+    First_Name_error,
+    Last_Name_error,
+    User_Name_error,
+    Father_Name_error,
+    Email_Address_error,
+    Password_error,
+    Confirm_Password_error,
+    Marital_Status_error,
+    Religion_error,
+    Language_error,
+    Nick_Name_error,
+    Phone_No_error,
+    Date_of_Birth_error,
+    Gender_error,
+    Current_Country_error,
+    From_Country_error,
+    City_error,
+    Qualification_error,
+    Field_of_Education_error,
+    School_error,
+    College_error,
+    University_error,
+    Job_error,
+    Company_error,
+    Working_Details_error,
+    First_Name,
     Current_Country,
-    Phone_No?.length,
-    Phone_No,
-    City?.length,
+    Marital_Status,
     Qualification,
-    Field_of_Education,
-    University?.length,
-    Job?.length,
-    Company,
-    Working_Details,
   ]);
 
   const {
@@ -337,27 +427,30 @@ const CreateAccount = () => {
   ]);
 
   return (
-    <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-myblue p-8">
-      <div className="Wrapper flex w-full h-full  bg-myblue max-w-[1440px]">
+    <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-algoBlueTwo p-8">
+      <div
+        className="Wrapper flex w-full h-full  bg-algoBlue max-w-[1440px] "
+        style={{ boxShadow: "0px 0px 12px 3px black" }}
+      >
         <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white  flex flex-col">
-          <section className=" h-[18%] flex justify-center items-center  ">
+          <section className=" h-[25%] flex justify-center items-center ">
             <h1 className="text-bluelite  text-[2rem] font-bold text-center  font-alkatra  w-full">
               SameBook
             </h1>
           </section>
-          <section className="pl-7  flex-auto flex justify-center items-end w-full">
+          <section className="pl-7 flex justify-center items-end w-full">
             <img src={Avatar} alt="avatar" className="max-h-[26rem] " />
           </section>
-          <section className="flex justify-center items-start w-full h-[10%]">
+          <section className="flex justify-center items-start w-full h-[15%] ">
             <button
               onClick={() => navigate("/login-page")}
-              className="w-4/5 py-2 bg-myblue rounded-sm text-white text-center hover:scale-110 transition-all font-semibold border-none outline-none"
+              className="w-4/5 py-2 bg-algoBlue rounded-sm text-white text-center hover:scale-110 transition-all font-semibold border-none outline-none"
             >
               Login
             </button>
           </section>
         </div>
-        <div className="RightContainer w-[72%]  bg-myblue relative ">
+        <div className="RightContainer w-[72%]  bg-algoBlue relative ">
           {/* <Particle /> */}
           <div className="absolute right-10 top-6">
             <h3 className="pl-5 text-sm text-white">
@@ -366,7 +459,7 @@ const CreateAccount = () => {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="w-full h-full text-white px-14 bg-white bg-opacity-5 absolute top-0  flex flex-col items-center"
+            className="w-full h-full text-white px-14 bg-algoBlue absolute top-0  flex flex-col items-center"
           >
             <div className="flex justify-start items-center  w-full h-[20%]">
               <h1 className="text-white text-3xl font-bold  tracking-wide ">
@@ -396,7 +489,7 @@ const CreateAccount = () => {
                   <button
                     type="button"
                     onClick={Previous}
-                    className="w-36 py-2 text-sm  bg-myblue text-white  tracking-wider rounded-sm  hover:scale-105 transition-all flex justify-center items-center "
+                    className="w-32 py-2 text-sm font-semibold  bg-purpleBlue text-white  tracking-wider rounded-sm  hover:scale-105 transition-all flex justify-center items-center "
                   >
                     <img
                       src={PreviousArrow}
@@ -412,13 +505,8 @@ const CreateAccount = () => {
                       window.location.reload(false);
                       setCurrentPageIndex(0);
                     }}
-                    className="w-36 py-2 text-sm  bg-myblue text-white  tracking-wider rounded-sm  hover:scale-105 transition-all flex justify-center items-center "
+                    className="w-32 py-2 text-sm font-semibold  bg-purpleBlue text-white  tracking-wider rounded-sm  hover:scale-105 transition-all flex justify-center items-center "
                   >
-                    {/* <img
-                      src={PreviousArrow}
-                      alt="nextArrow"
-                      className="h-4 w-4 "
-                    /> */}
                     <p className="ml-2">Reset</p>
                   </button>
                 ) : null}
@@ -426,7 +514,7 @@ const CreateAccount = () => {
                   <button
                     onClick={() => console.log("yes")}
                     type="submit"
-                    className="w-36 py-2 text-sm  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
+                    className="w-32 py-2 text-sm font-semibold  bg-purpleBlue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
                     disabled={
                       formIsValid && !isLoading
                         ? false
@@ -450,7 +538,7 @@ const CreateAccount = () => {
                   <button
                     type="button"
                     onClick={Next}
-                    className="w-36 py-2 text-sm  bg-myblue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
+                    className="w-32 py-2 text-sm font-semibold  bg-purpleBlue text-white  tracking-wider rounded-sm ml-3 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:bg-transparent  transition-all flex justify-center items-center disabled:border-[1px] disabled:border-white"
                     disabled={
                       pageOneValidation && currentPageIndex === 0
                         ? false
