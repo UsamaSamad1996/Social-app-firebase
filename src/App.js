@@ -3,23 +3,33 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import CreateAccount from "./Pages/CreateAccount";
 import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/LoginPage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { setUserData } from "./ReduxToolkit/userSlice";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "./firebase";
 
 const App = () => {
   const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  console.log("user set", user?.email);
   useEffect(() => {
     if (user === undefined) {
       localStorage.setItem("user", JSON.stringify(null));
     } else {
       localStorage.setItem("user", JSON.stringify(user));
     }
-  }, [user]);
+
+    if (user) {
+      onSnapshot(doc(db, "users", user?.uid), (doc) => {
+        const loggedUser = doc.data();
+        dispatch(setUserData(loggedUser));
+      });
+    }
+  }, [user, dispatch]);
 
   const RequireAuth = ({ children }) =>
-    user ? children : <Navigate to="/login-page" />;
+    user ? <div>{children}</div> : <Navigate to="/login-page" />;
   return (
     <div>
       <Routes>

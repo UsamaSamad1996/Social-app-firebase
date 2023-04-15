@@ -244,7 +244,10 @@ const CreateAccount = () => {
 
           // after creating user, we are storing here user form data in users collection with user uid
           if (response) {
-            await setDoc(doc(db, "users", response.user.uid), values);
+            await setDoc(doc(db, "users", response?.user.uid), values);
+            await setDoc(doc(db, "posts", response?.user.uid), {
+              posts: [],
+            });
           }
           notifySuccess("Account Registered Successfully");
           setTimeout(() => {

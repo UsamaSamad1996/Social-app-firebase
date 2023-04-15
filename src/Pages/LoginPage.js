@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import LoginAvatar from "../Images/login-avatar2.jpg";
@@ -38,9 +38,17 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      const user = response.user;
-      dispatch(loginSuccess(user));
+      await signInWithEmailAndPassword(auth, email, password);
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user?.uid;
+          dispatch(loginSuccess({ uid }));
+
+          // ...
+        }
+      });
+
       setEmail("");
       setPassword("");
       setIsLoading(false);

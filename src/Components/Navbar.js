@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <div className="BodyofTopBar flex items-center bg-algoBlue px-4 py-4 fixed top-0 left-0 right-0 z-10">
       {/* TopBar Divided Into 3 Divisions - this is the 1st div of App LOGO */}
-      <div className=" pl-7 md:pl-0 text-3xl tracking-wide font-bold font-alkatra flex-auto md:ml-10 text-white">
+      <div className=" pl-7 md:pl-0 text-3xl tracking-wide font-bold font-alkatra flex-auto md:ml-10 text-purpleBlue">
         <Link to="/">SameBook</Link>
       </div>
 
