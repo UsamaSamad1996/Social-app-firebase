@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import FormContainer from "./FormContainer";
 import Checked from "../Images/checked.svg";
+import OpenEye from "../Images/open-eye.svg";
+import CloseEye from "../Images/close-eye.svg";
 
 const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const {
     First_Name: First_Name_error,
     Last_Name: Last_Name_error,
@@ -47,7 +50,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="Lionel"
             />
             {First_Name_touched && First_Name_error ? (
-              <p className="text-[12px] text-red-600 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0 w-full text-right">
                 {First_Name_error}
               </p>
             ) : First_Name_touched && !First_Name_error ? (
@@ -79,7 +82,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="Messi"
             />
             {Last_Name_touched && Last_Name_error ? (
-              <p className="text-[12px] text-red-600 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0 w-full text-right">
                 {Last_Name_error}
               </p>
             ) : Last_Name_touched && !Last_Name_error ? (
@@ -113,7 +116,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="Lionel Messi"
             />
             {User_Name_touched && User_Name_error ? (
-              <p className="text-[12px] text-red-600 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0 w-full text-right">
                 {User_Name_error}
               </p>
             ) : User_Name_touched && !User_Name_error ? (
@@ -145,7 +148,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="Jorge Messi"
             />
             {Father_Name_touched && Father_Name_error ? (
-              <p className="text-[12px] text-red-600 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0 w-full text-right">
                 {Father_Name_error}
               </p>
             ) : Father_Name_touched && !Father_Name_error ? (
@@ -179,7 +182,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="you.name@gmail.com"
             />
             {Email_Address_touched && Email_Address_error ? (
-              <p className="text-[12px] text-red-600 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0 w-full text-right">
                 {Email_Address_error}
               </p>
             ) : Email_Address_touched && !Email_Address_error ? (
@@ -204,7 +207,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
                   ? "border-green-600"
                   : "border-transparent"
               }`}
-              type="password"
+              type={isOpen ? "text" : "password"}
               name="Password"
               id="Password"
               value={values.Password || ""}
@@ -213,16 +216,30 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="ABCxyz*123/"
             />
             {Password_touched && Password_error ? (
-              <p className="text-[12px] text-red-600 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0 w-full text-right">
                 {Password_error}
               </p>
             ) : Password_touched && !Password_error ? (
               <img
-                className="absolute w-4 h-4 right-4 top-[2.65rem]"
+                className="absolute w-4 h-4 right-10 top-[2.65rem]"
                 src={Checked}
                 alt="true"
               />
             ) : null}
+            <div
+              onClick={() => setIsOpen(!isOpen)}
+              className="absolute right-3 top-[35.3px]  hover:cursor-pointer flex justify-center items-center h-[30px] "
+            >
+              {isOpen ? (
+                <>
+                  <img src={OpenEye} alt="eye" className="h-[21px] w-[21px]" />
+                </>
+              ) : (
+                <>
+                  <img src={CloseEye} alt="eye" className="h-[19px] w-[19px]" />
+                </>
+              )}
+            </div>
           </div>
           <div className="w-full relative">
             <label htmlFor="Confirm_Password" className="text-sm">
@@ -245,7 +262,7 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
               placeholder="ABCxyz*123/"
             />
             {Password_touched && Confirm_Password_error ? (
-              <p className="text-[12px] text-red-600 absolute right-0">
+              <p className="text-[12px] text-red-600 absolute right-0 w-full text-right">
                 {Confirm_Password_error}
               </p>
             ) : Password_touched && !Confirm_Password_error ? (

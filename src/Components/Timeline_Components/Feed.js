@@ -16,6 +16,10 @@ import TimelinePosts from "./TimelinePosts";
 
 const Feed = () => {
   const { user } = useSelector((state) => state.user);
+  const { userData } = useSelector((state) => state.user);
+
+  console.log(userData);
+
   const [userName, setUserName] = useState("");
   const [fullName, setFullName] = useState("");
   const [postArray, setPostArray] = useState([]);
@@ -76,7 +80,7 @@ const Feed = () => {
   };
 
   const handleDelete = async (id) => {
-    const postToBeDeleted = postArray.find((post) => post.id === id);
+    const postToBeDeleted = postArray.find((post) => post?.id === id);
 
     const posts = doc(db, "posts", user?.uid);
     await updateDoc(posts, {
@@ -87,7 +91,11 @@ const Feed = () => {
 
   return (
     <div>
-      <h1 className=" text-black">Test</h1>
+      <div className="flex justify-center items-center p-5 border-2">
+        <h1 className=" text-black text-2xl font-semibold">
+          Welcome {userData?.User_Name}
+        </h1>
+      </div>
 
       <form onSubmit={handleSubmit}>
         <div>

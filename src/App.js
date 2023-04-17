@@ -23,6 +23,7 @@ const App = () => {
     if (user) {
       onSnapshot(doc(db, "users", user?.uid), (doc) => {
         const loggedUser = doc.data();
+        delete loggedUser.Created_At;
         dispatch(setUserData(loggedUser));
       });
     }

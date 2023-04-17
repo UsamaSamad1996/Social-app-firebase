@@ -8,6 +8,8 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { logout } from "../ReduxToolkit/userSlice";
 import { useDispatch } from "react-redux";
+import Logo from "../Images/purpleblue-logo.svg";
+import NotificationIcon from "../Images/notification.svg";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -20,66 +22,65 @@ const Navbar = () => {
       .catch((error) => {});
   };
   return (
-    <div className="BodyofTopBar flex items-center bg-algoBlue px-4 py-4 fixed top-0 left-0 right-0 z-10">
-      {/* TopBar Divided Into 3 Divisions - this is the 1st div of App LOGO */}
-      <div className=" pl-7 md:pl-0 text-3xl tracking-wide font-bold font-alkatra flex-auto md:ml-10 text-purpleBlue">
-        <Link to="/">SameBook</Link>
-      </div>
+    <div className="BodyofTopBar flex items-center justify-center bg-algoBlue px-10 h-[80px] fixed top-0 left-0 right-0 z-10">
+      <div className="wrapper h-full w-full flex items-center">
+        <div className=" ml-6 px-1  text-3xl tracking-wide font-semibold font-alkatra  text-purpleBlue  flex items-center h-full">
+          <img src={Logo} alt="logo" />
+          <Link to="/">
+            <h1 className="pt-2">SameBook</h1>
+          </Link>
+        </div>
 
-      {/* TopBar Divided Into 3 Divisions - this is the 2nd div of Search Bar on TOpbar*/}
-      <div className="hidden md:flex md:items-center md:flex-grow ">
-        <input
-          className="w-4/5 rounded-full h-9 px-5 placeholder-slate-500"
-          type="search"
-          placeholder="Search friends & posts"
-        />
-        <img src={SearchIcon} alt="" className="ml-[-40px] " />
-      </div>
+        <div className="flex items-center  flex-auto  h-full ml-10 px-5 ">
+          <input
+            className="w-full rounded-full px-5 py-1 placeholder-slate-500"
+            type="search"
+            placeholder="Search friends & posts"
+          />
+          <img src={SearchIcon} alt="" className="ml-[-40px] " />
+        </div>
 
-      {/* TopBar Divided Into 3 Divisions - This is The 3rd Div & Last also */}
-      <div className=" flex justify-between md:justify-evenly items-center flex-auto">
-        {/* this is the div of HomeIcon On TopBar */}
-        <Link to="/">
-          <div className="homeIcon hidden md:flex md:items-center  ">
-            <img src={HomeIcon} alt="" />
-            <p className="text-white text-center  bg-red-500 rounded-full h-4 w-4 text-[10px] ml-[-10px] mt-[-25px] z-10">
+        <div className=" flex justify-between md:justify-evenly items-center flex-auto  h-full">
+          <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
+            <img
+              src={HomeIcon}
+              alt=""
+              className="h-[35px] hover:cursor-pointer"
+            />
+            <p className="text-white text-center  bg-red-500 rounded-full h-[15px] w-[15px] text-[10px] flex items-center justify-center absolute top-5 right-1 z-10">
               2
             </p>
           </div>
-        </Link>
-        {/* this is the div of Notification Icon On TopBar */}
-        <div className="notificationIcon hidden md:flex md:items-center">
-          <img src={HomeIcon} alt="" />
 
-          <p className="text-white text-center  bg-red-500 rounded-full h-4 w-4 text-[10px] ml-[-10px] mt-[-25px] z-10">
-            1
-          </p>
-        </div>
-        {/* this is the div of Chat Icon on TopBar */}
-        <div className="chatIcon hidden md:flex md:items-center">
-          <img
-            src={DottedMenu}
-            alt=""
-            onClick={logOut}
-            className="hover:cursor-pointer"
-          />
-
-          {/* <p className="text-white text-center  bg-red-500 rounded-full h-4 w-4 text-[10px] ml-[-10px] mt-[px] z-10">
-            3
-          </p> */}
-        </div>
-        {/* this is the div of Profile Icon Link To User Profile Page on Topbar*/}
-        <Link to="">
-          <div className="accountIcon pl-20 md:pl-0">
+          <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
             <img
-              className="h-[40px] w-[40px] rounded-full border-2 bg-algoBlue "
-              src={Avatar}
-              alt="no poster"
+              src={NotificationIcon}
+              alt=""
+              className="h-[40px] hover:cursor-pointer"
+            />
+            <p className="text-white text-center  bg-red-500 rounded-full h-[15px] w-[15px] text-[10px] flex items-center justify-center absolute top-5 right-2 z-10">
+              6
+            </p>
+          </div>
+          <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
+            <img
+              src={DottedMenu}
+              alt=""
+              className="h-[30px] hover:cursor-pointer"
+              onClick={logOut}
             />
           </div>
-        </Link>
-        {/* this is the div of options Contain Logout PopOver on TopBar End*/}
-        {/* <div className="logout  md:flex md:ml-[-20px] md:mr-[-20px]">
+          <Link to="">
+            <div className="accountIcon pl-20 md:pl-0">
+              <img
+                className="h-[40px]  rounded-full  bg-algoBlue "
+                src={Avatar}
+                alt="no poster"
+              />
+            </div>
+          </Link>
+          {/* this is the div of options Contain Logout PopOver on TopBar End*/}
+          {/* <div className="logout  md:flex md:ml-[-20px] md:mr-[-20px]">
           {match ? (
             <div>
               <Button
@@ -112,6 +113,7 @@ const Navbar = () => {
             ""
           )}
         </div> */}
+        </div>
       </div>
     </div>
   );

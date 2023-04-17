@@ -43,8 +43,8 @@ const UserProfessional = ({
   ];
 
   const field_of_Education = [
-    "Pre-Engineering",
-    "Pre-Medical",
+    "Engineering",
+    "Medical",
     "Arts",
     "Commerce",
     "Others",

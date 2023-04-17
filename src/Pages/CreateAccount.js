@@ -1,6 +1,9 @@
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth, db } from "../firebase";
 import useMultiStepFormHook from "../CustomHooks/useMultiStepFormHook";
 import UserAccount from "../MultiStepForm-Pages/UserAccount";
@@ -18,6 +21,7 @@ import SubmitIcon from "../Images/submit.svg";
 import CircularLoader from "../Assets/CircularLoader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Logo from "../Images/blue-logo.svg";
 
 const CreateAccount = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +100,7 @@ const CreateAccount = () => {
             "Firstname can only contain letters, spaces, hyphens, and underscores"
           )
           .min(3, "Minimum 3 Characters")
-          .max(10, "Max 10 Characters")
+          .max(15, "Max 15 Characters")
           .required("Required*"),
         Last_Name: Yup.string()
           .matches(
@@ -104,7 +108,7 @@ const CreateAccount = () => {
             "Lastname can only contain letters, spaces, hyphens, and underscores"
           )
           .min(3, "Minimum 3 Characters")
-          .max(10, "Max 10 Characters")
+          .max(15, "Max 15 Characters")
           .required("Required*"),
         User_Name: Yup.string()
           .matches(
@@ -248,6 +252,7 @@ const CreateAccount = () => {
             await setDoc(doc(db, "posts", response?.user.uid), {
               posts: [],
             });
+            await sendEmailVerification(auth.currentUser);
           }
           notifySuccess("Account Registered Successfully");
           setTimeout(() => {
@@ -437,12 +442,13 @@ const CreateAccount = () => {
       >
         <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white  flex flex-col">
           <section className=" h-[25%] flex justify-center items-center ">
-            <h1 className="text-bluelite  text-[2rem] font-bold text-center  font-alkatra  w-full">
+            <img src={Logo} alt="" className="h-14 w-14" />
+            <h1 className="text-algoBlue pt-2  text-[2rem] font-semibold   font-alkatra">
               SameBook
             </h1>
           </section>
           <section className="pl-7 flex justify-center items-end w-full">
-            <img src={Avatar} alt="avatar" className="max-h-[26rem] " />
+            <img src={Avatar} alt="avatar" className="max-h-[25rem] " />
           </section>
           <section className="flex justify-center items-start w-full h-[15%] ">
             <button
@@ -455,7 +461,7 @@ const CreateAccount = () => {
         </div>
         <div className="RightContainer w-[72%]  bg-algoBlue relative ">
           {/* <Particle /> */}
-          <div className="absolute right-10 top-6">
+          <div className="absolute right-10 top-6 z-10">
             <h3 className="pl-5 text-sm text-white">
               Step {currentPageIndex + 1} / {formPages.length}
             </h3>
