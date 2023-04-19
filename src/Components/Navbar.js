@@ -8,7 +8,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { logout } from "../ReduxToolkit/userSlice";
 import { useDispatch } from "react-redux";
-import Logo from "../Images/purpleblue-logo.svg";
+import Logo from "../Images/logo.svg";
 import NotificationIcon from "../Images/notification.svg";
 
 const Navbar = () => {
@@ -22,32 +22,32 @@ const Navbar = () => {
       .catch((error) => {});
   };
   return (
-    <div className="BodyofTopBar flex items-center justify-center bg-algoBlue px-10 h-[80px] fixed top-0 left-0 right-0 z-10">
+    <div className="BodyofTopBar flex items-center justify-center bg-algoBlue pl-10 h-[80px] fixed top-0 left-0 right-0 z-10">
       <div className="wrapper h-full w-full flex items-center">
-        <div className=" ml-6 px-1  text-3xl tracking-wide font-semibold font-alkatra  text-purpleBlue  flex items-center h-full">
+        <div className=" ml-6 px-1  text-3xl tracking-wide font-semibold font-alkatra  text-purpleBlue  flex items-center h-full  w-[25%] ">
           <img src={Logo} alt="logo" />
           <Link to="/">
             <h1 className="pt-2">SameBook</h1>
           </Link>
         </div>
 
-        <div className="flex items-center  flex-auto  h-full ml-10 px-5 ">
+        <div className="flex items-center   h-full px-5  flex-auto w-[45%] ">
           <input
-            className="w-full rounded-full px-5 py-1 placeholder-slate-500"
+            className="w-full rounded-full px-5 py-[5px] placeholder-slate-500"
             type="search"
             placeholder="Search friends & posts"
           />
           <img src={SearchIcon} alt="" className="ml-[-40px] " />
         </div>
 
-        <div className=" flex justify-between md:justify-evenly items-center flex-auto  h-full">
+        <div className=" flex justify-between md:justify-evenly items-center flex-auto  h-full  w-[30%] ">
           <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
             <img
               src={HomeIcon}
               alt=""
               className="h-[35px] hover:cursor-pointer"
             />
-            <p className="text-white text-center  bg-red-500 rounded-full h-[15px] w-[15px] text-[10px] flex items-center justify-center absolute top-5 right-1 z-10">
+            <p className="text-white text-center bg-red-500 rounded-full h-[15px] w-[15px] text-[10px] flex items-center justify-center absolute top-5 right-1 z-10">
               2
             </p>
           </div>

@@ -1,6 +1,7 @@
 import {
   arrayRemove,
   arrayUnion,
+  deleteDoc,
   doc,
   onSnapshot,
   updateDoc,
@@ -11,11 +12,12 @@ import { useSelector } from "react-redux";
 import { db } from "../../firebase";
 import { useEffect } from "react";
 
-const TimelinePosts = ({ post, handleDelete }) => {
+const TimelinePosts = ({ post, postArray }) => {
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   const { user } = useSelector((state) => state.user);
   const { userData } = useSelector((state) => state.user);
   const [Likes, setLikes] = useState([]);
-
   const [isLike, setIsLike] = useState(false);
 
   const handleLikes = async () => {
@@ -32,6 +34,16 @@ const TimelinePosts = ({ post, handleDelete }) => {
       });
     }
   };
+
+  const handleDelete = async (id) => {
+    const postToBeDeleted = postArray.find((post) => post?.id === id);
+    const posts = doc(db, "posts", user?.uid);
+    await updateDoc(posts, {
+      posts: arrayRemove(postToBeDeleted),
+    });
+    await deleteDoc(doc(db, "likes", id));
+  };
+
   useEffect(() => {
     const likes = doc(db, "likes", post.id);
     onSnapshot(likes, (doc) => {
@@ -42,10 +54,12 @@ const TimelinePosts = ({ post, handleDelete }) => {
 
   const numberOfLikes = String(Likes?.length);
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   return (
     <div>
-      <p>{post.userName}</p>
-      <p>{post.fullName}</p>
+      <p>{post.postContent}</p>
+      <p>{post.created_at}</p>
       <p>{post.id}</p>
       {post.userId === user?.uid ? (
         <button

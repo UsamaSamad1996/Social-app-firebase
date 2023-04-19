@@ -14,6 +14,9 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../ReduxToolkit/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import Cross from "../Images/cross-icon.svg";
+import CloseEye from "../Images/close-eye.svg";
+import OpenEye from "../Images/open-eye.svg";
+import Logo from "../Images/blue-logo.svg";
 
 const LoginPage = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,8 +27,11 @@ const LoginPage = () => {
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
   const [error, setError] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [isEyeOpen, setIsEyeOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const notifyError = (msg) =>
     toast.error(msg, {
@@ -45,20 +51,16 @@ const LoginPage = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-
       onAuthStateChanged(auth, (user) => {
         if (user) {
           const uid = user?.uid;
           dispatch(loginSuccess({ uid }));
-
-          // ...
+          setEmail("");
+          setPassword("");
+          setIsLoading(false);
+          navigate("/");
         }
       });
-
-      setEmail("");
-      setPassword("");
-      setIsLoading(false);
-      navigate("/");
     } catch (error) {
       notifyError(error.message);
       setError(error.message);
@@ -84,7 +86,6 @@ const LoginPage = () => {
 
   const handleForgetPassword = () => {
     setIsLoadingEmail(true);
-
     sendPasswordResetEmail(auth, email)
       .then(() => {
         notifySuccess("Email Sent Successfully");
@@ -96,7 +97,6 @@ const LoginPage = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage, error);
         notifyError(errorCode, errorMessage);
         setTimeout(() => {
           setIsLoadingEmail(false);
@@ -108,9 +108,9 @@ const LoginPage = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-algoBlueTwo p-8 relative ">
-      <div className="Wrapper flex w-full h-full flex-col items-center bg-algoBlue max-w-[1300px]  shadow-[0px_0px_12px_3px_#000000]">
-        <section className="top  flex flex-col items-center justify-between w-[40%] h-[50%]">
+    <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-algoBlueTwo   relative ">
+      <div className="Wrapper flex w-full h-full flex-col items-center bg-algoBlue max-w-[1400px]  shadow-[0px_0px_12px_3px_#000000]">
+        <section className="top  flex flex-col items-center justify-center w-[95%] md:w-[70%] lg:w-[40%] md:h-[50%] py-10 md:py-0 ">
           <form
             onSubmit={handleSubmit}
             className="flex flex-col  px-3 w-full border-b-[1px] border-slate-600  "
@@ -120,7 +120,7 @@ const LoginPage = () => {
                 Email
               </label>
               <input
-                className="px-5 text-sm h-9 text-black w-full rounded-md focus:outline-none"
+                className="px-5 text-sm h-9 text-black w-full rounded-md focus:outline-none focus:shadow-[0px_0px_4px_3px_#626EE3]"
                 placeholder="Email"
                 type="email"
                 name="Email"
@@ -129,26 +129,48 @@ const LoginPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="  pt-5">
+            <div className="  pt-5 relative">
               <label htmlFor="password" className="hidden">
                 Password
               </label>
               <input
-                className="px-5 text-sm h-9 text-black w-full rounded-md focus:outline-none"
+                className="px-5 text-sm h-9 text-black w-full rounded-md focus:outline-none focus:shadow-[0px_0px_4px_3px_#626EE3]"
                 placeholder="Enter Password"
-                type="password"
+                type={isEyeOpen ? "text" : "password"}
                 name="Password"
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <div
+                onClick={() => setIsEyeOpen(!isEyeOpen)}
+                className="absolute right-4 top-[20px]  hover:cursor-pointer flex justify-center items-center h-[36px]"
+              >
+                {isEyeOpen ? (
+                  <>
+                    <img
+                      src={OpenEye}
+                      alt="eye"
+                      className="h-[21px] w-[21px]"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={CloseEye}
+                      alt="eye"
+                      className="h-[19px] w-[19px]"
+                    />
+                  </>
+                )}
+              </div>
             </div>
 
-            <div className="  pb-3 pt-7 flex items-center justify-center relative">
-              <div className="absolute top-1 text-sm text-red-600">{error}</div>
+            <div className="  pt-6 pb-4 flex items-center justify-center relative w-full">
+              <p className="absolute top-1 text-[12px] text-red-600">{error}</p>
               <button
                 type="submit"
-                className="bg-purpleBlue h-9 w-[65%] rounded-md text-white font-semibold hover:scale-105 transition-all flex items-center justify-center"
+                className="bg-purpleBlue h-9 w-full md:w-[65%] rounded-md text-white font-semibold hover:scale-105 transition-all flex items-center justify-center"
               >
                 <p className="mr-2">Login</p>
                 {isLoading ? (
@@ -159,27 +181,31 @@ const LoginPage = () => {
               </button>
             </div>
           </form>
-          <div className="SignUp-Button pb-5 pt-2  px-5 w-full flex justify-center items-center flex-col">
+          <div className="SignUp-Button pb-5 pt-3  px-5 w-full flex justify-center items-center flex-col ">
             <button
               onClick={() => setOpenModal(true)}
-              className="bg-transparent h-6 mb-3 w-[40%] rounded-md text-green-500 font-light hover:scale-105 transition-all flex justify-center items-center text-sm"
+              className="bg-transparent h-5  mb-3 md:w-[40%] rounded-md text-green-500 font-light hover:scale-105 transition-all flex justify-center items-center text-[12px] px-2 tracking-wide "
             >
               Forgot Password?
             </button>
             <button
               onClick={() => navigate("/create-account")}
-              className="bg-purpleBlue h-9 w-[40%] rounded-md text-white font-semibold hover:scale-105 transition-all flex justify-center items-center"
+              className="bg-purpleBlue h-9 w-[80%] md:w-[40%] rounded-md text-white font-semibold hover:scale-105 transition-all flex justify-center items-center"
             >
               Sign Up <img src={SignUpLogo} alt="sign" className=" ml-1 " />
             </button>
           </div>
         </section>
-        <section className="svg  flex justify-center bg-white w-full h-[50%] ">
-          <div className="w-[50%] px-20">
-            <h1 className="text-algoBlue text-[2rem] font-bold text-center font-alkatra mt-10 mb-5">
-              SameBook
-            </h1>
-            <p className="font-alkatra text-algoBlue text-center">
+        <section className="svg  flex justify-center md:bg-white w-full md:h-[50%] h-full bg-algoBlue ">
+          <div className="md:w-[50%] px-10 lg:px-28  bg-white h-fit">
+            <div className=" flex justify-center items-center mt-10 mb-5">
+              <img src={Logo} alt="" className="h-14 w-14" />
+              <h1 className="text-algoBlue text-[2rem] font-bold text-center font-alkatra pt-2">
+                SameBook
+              </h1>
+            </div>
+
+            <p className="font-alkatra text-algoBlue text-center pb-10 md:pb-0">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit.
               Voluptatum est obcaecati, tempora dolores esse perspiciatis
               deleniti similique repellendus, porro commodi quas molestias
@@ -194,7 +220,7 @@ const LoginPage = () => {
 
       {openModal ? (
         <div className="modal absolute  w-full h-full bg-algoBlue bg-opacity-50 top-0 flex items-center justify-center">
-          <div className="bg-white  w-[50%] relative rounded-md p-10">
+          <div className="bg-white  lg:w-[50%] relative rounded-md p-10">
             <div className="wrapper ">
               <div className=" px-5">
                 <ul className="list-outside list-disc">
@@ -204,12 +230,18 @@ const LoginPage = () => {
                     A Link will be sent to your Registered Email Address when
                     you click the button given below
                   </li>
-                  <li>Check your Email Inbox & Open the Link</li>
-                  <li>Create your New Password</li>
+                  <li>
+                    Check your Email{" "}
+                    <span className="text-red-500">inbox OR spam</span> folder,
+                    Open Email
+                  </li>
+                  <li>Open the Link and Create your New Password</li>
                   <li>Try to login with your New Password</li>
                   <li>
-                    Make sure you entered your registered and active Email
-                    Address
+                    Make sure you entered your{" "}
+                    <span className="text-red-500">
+                      registered and active Email Address
+                    </span>
                   </li>
                 </ul>
               </div>

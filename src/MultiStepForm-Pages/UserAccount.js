@@ -5,7 +5,10 @@ import OpenEye from "../Images/open-eye.svg";
 import CloseEye from "../Images/close-eye.svg";
 
 const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   const [isOpen, setIsOpen] = useState(false);
+
   const {
     First_Name: First_Name_error,
     Last_Name: Last_Name_error,
@@ -24,6 +27,8 @@ const UserAccount = ({ values, handleChange, handleBlur, touched, errors }) => {
     Email_Address: Email_Address_touched,
     Password: Password_touched,
   } = touched;
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
     <div>

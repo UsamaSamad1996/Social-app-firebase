@@ -1,27 +1,16 @@
 import React, { useEffect } from "react";
-import {
-  collection,
-  query,
-  onSnapshot,
-  setDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { nanoid } from "@reduxjs/toolkit";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../../firebase";
 import TimelinePosts from "./TimelinePosts";
-// import { collection,  getDocs } from "firebase/firestore";
+import CreateNewPost from "./CreateNewPost";
 
 const Feed = () => {
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   const { user } = useSelector((state) => state.user);
   const { userData } = useSelector((state) => state.user);
-
-  console.log(userData);
-
-  const [userName, setUserName] = useState("");
-  const [fullName, setFullName] = useState("");
   const [postArray, setPostArray] = useState([]);
 
   useEffect(() => {
@@ -44,89 +33,20 @@ const Feed = () => {
     }
   }, [user?.uid]);
 
-  const date = new Date()
-    .toLocaleString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-    .replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+) (AM|PM)/, "$1-$2-$3 $4:$5 $6");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const myPost = {
-      userName,
-      fullName,
-      id: nanoid(),
-      created_at: date,
-      userId: user?.uid,
-    };
-
-    const posts = doc(db, "posts", user?.uid);
-    try {
-      await updateDoc(posts, {
-        posts: arrayUnion(myPost),
-      });
-
-      await setDoc(doc(db, "likes", myPost?.id), {
-        likes: [],
-      });
-    } catch (error) {
-      console.log("create post error", error.message);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    const postToBeDeleted = postArray.find((post) => post?.id === id);
-
-    const posts = doc(db, "posts", user?.uid);
-    await updateDoc(posts, {
-      posts: arrayRemove(postToBeDeleted),
-    });
-    await deleteDoc(doc(db, "likes", id));
-  };
-
   return (
-    <div>
+    <div className="  px-0 mx-0 xl:px-10 md:px-1 md:ml-[25%] md:w-[50%] relative border-2">
       <div className="flex justify-center items-center p-5 border-2">
         <h1 className=" text-black text-2xl font-semibold">
           Welcome {userData?.User_Name}
         </h1>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            className="border-2 border-black"
-            type="text"
-            placeholder="input name"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            className="border-2 border-black"
-            type="text"
-            placeholder="input name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-        </div>
-        <div>
-          <button className="border-2 border-black" type="submit">
-            post
-          </button>
-        </div>
-      </form>
+      <CreateNewPost />
 
       <div>
         {postArray?.map((post) => (
-          <div key={post.id} className="border-2 border-black p-5">
-            <TimelinePosts post={post} handleDelete={handleDelete} />
+          <div key={post.id}>
+            <TimelinePosts post={post} postArray={postArray} />
           </div>
         ))}
       </div>

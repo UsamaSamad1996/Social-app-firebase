@@ -434,6 +434,8 @@ const CreateAccount = () => {
     />,
   ]);
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   return (
     <div className="ComponentContainer flex justify-center items-center w-full h-screen bg-algoBlueTwo p-8">
       <div
