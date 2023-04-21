@@ -8,8 +8,11 @@ import { useEffect } from "react";
 import { setUserData } from "./ReduxToolkit/userSlice";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
+import ProfilePage from "./Pages/ProfilePage";
 
 const App = () => {
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -31,6 +34,9 @@ const App = () => {
 
   const RequireAuth = ({ children }) =>
     user ? <div>{children}</div> : <Navigate to="/login-page" />;
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   return (
     <div>
       <Routes>
@@ -43,6 +49,15 @@ const App = () => {
           element={
             <RequireAuth>
               <HomePage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          exact
+          path="/user-profile/:id/:name"
+          element={
+            <RequireAuth>
+              <ProfilePage />
             </RequireAuth>
           }
         />

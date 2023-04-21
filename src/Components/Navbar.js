@@ -7,11 +7,16 @@ import DottedMenu from "../Images/dotted-menu9.svg";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { logout } from "../ReduxToolkit/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Logo from "../Images/logo.svg";
 import NotificationIcon from "../Images/notification.svg";
 
 const Navbar = () => {
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const { user } = useSelector((state) => state.user);
+  const { userData } = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
   const logOut = () => {
     signOut(auth)
@@ -27,7 +32,7 @@ const Navbar = () => {
         <div className=" ml-6 px-1  text-3xl tracking-wide font-semibold font-alkatra  text-purpleBlue  flex items-center h-full  w-[25%] ">
           <img src={Logo} alt="logo" />
           <Link to="/">
-            <h1 className="pt-2">SameBook</h1>
+            <h1 className="pt-2 text-white">SameBook</h1>
           </Link>
         </div>
 
@@ -42,14 +47,16 @@ const Navbar = () => {
 
         <div className=" flex justify-between md:justify-evenly items-center flex-auto  h-full  w-[30%] ">
           <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
-            <img
-              src={HomeIcon}
-              alt=""
-              className="h-[35px] hover:cursor-pointer"
-            />
-            <p className="text-white text-center bg-red-500 rounded-full h-[15px] w-[15px] text-[10px] flex items-center justify-center absolute top-5 right-1 z-10">
-              2
-            </p>
+            <Link to="/">
+              <img
+                src={HomeIcon}
+                alt=""
+                className="h-[35px] hover:cursor-pointer"
+              />
+              <p className="text-white text-center bg-red-500 rounded-full h-[15px] w-[15px] text-[10px] flex items-center justify-center absolute top-5 right-1 z-10">
+                2
+              </p>
+            </Link>
           </div>
 
           <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
@@ -70,7 +77,7 @@ const Navbar = () => {
               onClick={logOut}
             />
           </div>
-          <Link to="">
+          <Link to={`/user-profile/${user?.uid}/${userData?.User_Name}`}>
             <div className="accountIcon pl-20 md:pl-0">
               <img
                 className="h-[40px]  rounded-full  bg-algoBlue "
