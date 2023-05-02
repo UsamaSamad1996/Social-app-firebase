@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { db } from "../../../firebase";
 import Liked from "../../../Images/like-icon-blue.svg";
 import Unlike from "../../../Images/like-icon.svg";
+import UnlikeGrayIcon from "../../../Images/like-icon-fb-gray.svg";
 
 const LikeUnlikeButton = ({
   post,
@@ -80,19 +81,23 @@ const LikeUnlikeButton = ({
         isLike
           ? "text-purpleBlue"
           : toggleTheme
-          ? "text-slate-500"
+          ? "text-fbText hover:bg-slate-100 "
           : "text-white"
-      } text-[15px] font-semibold rounded-md hover:opacity-70 flex items-center justify-center`}
+      } w-[120px] py-2 px-4 text-[15px] font-semibold rounded-md hover:opacity-80 flex items-center justify-center`}
     >
       {isLike ? (
         <>
-          <img src={Liked} alt=" Liked img" className="h-4" />
-          <p className="w-full pl-1">Liked</p>
+          <img src={Liked} alt=" Liked img" className="h-[18px] " />
+          <p className=" pl-1">Liked</p>
         </>
       ) : (
         <>
-          <img src={Unlike} alt=" Liked img" className="h-4" />
-          <p className="w-full pl-1">Like</p>
+          <img
+            src={toggleTheme ? UnlikeGrayIcon : Unlike}
+            alt=" Liked img"
+            className="h-[18px] "
+          />
+          <p className=" pl-1">Like</p>
         </>
       )}
     </button>

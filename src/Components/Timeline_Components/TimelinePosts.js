@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import CircularLoader from "../../Assets/CircularLoader";
 // import BackgroundImg from "../../Images/content-bg.jpg";
 import LikeUnlikeButton from "../SinglePostComponents/PostSubComponents/LikeUnlikeButton";
-import DeletePostButton from "../SinglePostComponents/PostSubComponents/DeletePostButton";
+import AddCommentButton from "../SinglePostComponents/PostSubComponents/AddCommentButton";
 import SharePostButton from "../SinglePostComponents/PostSubComponents/SharePostButton";
 import PostHeader from "../SinglePostComponents/PostHeader";
 import PostBody from "../SinglePostComponents/PostBody";
@@ -33,15 +33,12 @@ const TimelinePosts = ({ post, postArray }) => {
   const [numberOfLikes, setNumberOfLikes] = useState("");
 
   const handleDelete = async (id) => {
-    setIsDeleting(true);
-
     const postToBeDeleted = postArray.find((post) => post?.id === id);
     const postsCollection = doc(db, "posts", user?.uid);
     await updateDoc(postsCollection, {
       posts: arrayRemove(postToBeDeleted),
     });
     await deleteDoc(doc(db, "likes", id));
-    setIsDeleting(false);
   };
 
   useEffect(() => {
@@ -55,7 +52,7 @@ const TimelinePosts = ({ post, postArray }) => {
 
   return (
     <div
-      className={`shareBox group flex flex-col p-3 border-2 border-slate-300 rounded-lg md:my-5 my-6 ${
+      className={`w-[500px] shareBox group flex flex-col p-3 md:pt-[13px] md:pb-[3px] md:px-[16px] border-2 border-slate-300 rounded-lg md:my-5 my-6 ${
         toggleTheme ? "bg-white" : "bg-algoBlue"
       }  shadow-[8px_7px_6px_0px_#a69999AD]`}
     >
@@ -65,7 +62,12 @@ const TimelinePosts = ({ post, postArray }) => {
         </div>
       ) : (
         <div>
-          <PostHeader post={post} postUser={postUser} />
+          <PostHeader
+            post={post}
+            postUser={postUser}
+            handleDelete={handleDelete}
+            setIsDeleting={setIsDeleting}
+          />
 
           <PostBody post={post} />
 
@@ -82,7 +84,7 @@ const TimelinePosts = ({ post, postArray }) => {
               setNumberOfLikes={setNumberOfLikes}
               post={post}
             />
-            <DeletePostButton post={post} handleDelete={handleDelete} />
+            <AddCommentButton />
             <SharePostButton />
           </section>
         </div>

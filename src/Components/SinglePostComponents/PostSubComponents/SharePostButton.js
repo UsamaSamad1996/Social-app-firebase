@@ -7,8 +7,8 @@ const SharePostButton = () => {
   return (
     <>
       <button
-        className={`pt-2 px-4 hover:opacity-70 text-[15px] font-semibold rounded-md ${
-          toggleTheme ? "text-slate-500" : "text-white"
+        className={`w-[120px] py-2 px-4 text-[15px] font-semibold rounded-md hover:opacity-80 ${
+          toggleTheme ? "text-fbText hover:bg-slate-100 " : "text-white"
         } `}
       >
         Share

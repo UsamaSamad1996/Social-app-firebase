@@ -57,7 +57,7 @@ const CreateNewPost = () => {
 
   return (
     <div>
-      <div className="shareBox flex flex-col md:px-5 md:pt-5 md:pb-3 py-5 border-2 border-slate-300 rounded-lg md:my-5 mb-4  bg-algoBlue shadow-[8px_7px_6px_0px_#a69999AD]">
+      <div className="w-[500px] flex flex-col md:px-5 md:pt-5 md:pb-3 py-5 border-2 border-slate-300 rounded-lg md:my-5 mb-4  bg-algoBlue shadow-[8px_7px_6px_0px_#a69999AD]">
         <form onSubmit={handleSubmit}>
           <div className="shareTop flex px-4 md:p-2 mt-2 md:mt-0 mb-4 md:mb-2 flex-auto items-start">
             {/* <Link to={`/Profile/${user._id}`}> */}{" "}

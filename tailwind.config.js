@@ -11,6 +11,9 @@ module.exports = {
         purpleBlue: "#626EE3",
         algoBlue: "#02203C",
         algoBlueTwo: "#15314B",
+        IconGray: "#8C939D",
+        fbBgGray: "#D8DADF",
+        fbText: "#65676B",
       },
       fontFamily: {
         virgo: ["Proza Libre", "sans-serif"],

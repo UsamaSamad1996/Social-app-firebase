@@ -1,9 +1,21 @@
-.loader {
+.loader-white {
     border: 3px solid #ffffff;
     border-radius: 50%;
     border-top: 3px solid #ffffff1A;
     border-right: 3px solid #ffffff59;
     border-bottom: 3px solid #ffffffB3;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 1s linear infinite;
+    margin-left: 2px;
+  }
+  .loader-black{
+    border: 3px solid #000000;
+    border-radius: 50%;
+    border-top: 3px solid #0000001A;
+    border-right: 3px solid #00000059;
+    border-bottom: 3px solid #000000B3;
     width: 20px;
     height: 20px;
     -webkit-animation: spin 2s linear infinite;

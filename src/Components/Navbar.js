@@ -8,7 +8,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { logout } from "../ReduxToolkit/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Logo from "../Images/logo.svg";
+import Logo from "../Images/purpleblue-logo.svg";
 import NotificationIcon from "../Images/notification.svg";
 
 const Navbar = () => {
