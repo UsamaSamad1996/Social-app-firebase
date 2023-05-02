@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex relative top-20 md:bg-white">
+      <div className="flex relative top-20 md:bg-slate-100">
         <LeftSideBar />
         <Feed />
       </div>

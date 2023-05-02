@@ -33,7 +33,7 @@ const Feed = () => {
   }, [user?.uid]);
 
   return (
-    <div className="  px-0 mx-0 xl:px-10 md:px-1 md:ml-[25%] md:w-[50%] relative ">
+    <div className="px-0 mx-0 xl:px-10 md:px-1 md:ml-[25%] md:w-[50%] relative">
       <CreateNewPost />
 
       <div>
