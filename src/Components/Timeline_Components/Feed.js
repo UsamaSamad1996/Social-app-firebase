@@ -6,11 +6,10 @@ import { db } from "../../firebase";
 import TimelinePosts from "./TimelinePosts";
 import CreateNewPost from "./CreateNewPost";
 
-const Feed = ({ toggleTheme }) => {
+const Feed = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const { user } = useSelector((state) => state.user);
-  // const { userData } = useSelector((state) => state.user);
   const [postArray, setPostArray] = useState([]);
 
   useEffect(() => {
@@ -35,16 +34,12 @@ const Feed = ({ toggleTheme }) => {
 
   return (
     <div className="  px-0 mx-0 xl:px-10 md:px-1 md:ml-[25%] md:w-[50%] relative ">
-      <CreateNewPost toggleTheme={toggleTheme} />
+      <CreateNewPost />
 
       <div>
         {postArray?.map((post) => (
           <div key={post.id}>
-            <TimelinePosts
-              post={post}
-              postArray={postArray}
-              toggleTheme={toggleTheme}
-            />
+            <TimelinePosts post={post} postArray={postArray} />
           </div>
         ))}
       </div>

@@ -14,33 +14,36 @@ import { useEffect } from "react";
 import CircularLoader from "../../Assets/CircularLoader";
 import { Link } from "react-router-dom";
 import Avatar from "../../Images/userAvatar.svg";
-import { format } from "timeago.js";
 import LikesImage from "../../Images/likes.png";
 import Heart from "../../Images/hearts.png";
 import LOL from "../../Images/lol.png";
 // import BackgroundImg from "../../Images/content-bg.jpg";
 import WhiteBackground from "../../Images/white-wall.jpg";
+import { formatDistanceToNow } from "date-fns";
+import LikeUnlikeButton from "../SinglePostComponents/LikeUnlikeButton";
 
-const TimelinePosts = ({ post, postArray, toggleTheme }) => {
+const TimelinePosts = ({ post, postArray }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const { user } = useSelector((state) => state.user);
-  const { userData } = useSelector((state) => state.user);
+  const { user, userData, toggleTheme } = useSelector((state) => state.user);
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const [postUser, setPostUser] = useState({});
   const [Likes, setLikes] = useState([]);
   const [isLike, setIsLike] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [numberOfLikes, setNumberOfLikes] = useState("");
 
   const handleLikes = async () => {
     setIsLike(!isLike);
-    const likes = doc(db, "likes", post.id);
+    const collectionOfLikes = doc(db, "likes", post.id);
     if (isLike) {
-      await updateDoc(likes, {
+      await updateDoc(collectionOfLikes, {
         likes: arrayRemove(userData?.User_Name),
       });
     } else {
-      await updateDoc(likes, {
+      await updateDoc(collectionOfLikes, {
         likes: arrayUnion(userData?.User_Name),
       });
     }
@@ -50,8 +53,8 @@ const TimelinePosts = ({ post, postArray, toggleTheme }) => {
     setIsDeleting(true);
 
     const postToBeDeleted = postArray.find((post) => post?.id === id);
-    const posts = doc(db, "posts", user?.uid);
-    await updateDoc(posts, {
+    const postsCollection = doc(db, "posts", user?.uid);
+    await updateDoc(postsCollection, {
       posts: arrayRemove(postToBeDeleted),
     });
     await deleteDoc(doc(db, "likes", id));
@@ -59,14 +62,29 @@ const TimelinePosts = ({ post, postArray, toggleTheme }) => {
   };
 
   useEffect(() => {
-    const likes = doc(db, "likes", post.id);
-    onSnapshot(likes, (doc) => {
+    const collectionOfLikes = doc(db, "likes", post.id);
+    onSnapshot(collectionOfLikes, (doc) => {
       setLikes(doc.data()?.likes);
       setIsLike(doc.data()?.likes?.includes(userData?.User_Name));
     });
-  }, [post?.id, userData?.User_Name]);
 
-  const numberOfLikes = Number(Likes?.length);
+    const numberOfLikes = Number(Likes?.length);
+    let LikesTextContent;
+
+    if (numberOfLikes > 1 && isLike === true) {
+      LikesTextContent = `You & ${numberOfLikes} Others`;
+    } else if (numberOfLikes > 1 && isLike === false) {
+      LikesTextContent = `${numberOfLikes} Likes`;
+    } else if (numberOfLikes === 1 && isLike === false) {
+      LikesTextContent = `${numberOfLikes} Like`;
+    } else if (numberOfLikes === 0 && isLike === false) {
+      LikesTextContent = `LOL No Likes`;
+    } else if (numberOfLikes === 1 && isLike === true) {
+      LikesTextContent = `You Like It`;
+    }
+
+    setNumberOfLikes(LikesTextContent);
+  }, [post?.id, userData?.User_Name, Likes?.length, isLike]);
 
   useEffect(() => {
     const postUser = doc(db, "users", post?.userId);
@@ -114,7 +132,9 @@ const TimelinePosts = ({ post, postArray, toggleTheme }) => {
               </span>
               <br />{" "}
               <span className="text-[12px] font-normal">
-                {format(post.created_at)}
+                {formatDistanceToNow(new Date(post.created_at), {
+                  addSuffix: true,
+                })}
               </span>
             </p>
             {/* post delete button */}
@@ -211,17 +231,7 @@ const TimelinePosts = ({ post, postArray, toggleTheme }) => {
                   toggleTheme ? "text-slate-500" : "text-white"
                 }  `}
               >
-                {numberOfLikes > 1 && isLike === true
-                  ? `You & ${numberOfLikes} Others`
-                  : numberOfLikes > 1 && isLike === false
-                  ? `${numberOfLikes} likes`
-                  : numberOfLikes === 1 && isLike === false
-                  ? `${numberOfLikes} Like`
-                  : numberOfLikes === 0 && isLike === false
-                  ? ` LoL No likes`
-                  : numberOfLikes === 1 && isLike === true
-                  ? `You Like It`
-                  : ""}
+                {numberOfLikes}
               </p>
             </div>
 
@@ -244,21 +254,14 @@ const TimelinePosts = ({ post, postArray, toggleTheme }) => {
           <hr />
           {/* likes comment & share Buttons */}
           <div className="Write flex justify-evenly pt-1 ">
-            <button
-              onClick={() => handleLikes(post?.id)}
-              className={`pt-2 px-4 ${
-                isLike
-                  ? "text-purpleBlue"
-                  : toggleTheme
-                  ? "text-slate-500"
-                  : "text-white"
-              } text-[15px] font-semibold rounded-md hover:opacity-70`}
-            >
-              {isLike ? "Liked" : "Like"}
-            </button>
+            <LikeUnlikeButton
+              handleLikes={handleLikes}
+              isLike={isLike}
+              post={post}
+            />
             {post.userId === user?.uid ? (
               <button
-                onClick={() => handleDelete(post.id)}
+                onClick={() => handleDelete(post?.id)}
                 className={`pt-2 px-4  hover:opacity-70 text-[15px] font-semibold rounded-md ${
                   toggleTheme ? "text-slate-500" : "text-white"
                 }`}

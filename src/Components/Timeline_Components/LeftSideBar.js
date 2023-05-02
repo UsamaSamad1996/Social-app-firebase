@@ -1,14 +1,15 @@
 import React from "react";
 import Avatar from "../../Images/home-icon-copy.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Usama from "../../Images/usama.jpg";
 import { Link } from "react-router-dom";
+import { setToggleTheme } from "../../ReduxToolkit/userSlice";
 
-const LeftSideBar = ({ setToggleTheme }) => {
+const LeftSideBar = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
-  const { user } = useSelector((state) => state.user);
+  const { user, userData } = useSelector((state) => state.user);
 
-  const { userData } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +30,7 @@ const LeftSideBar = ({ setToggleTheme }) => {
             </li>
           </Link>
           <li
-            onClick={() => setToggleTheme(true)}
+            onClick={() => dispatch(setToggleTheme(true))}
             className="sideBarItem py-3 flex items-center px-4 hover:bg-algoBlue hover:text-white hover:cursor-pointer transition-all hover:bg-opacity-90"
           >
             <img src={Avatar} alt="avatar" className="h-6 w-6" />
@@ -38,7 +39,7 @@ const LeftSideBar = ({ setToggleTheme }) => {
             </span>
           </li>
           <li
-            onClick={() => setToggleTheme(false)}
+            onClick={() => dispatch(setToggleTheme(false))}
             className="sideBarItem py-3 flex items-center px-4 hover:bg-algoBlue hover:text-white hover:cursor-pointer transition-all hover:bg-opacity-90"
           >
             <img src={Avatar} alt="avatar" className="h-6 w-6" />
