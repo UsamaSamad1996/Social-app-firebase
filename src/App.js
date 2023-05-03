@@ -2,13 +2,13 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import CreateAccount from "./Pages/CreateAccount";
 import HomePage from "./Pages/HomePage";
-import LoginPage from "./Pages/LoginPage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setUserData } from "./ReduxToolkit/userSlice";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
 import ProfilePage from "./Pages/ProfilePage";
+import LoginPage from "./Pages/LoginPage/LoginPage";
 
 const App = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
