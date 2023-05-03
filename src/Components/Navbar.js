@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import HomeIcon from "../Images/home-icon.svg";
 import Avatar from "../Images/userAvatar.svg";
 import SearchIcon from "../Images/search-icon.svg";
-import DottedMenu from "../Images/dotted-menu9.svg";
+import DottedMenuWhite from "../Images/dotted-menu-white.svg";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { logout } from "../ReduxToolkit/userSlice";
@@ -71,7 +71,7 @@ const Navbar = () => {
           </div>
           <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
             <img
-              src={DottedMenu}
+              src={DottedMenuWhite}
               alt=""
               className="h-[30px] hover:cursor-pointer"
               onClick={logOut}

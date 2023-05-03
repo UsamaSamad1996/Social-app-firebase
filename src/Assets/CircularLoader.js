@@ -1,15 +1,12 @@
 import React from "react";
 import "./style.css";
-import { useSelector } from "react-redux";
 
 const CircularLoader = () => {
-  const { toggleTheme } = useSelector((state) => state.user);
+  // const { toggleTheme } = useSelector((state) => state.user);
+  // ${toggleTheme ? "loader-black" : "loader-white"}
   return (
     <>
-      <div
-        className={`
-      ${toggleTheme ? "loader-black" : "loader-white"}`}
-      ></div>
+      <div className={`loader-white`}></div>
     </>
   );
 };

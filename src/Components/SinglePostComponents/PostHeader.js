@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Avatar from "../../Images/usama.jpg";
 import CheckIcon from "../../Images/check-icon.svg";
-import DottedMenu from "../../Images/dotted-menu9.svg";
-import DottedMenuBlack from "../../Images/dotted-menu9Black.svg";
-import DeleteIcon from "../../Images/delete-icon.svg";
-import PencilIcon from "../../Images/edit-pencil-icon.svg";
+import DottedMenuWhite from "../../Images/dotted-menu-white.svg";
+import DottedMenuBlack from "../../Images/dotted-menu-black.svg";
+import PostMenuTooltip from "./PostSubComponents/PostMenuTooltip";
 
 const PostHeader = ({ post, postUser, handleDelete, setIsDeleting }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,43 +60,19 @@ const PostHeader = ({ post, postUser, handleDelete, setIsDeleting }) => {
       </section>
       <section>
         <img
-          src={toggleTheme ? DottedMenuBlack : DottedMenu}
+          src={toggleTheme ? DottedMenuBlack : DottedMenuWhite}
           alt=""
           className="h-4 mr-1 hover:cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
         />
       </section>
+
       {isOpen && (
-        <div
-          className={`${
-            toggleTheme
-              ? "bg-IconGray text-white drop-shadow-2xl"
-              : "bg-algoBlueTwo text-white"
-          }  absolute text-black top-[28px] right-[17px] p-2 rounded-md rounded-tr-none flex flex-col gap-2`}
-        >
-          {post?.userId === user?.uid && (
-            <>
-              <button
-                onClick={deletePost}
-                className="w-[130px] py-2 bg-transparent hover:text-white font-semibold text-sm tracking-wide  hover:bg-purpleBlue hover:scale-105 rounded-sm flex items-center justify-start pl-3"
-              >
-                <img src={DeleteIcon} alt="" className="h-4 mr-2" />
-                Delete Post
-              </button>
-              <button className="w-[130px] py-2 bg-transparent hover:text-white font-semibold text-sm tracking-wide  hover:bg-purpleBlue hover:scale-105 rounded-sm flex items-center justify-start pl-3">
-                <img src={PencilIcon} alt="" className="h-4 mr-2" />
-                Edit Post
-              </button>
-            </>
-          )}
-          <button
-            onClick={() => setIsOpen(false)}
-            className="w-[130px] py-2 bg-transparent hover:text-white font-semibold text-sm tracking-wide  hover:bg-purpleBlue hover:scale-105 rounded-sm flex items-center justify-start pl-3"
-          >
-            <img src={DeleteIcon} alt="" className="h-4 mr-2" />
-            Close
-          </button>
-        </div>
+        <PostMenuTooltip
+          post={post}
+          setIsOpen={setIsOpen}
+          deletePost={deletePost}
+        />
       )}
     </div>
   );

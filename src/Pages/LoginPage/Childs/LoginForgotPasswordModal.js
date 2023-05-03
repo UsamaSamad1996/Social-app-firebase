@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { auth } from "../../../firebase";
 import CircularLoader from "../../../Assets/CircularLoader";
-import CrossIcon from "../../../Images/cross-icon.svg";
+import CrossIconBlack from "../../../Images/cross-icon-black.svg";
 import SubmitIcon from "../../../Images/submit.svg";
 import {
   notifyError,
@@ -29,8 +29,8 @@ const LoginForgotPasswordModal = ({ setOpenModal, email }) => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        notifyError(errorCode, errorMessage);
+        // const errorMessage = error.message;
+        notifyError(` ${errorCode} Enter Email`);
         setTimeout(() => {
           setIsLoadingEmail(false);
           setOpenModal(false);
@@ -43,15 +43,16 @@ const LoginForgotPasswordModal = ({ setOpenModal, email }) => {
   return (
     <div className="modal absolute  w-full h-full bg-algoBlue bg-opacity-50 top-0 flex items-center justify-center">
       <div className="Container bg-white  lg:w-[500px] lg:h-[430px] relative rounded-lg  drop-shadow-2xl flex flex-col">
-        <header className="h-[60px] w-full border-b-[1px] border-fbText flex relative">
+        <header className="h-[60px] w-full border-b-[1px] border-fbText flex relative justify-center items-center">
+          <h1 className="text-xl font-semibold">Forgot Password</h1>
           <button
             onClick={() => {
               setOpenModal(false);
               setCheckIsOpen(false);
             }}
-            className="p-2 bg-gray-300 rounded-full text-white text-sm flex justify-center items-center h-6 w-6 absolute top-[20px] right-5"
+            className="p-2 bg-fbBgGray bg-opacity-60 hover:bg-fbBgGray rounded-full text-white text-sm flex justify-center items-center h-8 w-8 absolute top-[15px] right-5"
           >
-            <img src={CrossIcon} alt="cross" className="h-3" />
+            <img src={CrossIconBlack} alt="cross" className="h-3" />
           </button>
         </header>
         <main className="wrapper p-5 flex-auto flex flex-col justify-between ">
@@ -71,7 +72,7 @@ const LoginForgotPasswordModal = ({ setOpenModal, email }) => {
               <li>Open the Link and Create your New Password</li>
               <li>Try to login with your New Password</li>
               <li>
-                Make sure you entered your
+                Make sure you entered your{" "}
                 <span className="text-red-500">
                   registered and active Email Address
                 </span>
