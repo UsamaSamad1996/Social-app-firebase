@@ -18,7 +18,7 @@ const PostMenuTooltip = ({ post, setIsOpen, deletePost }) => {
     <div
       className={`${
         toggleTheme ? "bg-white text-fbText " : "bg-algoBlueTwo text-white"
-      }  absolute text-black top-[28px] right-[17px] p-2 rounded-md rounded-tr-none flex flex-col gap-2 drop-shadow-2xl`}
+      }  absolute text-black top-[28px] right-[17px] p-2 rounded-md rounded-tr-none flex flex-col gap-2 drop-shadow-xl`}
     >
       {post?.userId === user?.uid && (
         <>

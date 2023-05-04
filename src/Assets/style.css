@@ -1,34 +1,85 @@
 .loader-white {
-    border: 3px solid #ffffff;
-    border-radius: 50%;
-    border-top: 3px solid #ffffff1A;
-    border-right: 3px solid #ffffff59;
-    border-bottom: 3px solid #ffffffB3;
-    width: 20px;
-    height: 20px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 1s linear infinite;
-    margin-left: 2px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  border-top: 3px solid #ffffff1a;
+  border-right: 3px solid #ffffff59;
+  border-bottom: 3px solid #ffffffb3;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 1s linear infinite;
+  margin-left: 2px;
+}
+.loader-black {
+  border: 3px solid #000000;
+  border-radius: 50%;
+  border-top: 3px solid #0000001a;
+  border-right: 3px solid #00000059;
+  border-bottom: 3px solid #000000b3;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 1s linear infinite;
+  margin-left: 2px;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
   }
-  .loader-black{
-    border: 3px solid #000000;
-    border-radius: 50%;
-    border-top: 3px solid #0000001A;
-    border-right: 3px solid #00000059;
-    border-bottom: 3px solid #000000B3;
-    width: 20px;
-    height: 20px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 1s linear infinite;
-    margin-left: 2px;
+  100% {
+    -webkit-transform: rotate(360deg);
   }
-  
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
   }
+}
+
+/* //////////////////////////////////////////////////////////////////// */
+
+.react-switch-checkbox {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.react-switch-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 40px;
+  height: 19px;
+  background: #d8dadf;
+  border-radius: 100px;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.react-switch-label .react-switch-button {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 45px;
+  transition: 2s ease;
+  background: white;
+  box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+}
+
+.react-switch-checkbox:checked + .react-switch-label .react-switch-button {
+  left: calc(100% - 2px);
+  transform: translateX(-100%);
+}
+
+.react-switch-label:active .react-switch-button {
+  width: 20px;
+}

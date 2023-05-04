@@ -27,11 +27,13 @@ const PostHeader = ({ post, postUser, handleDelete, setIsDeleting }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div className="flex mb-2 flex-auto items-center relative">
+    <div className="flex mb-2 flex-auto items-center relative ease-in-out transition-all duration-1000">
       <section className="flex items-center flex-auto p-0 m-0">
         <Link to={`/user-profile/${post?.userId}`}>
           <img
-            className="h-[45px] w-[45px] rounded-full object-cover object-center border-[3px] border-purpleBlue bg-algoBlue"
+            className={`h-[45px] w-[45px] rounded-full object-cover object-center border-[3px] bg-algoBlue ${
+              toggleTheme ? "border-purpleBlue" : "border-white"
+            } `}
             src={Avatar}
             alt="no poster"
           />

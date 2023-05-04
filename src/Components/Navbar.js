@@ -1,15 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import HomeIcon from "../Images/home-icon.svg";
-import Avatar from "../Images/userAvatar.svg";
+import Avatar from "../Images/usama.jpg";
 import SearchIcon from "../Images/search-icon.svg";
 import DottedMenuWhite from "../Images/dotted-menu-white.svg";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
-import { logout } from "../ReduxToolkit/userSlice";
+import { logout, setToggleTheme } from "../ReduxToolkit/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Logo from "../Images/purpleblue-logo.svg";
 import NotificationIcon from "../Images/notification.svg";
+import ToggleSwitch from "../Assets/ToggleSwitch";
 
 const Navbar = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +28,7 @@ const Navbar = () => {
       .catch((error) => {});
   };
   return (
-    <div className="BodyofTopBar flex items-center justify-center bg-algoBlue pl-10 h-[80px] fixed top-0 left-0 right-0 z-10">
+    <div className="BodyofTopBar flex items-center justify-center bg-algoBlue pl-10 h-[80px] fixed top-0 left-0 right-0 z-10 ease-in-out transition-all duration-1000">
       <div className="wrapper h-full w-full flex items-center">
         <div className=" ml-6 px-1  text-3xl tracking-wide font-semibold font-alkatra  text-purpleBlue  flex items-center h-full  w-[25%] ">
           <img src={Logo} alt="logo" />
@@ -36,91 +37,56 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="flex items-center   h-full px-5  flex-auto w-[45%] ">
+        <section className="flex items-center   h-full px-5  flex-auto w-[45%] ">
           <input
             className="w-full rounded-full px-5 py-[5px] placeholder-slate-500"
             type="search"
             placeholder="Search friends & posts"
           />
           <img src={SearchIcon} alt="" className="ml-[-40px] " />
-        </div>
+        </section>
 
-        <div className=" flex justify-between md:justify-evenly items-center flex-auto  h-full  w-[30%] ">
-          <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
-            <Link to="/">
-              <img
-                src={HomeIcon}
-                alt=""
-                className="h-[35px] hover:cursor-pointer"
-              />
-              <p className="text-white text-center bg-red-500 rounded-full h-[15px] w-[15px] text-[10px] flex items-center justify-center absolute top-5 right-1 z-10">
-                2
-              </p>
-            </Link>
+        <section className=" flex justify-between md:justify-evenly items-center flex-auto h-full w-[30%]">
+          <div className="homeIcon hidden md:flex md:items-center relative bg-purpleBlue rounded-full ease-in-out transition-all duration-1000 md:justify-center hover:cursor-pointer">
+            <ToggleSwitch />
           </div>
 
-          <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
-            <img
-              src={NotificationIcon}
-              alt=""
-              className="h-[40px] hover:cursor-pointer"
-            />
-            <p className="text-white text-center  bg-red-500 rounded-full h-[15px] w-[15px] text-[10px] flex items-center justify-center absolute top-5 right-2 z-10">
+          <Link to="/">
+            <div className="homeIcon hidden md:flex md:items-center relative bg-purpleBlue rounded-full h-[40px] w-[40px] md:justify-center hover:cursor-pointer">
+              <img src={HomeIcon} alt="" className="h-[25px]" />
+              <p className="text-white text-center bg-red-500 rounded-full h-[13px] w-[13px] text-[10px] flex items-center justify-center absolute top-[-2px] right-[-2px] z-10">
+                2
+              </p>
+            </div>
+          </Link>
+
+          <div
+            onClick={() => dispatch(setToggleTheme())}
+            className="homeIcon hidden md:flex md:items-center relative bg-purpleBlue rounded-full h-[40px] w-[40px] md:justify-center hover:cursor-pointer"
+          >
+            <img src={NotificationIcon} alt="" className="h-[28px]" />
+            <p className="text-white text-center  bg-red-500 rounded-full h-[13px] w-[13px] text-[10px] flex items-center justify-center absolute top-[-2px] right-[-2px] z-10">
               6
             </p>
           </div>
-          <div className="homeIcon hidden md:flex md:items-center relative  h-full px-2">
-            <img
-              src={DottedMenuWhite}
-              alt=""
-              className="h-[30px] hover:cursor-pointer"
-              onClick={logOut}
-            />
+
+          <div
+            onClick={logOut}
+            className="homeIcon hidden md:flex md:items-center relative bg-purpleBlue rounded-full h-[40px] w-[40px] md:justify-center hover:cursor-pointer"
+          >
+            <img src={DottedMenuWhite} alt="" className="h-[22px]" />
           </div>
+
           <Link to={`/user-profile/${user?.uid}/${userData?.User_Name}`}>
-            <div className="accountIcon pl-20 md:pl-0">
+            <div className="pl-20 md:pl-0">
               <img
-                className="h-[40px]  rounded-full  bg-algoBlue "
+                className="h-[45px] w-[45px] rounded-full object-cover object-center border-[3px] bg-algoBlue border-white"
                 src={Avatar}
                 alt="no poster"
               />
             </div>
           </Link>
-          {/* this is the div of options Contain Logout PopOver on TopBar End*/}
-          {/* <div className="logout  md:flex md:ml-[-20px] md:mr-[-20px]">
-          {match ? (
-            <div>
-              <Button
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-              >
-                <MoreVertIcon
-                  style={{
-                    fontSize: "2.5rem",
-                  }}
-                  className="text-white text-2xl "
-                />
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={popover}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={logOut}>LogOut</MenuItem>
-              </Menu>
-            </div>
-          ) : (
-            ""
-          )}
-        </div> */}
-        </div>
+        </section>
       </div>
     </div>
   );

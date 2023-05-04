@@ -52,9 +52,9 @@ const TimelinePosts = ({ post, postArray }) => {
 
   return (
     <div
-      className={`w-[500px] shareBox group flex flex-col p-3 md:pt-[13px] md:pb-[3px] md:px-[16px] border-2 border-slate-300 rounded-lg md:my-5 my-6 ${
+      className={`w-[500px] shareBox group flex flex-col p-3 md:pt-[13px] md:pb-[3px] md:px-[16px] border-2 border-slate-300 rounded-lg md:my-5 my-6 shadow-[8px_7px_6px_0px_#a69999AD] ease-in-out transition-all duration-1000 ${
         toggleTheme ? "bg-white" : "bg-algoBlue"
-      }  shadow-[8px_7px_6px_0px_#a69999AD]`}
+      }`}
     >
       {isDeleting ? (
         <div className="h-48 flex justify-center items-center">

@@ -19,8 +19,8 @@ export const userSlice = createSlice({
     setUserData: (state, action) => {
       state.userData = action.payload;
     },
-    setToggleTheme: (state, action) => {
-      state.toggleTheme = action.payload;
+    setToggleTheme: (state) => {
+      state.toggleTheme = !state.toggleTheme;
     },
   },
 });
