@@ -9,7 +9,6 @@ import useMultiStepFormHook from "../CustomHooks/useMultiStepFormHook";
 import UserAccount from "../MultiStepForm-Pages/UserAccount";
 import UserPersonal from "../MultiStepForm-Pages/UserPersonal";
 import UserProfessional from "../MultiStepForm-Pages/UserProfessional";
-import Avatar from "../Images/login-avatar.jpg";
 import NextArrow from "../Images/next-arrow.svg";
 import PreviousArrow from "../Images/left-arrow.svg";
 import { useNavigate } from "react-router-dom";
@@ -19,9 +18,10 @@ import * as Yup from "yup";
 import SubmitForm from "../MultiStepForm-Pages/SubmitForm";
 import SubmitIcon from "../Images/submit.svg";
 import CircularLoader from "../Assets/CircularLoader";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Logo from "../Images/blue-logo.svg";
+import { notifyError, notifySuccess } from "../Assets/NotificationsByToastify";
+import ReactToastifyNotificationsElement from "../Assets/ReactToastifyNotificationsElement";
+import HeroSection from "../Components/CreateNewAccount/HeroSection";
 
 const CreateAccount = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,31 +35,6 @@ const CreateAccount = () => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-  const notifyError = (msg) =>
-    toast.error(msg, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-  const notifySuccess = (msg) => {
-    toast.success(msg, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -442,25 +417,7 @@ const CreateAccount = () => {
         className="Wrapper flex w-full h-full  bg-algoBlue max-w-[1440px] "
         style={{ boxShadow: "0px 0px 12px 3px black" }}
       >
-        <div className="LeftContainer h-full w-[28%] bg-contain bg-center bg-no-repeat bg-white  flex flex-col">
-          <section className=" h-[25%] flex justify-center items-center ">
-            <img src={Logo} alt="" className="h-14 w-14" />
-            <h1 className="text-algoBlue pt-2  text-[2rem] font-semibold   font-alkatra">
-              SameBook
-            </h1>
-          </section>
-          <section className="pl-7 flex justify-center items-end w-full">
-            <img src={Avatar} alt="avatar" className="max-h-[25rem] " />
-          </section>
-          <section className="flex justify-center items-start w-full h-[15%] ">
-            <button
-              onClick={() => navigate("/login-page")}
-              className="w-4/5 py-2 bg-algoBlue rounded-sm text-white text-center hover:scale-110 transition-all font-semibold border-none outline-none"
-            >
-              Login
-            </button>
-          </section>
-        </div>
+        <HeroSection />
         <div className="RightContainer w-[72%]  bg-algoBlue relative ">
           {/* <Particle /> */}
           <div className="absolute right-10 top-6 z-10">
@@ -477,6 +434,7 @@ const CreateAccount = () => {
                 Create Account
               </h1>
             </div>
+
             <div className="  w-full  h-[62%] xl:px-8">{currentPage}</div>
 
             <div className="flex justify-between py-3 px-1 items-center   w-full h-[18%] ">
@@ -569,18 +527,7 @@ const CreateAccount = () => {
               </div>
             </div>
           </form>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+          <ReactToastifyNotificationsElement />
         </div>
       </div>
     </div>

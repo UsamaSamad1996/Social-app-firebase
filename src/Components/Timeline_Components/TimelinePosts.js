@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import { db } from "../../firebase";
 import { useEffect } from "react";
 import CircularLoader from "../../Assets/CircularLoader";
-// import BackgroundImg from "../../Images/content-bg.jpg";
 import LikeUnlikeButton from "../SinglePostComponents/PostSubComponents/LikeUnlikeButton";
 import AddCommentButton from "../SinglePostComponents/PostSubComponents/AddCommentButton";
 import SharePostButton from "../SinglePostComponents/PostSubComponents/SharePostButton";

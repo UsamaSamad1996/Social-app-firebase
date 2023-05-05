@@ -1,22 +1,22 @@
 import React from "react";
 import { useSelector } from "react-redux";
-// import WhiteBackground from "../../Images/white-wall.jpg";
 
 const PostBody = ({ post }) => {
   const { toggleTheme } = useSelector((state) => state.user);
+
   return (
     <div>
-      {post.img ? (
+      {post.imgUrl ? (
         <div>
           <div className="description pl-4 pr-6 mb-2 md:mb-1 mt-5 md:mt-3 md:pl-2 md:pr-5 md:pb-2 text-[16px]  break-words">
             <p>{post?.postContent}</p>
           </div>
 
-          <div className="image ">
+          <div className="image bg-transparent">
             <img
-              className="object-fill bg-black"
+              className="object-fill bg-transparent"
               style={{ height: "70%", width: "100%" }}
-              src={post.img}
+              src={post.imgUrl}
               alt="File Not Supported"
             />
           </div>

@@ -7,14 +7,19 @@ import { db } from "../../firebase";
 import Photo from "../../Images/photo.svg";
 import SharePost from "../../Images/share.svg";
 import CircularLoader from "../../Assets/CircularLoader";
+import UploadMediaFiles from "../CreateNewPostComponents/UploadMediaFiles";
 
 const CreateNewPost = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const { user, toggleTheme, userData } = useSelector((state) => state.user);
   const [postContent, setPostContent] = useState("");
-  const [file, setFile] = useState(null);
+  const [imgUrl, setImgUrl] = useState(null);
+  const [progresspercent, setProgresspercent] = useState(0);
   const [isSharing, setIsSharing] = useState(false);
+  const [file, setFile] = useState(null);
+
+  // console.log({ imgUrl });
 
   const date = new Date()
     .toLocaleString("en-US", {
@@ -31,7 +36,7 @@ const CreateNewPost = () => {
     setIsSharing(true);
     const myPost = {
       postContent,
-      file,
+      imgUrl,
       id: nanoid(),
       created_at: date,
       userId: user?.uid,
@@ -42,11 +47,13 @@ const CreateNewPost = () => {
       await updateDoc(posts, {
         posts: arrayUnion(myPost),
       });
+      setPostContent("");
+      setIsSharing(false);
+      setFile(null);
+      setImgUrl(null);
       await setDoc(doc(db, "likes", myPost?.id), {
         likes: [],
       });
-      setPostContent("");
-      setIsSharing(false);
     } catch (error) {
       console.log("create post error", error.message);
     }
@@ -63,14 +70,12 @@ const CreateNewPost = () => {
       >
         <form onSubmit={handleSubmit}>
           <div className="shareTop flex px-4 md:p-2 mt-2 md:mt-0 mb-4 md:mb-2 flex-auto items-start">
-            {/* <Link to={`/Profile/${user._id}`}> */}{" "}
             <img
               className="h-[39px] w-[40px] rounded-full object-cover border-2  "
               src={Avatar}
               alt="no poster"
             />
-            {/* </Link> */}
-            {/* Create Post Text Input Field */}
+
             <textarea
               className="md:w-full h-full rounded-md p-3 ml-3 md:ml-5 bg-slate-100 placeholder-slate-600 focus:h-40 hover:outline-none  outline-none resize-none hover:resize text-sm placeholder:text-sm "
               name="post"
@@ -87,8 +92,6 @@ const CreateNewPost = () => {
 
           <hr />
 
-          {/*  Buttons Div  */}
-
           <div className="sharebottom flex pt-3 flex-wrap flex-auto items-center justify-evenly">
             <div className="h-8 w-24 my-1  bg-algoBlue text-white text-sm font-semibold rounded-md flex items-center justify-center hover:scale-105 transition-all hover:opacity-70 ">
               <img src={Photo} alt="" className="h-4" />
@@ -103,9 +106,10 @@ const CreateNewPost = () => {
                 type="file"
                 id="photo"
                 accept=".mp4"
-                onChange={(e) => setFile(e.target.files[0])}
+                // onChange={(e) => setFile(e.target.files[0])}
               />
             </div>
+
             <div className="h-8 w-24 my-1  bg-algoBlue text-white text-sm font-semibold rounded-md flex items-center justify-center hover:scale-105 transition-all hover:opacity-70 ">
               <img src={Photo} alt="" className="h-4" />
               <label
@@ -114,14 +118,15 @@ const CreateNewPost = () => {
               >
                 Video
               </label>
-              <input
-                style={{ display: "none" }}
-                type="file"
-                id="video"
-                accept=".mp4"
-                onChange={(e) => setFile(e.target.files[0])}
+              <UploadMediaFiles
+                setImgUrl={setImgUrl}
+                imgUrl={imgUrl}
+                setProgresspercent={setProgresspercent}
+                file={file}
+                setFile={setFile}
               />
             </div>
+
             <div className="h-8 w-24 my-1  bg-algoBlue text-white text-sm font-semibold rounded-md flex items-center justify-center hover:scale-105 transition-all hover:opacity-70 ">
               <img src={Photo} alt="" className="h-4" />
               <label
@@ -135,7 +140,7 @@ const CreateNewPost = () => {
                 type="file"
                 id="song"
                 accept=".mp4"
-                onChange={(e) => setFile(e.target.files[0])}
+                // onChange={(e) => setFile(e.target.files[0])}
               />
             </div>
 
@@ -160,6 +165,20 @@ const CreateNewPost = () => {
             </button>
           </div>
         </form>
+
+        <div>
+          {!imgUrl && (
+            <div className="outerbar bg-black p-2 w-full">
+              <div
+                className="innerbar bg-red-600 p-2 text-white"
+                style={{ width: `${progresspercent}%` }}
+              >
+                {progresspercent}
+              </div>
+            </div>
+          )}
+          {imgUrl && <img src={imgUrl} alt="uploaded file" height={200} />}
+        </div>
       </div>
     </div>
   );
