@@ -6,7 +6,7 @@ const PostBody = ({ post }) => {
 
   return (
     <div>
-      {post?.postImageUrl || post?.imgUrl ? (
+      {post?.postImageUrl ? (
         <div>
           <div className="description pl-4 pr-6 mb-2 md:mb-1 mt-5 md:mt-3 md:pl-2 md:pr-5 md:pb-2 text-[16px]  break-words">
             <p>{post?.postContent}</p>
@@ -16,7 +16,7 @@ const PostBody = ({ post }) => {
             <img
               className="object-fill bg-transparent"
               style={{ height: "70%", width: "100%" }}
-              src={post?.postImageUrl || post?.imgUrl}
+              src={post?.postImageUrl}
               alt="File Not Supported"
             />
           </div>

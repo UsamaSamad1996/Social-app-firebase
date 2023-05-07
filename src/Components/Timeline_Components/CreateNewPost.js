@@ -19,7 +19,7 @@ const CreateNewPost = () => {
         toggleTheme ? "bg-white" : "bg-algoBlue"
       }`}
     >
-      <div className="shareTop flex mt-2 md:mt-0 mb-4 md:mb-2 flex-auto items-center">
+      <section className="shareTop flex mt-2 md:mt-0 mb-4 md:mb-2 flex-auto items-center">
         <img
           className={`h-[45px] w-[45px] rounded-full object-cover object-center border-[3px] bg-algoBlue ${
             toggleTheme ? "border-purpleBlue" : "border-white"
@@ -31,7 +31,7 @@ const CreateNewPost = () => {
         <button className="md:w-full h-full rounded-full px-[12px] py-[8px] ml-3 md:ml-5 bg-slate-100 text-[17px] text-start text-slate-500">
           What's on your mind, {userData?.User_Name}{" "}
         </button>
-      </div>
+      </section>
 
       <div>
         {isModalOpen && <OpenNewPostModal setIsModalOpen={setIsModalOpen} />}

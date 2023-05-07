@@ -17,12 +17,16 @@ import SharePostButton from "../SinglePostComponents/PostSubComponents/SharePost
 import PostHeader from "../SinglePostComponents/PostHeader";
 import PostBody from "../SinglePostComponents/PostBody";
 import PostStats from "../SinglePostComponents/PostStats";
+import { deleteObject, getStorage, ref } from "firebase/storage";
+import { notifySuccess } from "../../Assets/NotificationsByToastify";
+import ReactToastifyNotificationsElement from "../../Assets/ReactToastifyNotificationsElement";
 
 const TimelinePosts = ({ post, postArray }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const { user, toggleTheme } = useSelector((state) => state.user);
 
+  // console.log({ post });
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const [postUser, setPostUser] = useState({});
@@ -30,14 +34,41 @@ const TimelinePosts = ({ post, postArray }) => {
   const [isLike, setIsLike] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [numberOfLikes, setNumberOfLikes] = useState("");
+  const storage = getStorage();
 
   const handleDelete = async (id) => {
+    setIsDeleting(true);
     const postToBeDeleted = postArray.find((post) => post?.id === id);
     const postsCollection = doc(db, "posts", user?.uid);
-    await updateDoc(postsCollection, {
-      posts: arrayRemove(postToBeDeleted),
-    });
-    await deleteDoc(doc(db, "likes", id));
+
+    const postsWithSameImageName = postArray.filter(
+      (post) => post.postImageName === postToBeDeleted?.postImageName
+    );
+
+    const deleteImage = ref(
+      storage,
+      `images/${postToBeDeleted?.postImageName}`
+    );
+
+    console.log({ deleteImage });
+
+    try {
+      if (deleteImage?._location?.path_ !== "images/null") {
+        if (postsWithSameImageName?.length < 2) {
+          await deleteObject(deleteImage);
+        }
+      }
+
+      await updateDoc(postsCollection, {
+        posts: arrayRemove(postToBeDeleted),
+      });
+
+      await deleteDoc(doc(db, "likes", id));
+      notifySuccess("Post Deleted Successfully");
+      setIsDeleting(false);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +87,7 @@ const TimelinePosts = ({ post, postArray }) => {
       }`}
     >
       {isDeleting ? (
-        <div className="h-48 flex justify-center items-center">
+        <div className="h-48 flex justify-center items-center bg-black">
           <CircularLoader />
         </div>
       ) : (
@@ -65,7 +96,6 @@ const TimelinePosts = ({ post, postArray }) => {
             post={post}
             postUser={postUser}
             handleDelete={handleDelete}
-            setIsDeleting={setIsDeleting}
           />
 
           <PostBody post={post} />
@@ -86,6 +116,7 @@ const TimelinePosts = ({ post, postArray }) => {
             <AddCommentButton />
             <SharePostButton />
           </section>
+          <ReactToastifyNotificationsElement />
         </div>
       )}
     </div>

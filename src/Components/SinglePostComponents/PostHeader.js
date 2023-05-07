@@ -8,17 +8,15 @@ import DottedMenuWhite from "../../Images/dotted-menu-white.svg";
 import DottedMenuBlack from "../../Images/dotted-menu-black.svg";
 import PostMenuTooltip from "./PostSubComponents/PostMenuTooltip";
 
-const PostHeader = ({ post, postUser, handleDelete, setIsDeleting }) => {
+const PostHeader = ({ post, postUser, handleDelete }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const { toggleTheme, user } = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
 
   const deletePost = () => {
-    setIsDeleting(true);
     if (post?.userId === user?.uid) {
       handleDelete(post?.id);
-      setIsDeleting(false);
     } else {
       alert("invalid action occurs");
     }

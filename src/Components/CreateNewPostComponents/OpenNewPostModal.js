@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import CrossIconBlack from "../../Images/cross-icon-black.svg";
 import UploadMediaFiles from "./UploadMediaFiles";
 import { nanoid } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-
-import { provideNewDate } from "../../Assets/NotificationsByToastify";
+import {
+  notifySuccess,
+  provideNewDate,
+} from "../../Assets/NotificationsByToastify";
 import {
   getStorage,
   ref,
@@ -14,12 +16,10 @@ import {
   getDownloadURL,
   getMetadata,
 } from "firebase/storage";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useCallback } from "react";
 import PostContentInput from "./PostContentInput";
 import SharePostButton from "./SharePostButton";
 import ShowUploadFile from "./ShowUploadFile";
+import ReactToastifyNotificationsElement from "../../Assets/ReactToastifyNotificationsElement";
 
 const OpenNewPostModal = ({ setIsModalOpen }) => {
   const { user } = useSelector((state) => state.user);
@@ -30,6 +30,7 @@ const OpenNewPostModal = ({ setIsModalOpen }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const [postContent, setPostContent] = useState("");
+  const [postImageName, setPostImageName] = useState(null);
   const [postImageUrl, setPostImageUrl] = useState(null);
   const [progressPercent, setProgressPercent] = useState(0);
   const [isSharing, setIsSharing] = useState(false);
@@ -39,7 +40,9 @@ const OpenNewPostModal = ({ setIsModalOpen }) => {
 
     if (!file) return;
 
-    const storageRef = ref(storage, "images/" + file.name);
+    setPostImageName(file?.name);
+
+    const storageRef = ref(storage, `images/${file?.name}`);
 
     getMetadata(storageRef)
       .then((metadata) => {
@@ -82,21 +85,26 @@ const OpenNewPostModal = ({ setIsModalOpen }) => {
       postContent,
       postImageUrl,
       id: nanoid(),
+      postImageName,
       created_at: provideNewDate,
       userId: user?.uid,
     };
 
     const posts = doc(db, "posts", user?.uid);
+
     try {
       await updateDoc(posts, {
         posts: arrayUnion(myPost),
       });
-      setPostContent("");
-      setIsSharing(false);
-      setIsModalOpen(false);
+
       await setDoc(doc(db, "likes", myPost?.id), {
         likes: [],
       });
+
+      setPostContent("");
+      setIsSharing(false);
+      setIsModalOpen(false);
+      notifySuccess("Post Shared Successfully");
     } catch (error) {
       console.log("create post error", error.message);
     }
@@ -104,7 +112,7 @@ const OpenNewPostModal = ({ setIsModalOpen }) => {
 
   return (
     <div className="modal w-screen h-screen bg-white bg-opacity-70 top-0 left-0 right-0  flex items-center justify-center z-20 fixed">
-      <div className="Container bg-white  lg:w-[500px] lg:h-[475px] rounded-lg  drop-shadow-2xl flex flex-col">
+      <div className="Container bg-white  md:w-[500px] md:h-[475px] rounded-lg  drop-shadow-2xl flex flex-col">
         <header className="h-[60px] w-full border-b-[1px] border-fbBgGray flex relative justify-center items-center">
           <h1 className="text-xl font-semibold">Create New Post</h1>
           <button
@@ -133,6 +141,7 @@ const OpenNewPostModal = ({ setIsModalOpen }) => {
 
         <SharePostButton handleSubmit={handleSubmit} isSharing={isSharing} />
       </div>
+      <ReactToastifyNotificationsElement />
     </div>
   );
 };
