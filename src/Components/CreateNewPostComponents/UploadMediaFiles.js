@@ -1,73 +1,29 @@
-import React, { useCallback } from "react";
+import React from "react";
+import Photo from "../../Images/upload-photo-icon-gray.svg";
 
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  getMetadata,
-} from "firebase/storage";
-import { useState } from "react";
-import { useEffect } from "react";
-
-const UploadMediaFiles = ({ setImgUrl, setProgresspercent, file, setFile }) => {
+const UploadMediaFiles = ({ setFile }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-  console.log({ file });
-  const [metaData, setMetaData] = useState({});
-  const storage = getStorage();
-
-  const handleSubmit = useCallback(() => {
-    console.log("i am running");
-    if (!file) return;
-
-    const storageRef = ref(storage, "images/" + file.name);
-
-    getMetadata(storageRef)
-      .then((metadata) => {
-        setMetaData(metadata);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-
-    const uploadTask = uploadBytesResumable(storageRef, file, metaData);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        console.log(snapshot.totalBytes);
-        console.log(snapshot);
-
-        const progress =
-          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgresspercent(`Uploading ${progress} %`);
-      },
-      (error) => {
-        alert(error.message);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImgUrl(downloadURL);
-        });
-      }
-    );
-  }, [file, setImgUrl, metaData, setProgresspercent, storage]);
-
-  useEffect(() => {
-    handleSubmit();
-  }, [handleSubmit]);
-
   return (
-    <>
-      <input
-        type="file"
-        style={{ display: "none" }}
-        id="video"
-        accept="image/*,video/*"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
-    </>
+    <section className="border-[1px] my-3 border-fbBgGray rounded-md flex items-center px-2 py-1 mx-3 justify-between shadow-[0px_0px_8px_0px_#a69999AD]">
+      <p className="pl-3 font-base font-semibold">Add to your post</p>
+      <div>
+        <label
+          htmlFor="video"
+          className="h-9 px-5 my-1  bg-transparent text-fbText text-sm font-semibold rounded-md flex items-center justify-center  transition-all hover:bg-slate-200 hover:cursor-pointer "
+        >
+          <img src={Photo} alt="" className="h-4 mr-2" />
+          <p className="pb-[2px] "> Video/Photo</p>
+        </label>
+        <input
+          type="file"
+          style={{ display: "none" }}
+          id="video"
+          accept="image/*,video/*"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+      </div>
+    </section>
   );
 };
 
