@@ -12,8 +12,6 @@ const PostMenuTooltip = ({ post, setIsOpen, deletePost }) => {
 
   const { toggleTheme, user } = useSelector((state) => state.user);
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-
   return (
     <div
       className={`${

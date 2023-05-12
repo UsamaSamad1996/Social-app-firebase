@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { db } from "../../../firebase";
 import {
   arrayRemove,
   arrayUnion,
@@ -5,28 +8,19 @@ import {
   onSnapshot,
   updateDoc,
 } from "firebase/firestore";
-import React from "react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { db } from "../../../firebase";
 import Liked from "../../../Images/like-icon-blue.svg";
 import Unlike from "../../../Images/like-icon.svg";
 import UnlikeGrayIcon from "../../../Images/like-icon-fb-gray.svg";
 
-const LikeUnlikeButton = ({
-  post,
-  isLike,
-  likes,
-  setLikes,
-  setIsLike,
-  setNumberOfLikes,
-}) => {
+const LikeUnlikeButton = ({ post, likes, setLikes, setNumberOfLikes }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   const { toggleTheme, userData } = useSelector((state) => state.user);
+  const [isLike, setIsLike] = useState(false);
 
   const handleLikes = async () => {
     setIsLike(!isLike);
+
     const collectionOfLikes = doc(db, "likes", post?.id);
     if (isLike) {
       await updateDoc(collectionOfLikes, {
@@ -41,6 +35,7 @@ const LikeUnlikeButton = ({
 
   useEffect(() => {
     const collectionOfLikes = doc(db, "likes", post.id);
+
     onSnapshot(collectionOfLikes, (doc) => {
       setLikes(doc.data()?.likes);
       setIsLike(doc.data()?.likes?.includes(userData?.User_Name));

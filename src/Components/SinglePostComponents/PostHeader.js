@@ -1,5 +1,5 @@
-import { formatDistanceToNow } from "date-fns";
 import React, { useState } from "react";
+import { formatDistanceToNow } from "date-fns";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Avatar from "../../Images/usama.jpg";

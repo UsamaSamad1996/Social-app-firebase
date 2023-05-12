@@ -12,7 +12,7 @@ const ViewTotalLikes = ({ numberOfLikes, likes }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div className="likes flex ml-2 items-center justify-center">
+    <div className="flex ml-2 items-center justify-center">
       {likes?.length > 0 ? (
         <div className="flex ml-2 md:ml-0">
           <img
