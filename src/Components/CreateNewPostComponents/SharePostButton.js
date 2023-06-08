@@ -2,10 +2,19 @@ import React from "react";
 import CircularLoader from "../../Assets/CircularLoader";
 import SharePost from "../../Images/share.svg";
 
-const SharePostButton = ({ isSharing, handleSubmit }) => {
+const SharePostButton = ({
+  isSharing,
+  handleSubmit,
+  postContent,
+  postImageUrl,
+}) => {
   return (
     <button
-      disabled={isSharing}
+      disabled={
+        isSharing ||
+        postContent === "" ||
+        (postContent === "" && postImageUrl === "")
+      }
       onClick={handleSubmit}
       className="h-[38px] mx-3 bg-purpleBlue text-white text-base font-semibold rounded-md flex items-center justify-center hover:-translate-y-[2px] transition-all  disabled:bg-opacity-80 disabled:cursor-not-allowed "
     >

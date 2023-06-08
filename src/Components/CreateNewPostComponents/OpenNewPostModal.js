@@ -5,10 +5,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import {
-  notifySuccess,
-  provideNewDate,
-} from "../../Assets/NotificationsByToastify";
+import { notifySuccess } from "../../Assets/NotificationsByToastify";
 import {
   getStorage,
   ref,
@@ -81,6 +78,16 @@ const OpenNewPostModal = ({ setIsModalOpen }) => {
     e.preventDefault();
     setIsSharing(true);
 
+    const provideNewDate = new Date()
+      .toLocaleString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+      .replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+) (AM|PM)/, "$1-$2-$3 $4:$5 $6");
+
     const myPost = {
       postContent,
       postImageUrl,
@@ -139,7 +146,12 @@ const OpenNewPostModal = ({ setIsModalOpen }) => {
 
         <UploadMediaFiles setFile={setFile} />
 
-        <SharePostButton handleSubmit={handleSubmit} isSharing={isSharing} />
+        <SharePostButton
+          handleSubmit={handleSubmit}
+          isSharing={isSharing}
+          postContent={postContent}
+          postImageUrl={postImageUrl}
+        />
       </div>
       <ReactToastifyNotificationsElement />
     </div>
