@@ -19,6 +19,8 @@ import ShowUploadFile from "./ShowUploadFile";
 import ReactToastifyNotificationsElement from "../../../../../Assets/ReactToastifyNotificationsElement";
 
 const OpenNewPostModal = ({ setIsModalOpen }) => {
+  ////
+  ////
   const { user } = useSelector((state) => state.user);
   const storage = getStorage();
   const [metaData, setMetaData] = useState({});
@@ -60,6 +62,7 @@ const OpenNewPostModal = ({ setIsModalOpen }) => {
       },
       (error) => {
         alert(error.message);
+        setFile(null);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {

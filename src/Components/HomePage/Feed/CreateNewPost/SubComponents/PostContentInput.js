@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
-import useAutoSizeTextArea from "../useAutoSizeTextArea";
+import useAutoSizeTextArea from "../../../../../Assets/useAutoSizeTextArea";
 
 const PostContentInput = ({ postContent, setPostContent }) => {
   ///

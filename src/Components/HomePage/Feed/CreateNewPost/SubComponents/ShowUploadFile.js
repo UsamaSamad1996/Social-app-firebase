@@ -21,14 +21,14 @@ const ShowUploadFile = ({ file, postImageUrl, progressPercent }) => {
           <div className="w-full bg-fbBgGray rounded-md flex flex-col items-center justify-center py-20 flex-auto text-black font-semibold text-lg">
             <CircularLoader />
           </div>
-        ) : (
+        ) : !file && !postImageUrl ? (
           <div className="w-full bg-fbBgGray rounded-md flex flex-col items-center justify-center py-14 flex-auto text-black font-semibold text-lg">
             <p className="h-10 w-10 bg-white text-black flex justify-center items-center rounded-full text-4xl font-bold pb-1">
               +
             </p>
             <p> Add Photos/Videos</p>
           </div>
-        )}
+        ) : null}
       </div>
     </section>
   );
