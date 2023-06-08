@@ -1,14 +1,14 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import CreateAccount from "./Pages/CreateAccount";
-import HomePage from "./Pages/HomePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setUserData } from "./ReduxToolkit/userSlice";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
-import ProfilePage from "./Pages/ProfilePage";
-import LoginPage from "./Pages/LoginPage/LoginPage";
+import CreateAccount from "./Components/CreateAccount/CreateAccount";
+import LoginPage from "./Components/LoginPage/LoginPage";
+import HomePage from "./Components/HomePage/HomePage";
+import ProfilePage from "./Components/ProfilePage/ProfilePage";
 
 const App = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
