@@ -11,12 +11,12 @@ import { db } from "../../../../firebase";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { notifySuccess } from "../../../../Assets/NotificationsByToastify";
 import CircularLoader from "../../../../Assets/CircularLoader";
-import LikeUnlikeButton from "./SinglePost/Footer/LikeUnlikeButton";
-import AddCommentButton from "./SinglePost/Footer/AddCommentButton";
-import SharePostButton from "./SinglePost/Footer/SharePostButton";
-import PostHeader from "./SinglePost/Header/PostHeader";
-import PostBody from "./SinglePost/Body/PostBody";
-import PostStats from "./SinglePost/Stats/PostStats";
+import LikeUnlikeButton from "./Footer/LikeUnlikeButton";
+import AddCommentButton from "./Footer/AddCommentButton";
+import SharePostButton from "./Footer/SharePostButton";
+import PostHeader from "./Header/PostHeader";
+import PostBody from "./Body/PostBody";
+import PostStats from "./Stats/PostStats";
 import ReactToastifyNotificationsElement from "../../../../Assets/ReactToastifyNotificationsElement";
 
 const TimelinePosts = ({ post, postArray }) => {

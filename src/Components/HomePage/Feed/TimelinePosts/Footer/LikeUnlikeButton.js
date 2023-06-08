@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { db } from "../../../../../../firebase";
+import { db } from "../../../../../firebase";
 import {
   arrayRemove,
   arrayUnion,
@@ -8,9 +8,9 @@ import {
   onSnapshot,
   updateDoc,
 } from "firebase/firestore";
-import Liked from "../../../../../../Images/like-icon-blue.svg";
-import Unlike from "../../../../../../Images/like-icon.svg";
-import UnlikeGrayIcon from "../../../../../../Images/like-icon-fb-gray.svg";
+import Liked from "../../../../../Images/like-icon-blue.svg";
+import Unlike from "../../../../../Images/like-icon.svg";
+import UnlikeGrayIcon from "../../../../../Images/like-icon-fb-gray.svg";
 
 const LikeUnlikeButton = ({ post, likes, setLikes, setNumberOfLikes }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////

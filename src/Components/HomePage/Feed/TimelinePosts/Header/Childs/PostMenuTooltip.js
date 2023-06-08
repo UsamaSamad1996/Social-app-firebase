@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import DeleteIconWhite from "../../../../../../../Images/delete-icon-white.svg";
-import DeleteIconBlack from "../../../../../../../Images/delete-icon-black.svg";
-import PencilIconWhite from "../../../../../../../Images/edit-pencil-icon-white.svg";
-import PencilIconBlack from "../../../../../../../Images/edit-pencil-icon-black.svg";
-import CrossWhite from "../../../../../../../Images/cross-icon-white.svg";
-import CrossGray from "../../../../../../../Images/cross-icon-gray.svg";
+import DeleteIconWhite from "../../../../../../Images/delete-icon-white.svg";
+import DeleteIconBlack from "../../../../../../Images/delete-icon-black.svg";
+import PencilIconWhite from "../../../../../../Images/edit-pencil-icon-white.svg";
+import PencilIconBlack from "../../../../../../Images/edit-pencil-icon-black.svg";
+import CrossWhite from "../../../../../../Images/cross-icon-white.svg";
+import CrossGray from "../../../../../../Images/cross-icon-gray.svg";
 
 const PostMenuTooltip = ({ post, setIsOpen, deletePost }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////

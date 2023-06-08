@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Avatar from "../../../../../../Images/usama.jpg";
-import CheckIcon from "../../../../../../Images/check-icon.svg";
-import DottedMenuWhite from "../../../../../../Images/dotted-menu-white.svg";
-import DottedMenuBlack from "../../../../../../Images/dotted-menu-black.svg";
+import Avatar from "../../../../../Images/usama.jpg";
+import CheckIcon from "../../../../../Images/check-icon.svg";
+import DottedMenuWhite from "../../../../../Images/dotted-menu-white.svg";
+import DottedMenuBlack from "../../../../../Images/dotted-menu-black.svg";
 import PostMenuTooltip from "./Childs/PostMenuTooltip";
 
 const PostHeader = ({ post, postUser, handleDelete }) => {

@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import LikesImage from "../../../../../../../Images/likes.png";
-import Heart from "../../../../../../../Images/hearts.png";
-import LOL from "../../../../../../../Images/lol.png";
+import LikesImage from "../../../../../../Images/likes.png";
+import Heart from "../../../../../../Images/hearts.png";
+import LOL from "../../../../../../Images/lol.png";
 
 const ViewTotalLikes = ({ numberOfLikes, likes }) => {
   ///////////////////////////////////////////////////////////////////////////////////////////////////
